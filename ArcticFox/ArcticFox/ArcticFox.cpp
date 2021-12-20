@@ -13,6 +13,7 @@ public:
 	bool Close() {
 		return m_Close;
 	}
+	void Stop() override;
 
 	~Application() {
 	}
@@ -22,29 +23,10 @@ private:
 
 void Application::Run() {
 	m_Close = false;
-	/*ARFMountPoint * VirtualFiles = new ARFMountPoint();
-	//VirtualFiles->CreateMount("C:/Users/Kosmosas/Desktop/GameData/Contet.ARF");
-	VirtualFiles->SetMountPoint("C:/Users/Kosmosas/Desktop/GameData/Contet.ARF");
-	VFS::GetInstance().Mount(VirtualFiles);
 
-	PhysicalMountPoint * PhysicalSystem = new PhysicalMountPoint();
-	PhysicalSystem->SetMountPoint("C:/Users/Kosmosas/Desktop/Export/");
-	VFS::GetInstance().Mount(PhysicalSystem);
-
-	PhysicalMountPoint * _PhysicalSystem = new PhysicalMountPoint();
-	_PhysicalSystem->SetMountPoint("C:/Users/Kosmosas/Desktop/Import/");
-	VFS::GetInstance().Mount(_PhysicalSystem);
-
-
-
-	File* file = PhysicalSystem->ReadFile("Data/zip.zip");//Get file from exports folder.
-	VirtualFiles->WriteFile(file);//write file to virtual file system.
-	File* VRfile = VirtualFiles->ReadFile("Data/zip.zip");
-	ASSERT(VRfile != nullptr);
-	_PhysicalSystem->WriteFile(VRfile);//write file to virtual file system.*/
-	/*AppFrame::PhysicalMountPoint * PhysicalSystem = new AppFrame::PhysicalMountPoint();
+	AppFrame::PhysicalMountPoint * PhysicalSystem = new AppFrame::PhysicalMountPoint();
 	PhysicalSystem->SetMountPoint("C:/Users/Kosmosas/Desktop/Application/");
-	AppFrame::VFS::GetInstance()->Mount(PhysicalSystem);*/
+	AppFrame::VFS::GetInstance()->Mount(PhysicalSystem);
 
 	AddModule<AppFrame::ModuleWindow>(new AppFrame::ModuleWindow());
 	AddModule<AppFrame::ModuleConsole>(new AppFrame::ModuleConsole());
@@ -64,25 +46,43 @@ bool Application::OnEvent(AppFrame::BasicEvent & event) {
 		return true;
 	}
 }
+void Application::Stop() {
+	AppFrame::Application::Stop();
+
+	AppFrame::PhysicalMountPoint * PhysicalSystem = static_cast<AppFrame::PhysicalMountPoint*>(AppFrame::VFS::GetInstance()->GetMount("C:/Users/Kosmosas/Desktop/Application/"));
+	AppFrame::VFS::GetInstance()->Unmount("C:/Users/Kosmosas/Desktop/Application/");
+	delete PhysicalSystem;
+
+	for (auto it = m_Modules.begin(); it != m_Modules.end(); it++) {
+		delete it->second;
+	}
+	m_EarlyUpdate.clear();
+	m_MiddleUpdate.clear();
+	m_LateUpdate.clear();
+	m_Modules.clear();
+}
 
 
 int main() {
 	std::cout << "Start with memory " << m_MemoryAllocated << std::endl;
 	{
-		//Engine::Memory::Scope<Application> app = Engine::Memory::CreateScope<Application>();
 		Application * aap = new Application();
 		Application::SetInstance(aap);
 		AppFrame::AppConfig config;
 		aap->SetConfig(&config);
 		aap->Run();
-		//Examples();
-
+		int a = 0;
 		while (!aap->Close()) {
 			aap->OnEarlyUpdate();
 			aap->OnUpdate();
 			aap->OnLateUpdate();
+			if (a > 90000) {
+				break;
+			}
+			a++;
 		}
 		aap->Stop();
+		delete aap;
 	}
 	std::cout << "---Left with memory " << m_MemoryAllocated - m_MemoryRelease << std::endl;
 	std::cout << "---Left with memory current " << m_MemoryCurrentMemory << std::endl;
