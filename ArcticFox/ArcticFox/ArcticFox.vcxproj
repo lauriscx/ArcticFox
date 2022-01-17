@@ -167,12 +167,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="ArcticFox.cpp" />
+    <ClCompile Include="Engine\Core\Application.cpp" />
+    <ClCompile Include="Engine\Editor\Editor.cpp" />
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\AppFrame\AppFrame\AppFrame.vcxproj">
       <Project>{72e7ea57-7452-4521-b937-e5109f9d27d5}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Engine\Core\Application.h" />
+    <ClInclude Include="Engine\Editor\Editor.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
