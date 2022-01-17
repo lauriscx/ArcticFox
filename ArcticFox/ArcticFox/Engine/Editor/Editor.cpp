@@ -8,9 +8,9 @@ void Editor::OnEarlyUpdate(float deltaTime) {
 }
 
 void Editor::OnUpdate(float deltaTime) {
+	Docking();
 	EntytiesList();
 	Menu();
-	test();
 }
 
 void Editor::OnLateUpdate(float deltaTime) {
@@ -43,42 +43,20 @@ void Editor::Menu() {
 }
 void Editor::EntytiesList()  {
 
-	/*ImGuiDockNodeFlags dockspaceFlags = ImGuiDockNodeFlags_None;
-	ImGuiID dockspaceID = ImGui::GetID("Window");
-	if (!ImGui::DockBuilderGetNode(dockspaceID)) {
-		ImGui::DockBuilderRemoveNode(dockspaceID);
-		ImGui::DockBuilderAddNode(dockspaceID, ImGuiDockNodeFlags_None);
-
-		ImGuiID dock_main_id = dockspaceID;
-		ImGuiID dock_up_id = ImGui::DockBuilderSplitNode(dock_main_id, ImGuiDir_Up, 0.05f, nullptr, &dock_main_id);
-		ImGuiID dock_right_id = ImGui::DockBuilderSplitNode(dock_main_id, ImGuiDir_Right, 0.2f, nullptr, &dock_main_id);
-		ImGuiID dock_left_id = ImGui::DockBuilderSplitNode(dock_main_id, ImGuiDir_Left, 0.2f, nullptr, &dock_main_id);
-		ImGuiID dock_down_id = ImGui::DockBuilderSplitNode(dock_main_id, ImGuiDir_Down, 0.2f, nullptr, &dock_main_id);
-		ImGuiID dock_down_right_id = ImGui::DockBuilderSplitNode(dock_down_id, ImGuiDir_Right, 0.6f, nullptr, &dock_down_id);
-
-		ImGui::DockBuilderDockWindow("Actions", dock_up_id);
-		ImGui::DockBuilderDockWindow("Hierarchy", dock_right_id);
-		ImGui::DockBuilderDockWindow("EntitiesList", dock_left_id);
-		ImGui::DockBuilderDockWindow("Console", dock_down_id);
-		ImGui::DockBuilderDockWindow("Project", dock_down_right_id);
-		ImGui::DockBuilderDockWindow("Scene", dock_main_id);
-
-		// Disable tab bar for custom toolbar
-		ImGuiDockNode* node = ImGui::DockBuilderGetNode(dock_up_id);
-		node->LocalFlags |= ImGuiDockNodeFlags_NoTabBar;
-
-		ImGui::DockBuilderFinish(dock_main_id);
-	}
-
-	ImGui::DockSpace(dockspaceID, ImVec2(0.0f, 0.0f), dockspaceFlags);
-
-	ImGui::Begin("EntitiesList");
+	ImGui::Begin("Entyties");
 	ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-	ImGui::End();*/
+	ImGui::End();
 
+	ImGui::Begin("Properties");
+	ImGui::Text("Hello, down!");
+	ImGui::End();
+
+	ImGui::Begin("FileExplorer");
+	ImGui::Text("Hello, down!");
+	ImGui::End();
 }
 
-void Editor::test()
+void Editor::Docking()
 {
 	static ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_PassthruCentralNode;
 
@@ -140,18 +118,5 @@ void Editor::test()
 			ImGui::DockBuilderFinish(dockspace_id);
 		}
 	}
-
-	ImGui::End();
-
-	ImGui::Begin("Entyties");
-	ImGui::Text("Hello, left!");
-	ImGui::End();
-
-	ImGui::Begin("Properties");
-	ImGui::Text("Hello, down!");
-	ImGui::End();
-
-	ImGui::Begin("FileExplorer");
-	ImGui::Text("Hello, down!");
 	ImGui::End();
 }

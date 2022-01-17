@@ -16,5 +16,5 @@ private:
 	void GameView();
 	void Menu();
 	void EntytiesList();
-	void test();
+	void Docking();
 };
