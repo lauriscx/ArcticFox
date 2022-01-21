@@ -3,10 +3,10 @@
 int main() {
 	//std::cout << "Start with memory " << m_MemoryAllocated << std::endl;
 	{
-		Application * aap = new Application();
-		Application::SetInstance(aap);
 		AppFrame::AppConfig config;
-		aap->SetConfig(&config);
+		Application * aap = new Application(&config);
+		Application::SetInstance(aap);
+		//aap->SetConfig(&config);
 		aap->Run();
 		while (!aap->Close()) {
 			aap->OnEarlyUpdate();

@@ -5,7 +5,7 @@
 
 class Application : public AppFrame::Application {
 public:
-	Application();
+	Application(AppFrame::AppConfig* config);
 
 	virtual void Run() override;
 	virtual void OnEarlyUpdate() override;

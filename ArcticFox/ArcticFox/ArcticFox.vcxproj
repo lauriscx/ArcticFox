@@ -97,14 +97,16 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>ENGINE_PLATFORM_WINDOWS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>ENGINE_PLATFORM_WINDOWS;_MBCS;IMGUI_API=__declspec(dllimport);%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)../AppFrame/Libraries/glm/;$(SolutionDir)../AppFrame/AppFrame/src/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)../AppFrame/Libraries/glm/;$(SolutionDir)/ArcticFox/;$(SolutionDir)../AppFrame/AppFrame/src/;$(SolutionDir)../AppFrame/Libraries/glfw/include/;$(SolutionDir)../AppFrame/Libraries/glew/include/GL/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(SolutionDir)../AppFrame/Libraries/glfw/lib/;$(SolutionDir)../AppFrame/Libraries/glew/lib/x64/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glew32.lib;opengl32.lib;glfw3.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -114,14 +116,16 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>ENGINE_PLATFORM_WINDOWS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>ENGINE_PLATFORM_WINDOWS;_MBCS;IMGUI_API=__declspec(dllimport);%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)../AppFrame/Libraries/glm/;$(SolutionDir)../AppFrame/AppFrame/src/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)../AppFrame/Libraries/glm/;$(SolutionDir)/ArcticFox/;$(SolutionDir)../AppFrame/AppFrame/src/;$(SolutionDir)../AppFrame/Libraries/glfw/include/;$(SolutionDir)../AppFrame/Libraries/glew/include/GL/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(SolutionDir)../AppFrame/Libraries/glfw/lib/;$(SolutionDir)../AppFrame/Libraries/glew/lib/x64/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glew32.lib;opengl32.lib;glfw3.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -133,9 +137,9 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>ENGINE_PLATFORM_WINDOWS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>ENGINE_PLATFORM_WINDOWS;_MBCS;IMGUI_API=__declspec(dllimport);%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)../AppFrame/Libraries/glm/;$(SolutionDir)../AppFrame/AppFrame/src/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)../AppFrame/Libraries/glm/;$(SolutionDir)/ArcticFox/;$(SolutionDir)../AppFrame/AppFrame/src/;$(SolutionDir)../AppFrame/Libraries/glfw/include/;$(SolutionDir)../AppFrame/Libraries/glew/include/GL/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -143,6 +147,8 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(SolutionDir)../AppFrame/Libraries/glfw/lib/;$(SolutionDir)../AppFrame/Libraries/glew/lib/x64/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glew32.lib;opengl32.lib;glfw3.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -154,9 +160,9 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>ENGINE_PLATFORM_WINDOWS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>ENGINE_PLATFORM_WINDOWS;_MBCS;IMGUI_API=__declspec(dllimport);%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)../AppFrame/Libraries/glm/;$(SolutionDir)../AppFrame/AppFrame/src/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)../AppFrame/Libraries/glm/;$(SolutionDir)/ArcticFox/;$(SolutionDir)../AppFrame/AppFrame/src/;$(SolutionDir)../AppFrame/Libraries/glfw/include/;$(SolutionDir)../AppFrame/Libraries/glew/include/GL/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -164,14 +170,25 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(SolutionDir)../AppFrame/Libraries/glfw/lib/;$(SolutionDir)../AppFrame/Libraries/glew/lib/x64/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glew32.lib;opengl32.lib;glfw3.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Engine\Core\Modules\Render\Buffer.cpp" />
     <ClCompile Include="Engine\Core\Application.cpp" />
+    <ClCompile Include="Engine\Core\Modules\Render\GraphicsModule.cpp" />
+    <ClCompile Include="Engine\Core\Modules\Render\OpenGL\OpenGLBuffer.cpp" />
+    <ClCompile Include="Engine\Core\Modules\Render\OpenGL\Glad\glad.c" />
+    <ClCompile Include="Engine\Core\Modules\Render\OpenGL\OpenGLContext.cpp" />
+    <ClCompile Include="Engine\Core\Modules\Render\OpenGL\OpenGLRendererAPI.cpp" />
+    <ClCompile Include="Engine\Core\Modules\Render\RenderCommand.cpp" />
     <ClCompile Include="Engine\Editor\Editor.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Engine\Core\Modules\Render\GraphicsModule.cpp" />
-    <ClCompile Include="Engine\Core\Modules\Render\Material.cpp" />
+    <ClCompile Include="Engine\Core\Modules\Render\OpenGL\OpenGLShader.cpp" />
+    <ClCompile Include="Engine\Core\Modules\Render\Shader.cpp" />
+    <ClCompile Include="Engine\Core\Modules\Render\Renderer.cpp" />
+    <ClCompile Include="Engine\Core\Modules\Render\RendererAPI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\AppFrame\AppFrame\AppFrame.vcxproj">
@@ -179,14 +196,22 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Engine\Core\Modules\Render\Buffer.h" />
     <ClInclude Include="Engine\Core\Application.h" />
-    <ClInclude Include="Engine\Core\Modules\Render\Mesh.h" />
-    <ClInclude Include="Engine\Editor\Editor.h" />
+    <ClInclude Include="Engine\Core\Modules\Render\BufferLayout.h" />
+    <ClInclude Include="Engine\Core\Modules\Render\GraphicsContext.h" />
     <ClInclude Include="Engine\Core\Modules\Render\GraphicsModule.h" />
-    <ClInclude Include="Engine\Core\Modules\Render\ShaderInterface.h" />
-    <ClInclude Include="Engine\Core\Modules\Render\RendererInterface.h" />
-    <ClInclude Include="Engine\Core\Modules\Render\TextureInterface.h" />
-    <ClInclude Include="Engine\Core\Modules\Render\Material.h" />
+    <ClInclude Include="Engine\Core\Modules\Render\OpenGL\OpenGLBuffer.h" />
+    <ClInclude Include="Engine\Core\Modules\Render\OpenGL\Glad\glad.h" />
+    <ClInclude Include="Engine\Core\Modules\Render\OpenGL\Glad\KHR\khrplatform.h" />
+    <ClInclude Include="Engine\Core\Modules\Render\OpenGL\OpenGLContext.h" />
+    <ClInclude Include="Engine\Core\Modules\Render\OpenGL\OpenGLRendererAPI.h" />
+    <ClInclude Include="Engine\Core\Modules\Render\RenderCommand.h" />
+    <ClInclude Include="Engine\Editor\Editor.h" />
+    <ClInclude Include="Engine\Core\Modules\Render\OpenGL\OpenGLShader.h" />
+    <ClInclude Include="Engine\Core\Modules\Render\Shader.h" />
+    <ClInclude Include="Engine\Core\Modules\Render\Renderer.h" />
+    <ClInclude Include="Engine\Core\Modules\Render\RendererAPI.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

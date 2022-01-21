@@ -1,7 +1,18 @@
 #pragma once
-#include <AppFrame.h>
+#include "Core/Core.h"
+#include "Core/ModuleSystem/Module.h"
 
-class GraphicsModule : public AppFrame::Module {
+#include "GraphicsContext.h"
+/*#include "Engine/Core/Modules/Render/Renderer.h"
+#include "Engine/Core/Modules/Render/Mesh.h"*/
+#include "Engine/Core/Modules/Render/Shader.h"
+#include "Buffer.h"
+
+/*#include "Application/Modules/Render/Mesh.h"
+#include "Application/Modules/Render/Renderer.h"*/
+
+
+class /*ENGINE_API*/ GraphicsModule : public AppFrame::Module {
 public:
 	GraphicsModule();
 
@@ -13,4 +24,13 @@ public:
 	virtual void OnStop() override;
 
 	virtual ~GraphicsModule();
+private:
+	Graphics::GraphicsContext* m_GraphicsContext;
+	/*Graphics::OpenGL::Mesh* m_Mesh;
+	Graphics::OpenGL::Renderer* m_Renderer;*/
+	Graphics::Shader* m_Shader;
+
+	Graphics::VertexArray* VAO;
+	Graphics::VertexBuffer* VBO;
+	Graphics::IndexBuffer* IBO;
 };

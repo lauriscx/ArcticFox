@@ -1,6 +1,9 @@
 #include "Application.h"
 
-Application::Application() {
+/* Engine API */
+#include "Engine/Core/Modules/Render/GraphicsModule.h"
+
+Application::Application(AppFrame::AppConfig* config) : AppFrame::Application(config) {
 	 SubscribeToEvent(AppFrame::WindowCloses::Type());
 	 SubscribeToEvent(AppFrame::WindowResize::Type());
 	 SubscribeToEvent(AppFrame::Log::Type());//Used for Console module.
@@ -16,6 +19,7 @@ void Application::Run() {
 	AddModule<AppFrame::ModuleWindow>(new AppFrame::ModuleWindow());
 	AddModule<AppFrame::ModuleConsole>(new AppFrame::ModuleConsole());
 	//AddModule<AppFrame::SoundModule>(new AppFrame::SoundModule());
+	AddModule<GraphicsModule>(new GraphicsModule());
 	AddModule<AppFrame::ModuleIMGUI>(new AppFrame::ModuleIMGUI());
 
 	AppFrame::Application::Run();
