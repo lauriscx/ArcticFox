@@ -2,22 +2,31 @@
 #include "Glad/glad.h"
 #include <string>
 #include <iostream>
+#include <glm/gtc/type_ptr.hpp>
 
 
 Graphics::OpenGL::OpenGLShader::OpenGLShader() {
-unsigned int m_VertexShader;
-unsigned int m_FragmentShader;
-unsigned int m_Shader;
 
 	std::string vert = "#version 330 core\n"
 		"layout(location = 0) in vec3 position;\n"
+		"layout(location = 1) in vec2 textCoords;\n"
+
+		"uniform mat4 u_ViewPeojection;\n"
+		"uniform mat4 u_Transform;\n"
+
+		"out vec2 Coords;\n"
+
 		"void main(){\n"
-		"gl_Position = vec4(position, 1.0);\n"
+		"Coords = textCoords;\n"
+		"gl_Position = u_ViewPeojection * u_Transform * vec4(position, 1.0);\n"
 		"}";
 	std::string frag = "#version 330 core\n"
+		"uniform sampler2D u_Image;\n"
 		"out vec4 color;\n"
+		"in vec2 Coords;\n"
 		"void main(){\n"
-		"color = vec4(1.0, 0.0, 0.0, 1.0);\n"
+		"color = texture(u_Image, Coords);\n"
+		"//color = vec4(Coords.x,Coords.y, 0, 1);\n"
 		"}";
 
 	m_Shader = glCreateProgram();
@@ -60,6 +69,27 @@ unsigned int m_Shader;
 	glDeleteShader(m_VertexShader);
 	glDeleteShader(m_FragmentShader);
 	glUseProgram(m_Shader);
+}
+
+
+void Graphics::OpenGL::OpenGLShader::Bind() {
+	glUseProgram(m_Shader);
+}
+
+void Graphics::OpenGL::OpenGLShader::Unbind() {
+	glUseProgram(0);
+}
+
+void Graphics::OpenGL::OpenGLShader::UploadUniform(const std::string& name, const glm::mat4 & matrix) {
+	glUseProgram(m_Shader);
+	int location = glGetUniformLocation(m_Shader, name.c_str());
+	glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(matrix));
+}
+
+void Graphics::OpenGL::OpenGLShader::UploadUniform(const std::string& name, int value) {
+	glUseProgram(m_Shader);
+	int location = glGetUniformLocation(m_Shader, name.c_str());
+	glUniform1i(location, value);
 }
 
 Graphics::OpenGL::OpenGLShader::~OpenGLShader()

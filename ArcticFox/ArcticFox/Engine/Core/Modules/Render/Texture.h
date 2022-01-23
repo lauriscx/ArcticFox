@@ -1,0 +1,23 @@
+#pragma once
+#include "Application/Resources/ResourceTexture.h"
+
+namespace Graphics {
+	class Texture {
+	public:
+		virtual int GetWidth() const = 0;
+		virtual int GetHeight() const = 0;
+
+		virtual void Bind(unsigned int slot = 0) const = 0;
+		virtual void Unbind() const = 0;
+
+		virtual ~Texture() = default;
+	};
+
+	class Texture2D : public Texture {
+	public:
+		static Texture2D* Create(AppFrame::ResourceTexture* texture);
+
+		virtual ~Texture2D() = default;
+	};
+
+}

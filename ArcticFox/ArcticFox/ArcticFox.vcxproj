@@ -177,6 +177,7 @@
   <ItemGroup>
     <ClCompile Include="Engine\Core\Modules\Render\Buffer.cpp" />
     <ClCompile Include="Engine\Core\Application.cpp" />
+    <ClCompile Include="Engine\Core\Modules\Render\Camera.cpp" />
     <ClCompile Include="Engine\Core\Modules\Render\GraphicsModule.cpp" />
     <ClCompile Include="Engine\Core\Modules\Render\OpenGL\OpenGLBuffer.cpp" />
     <ClCompile Include="Engine\Core\Modules\Render\OpenGL\Glad\glad.c" />
@@ -189,6 +190,8 @@
     <ClCompile Include="Engine\Core\Modules\Render\Shader.cpp" />
     <ClCompile Include="Engine\Core\Modules\Render\Renderer.cpp" />
     <ClCompile Include="Engine\Core\Modules\Render\RendererAPI.cpp" />
+    <ClCompile Include="Engine\Core\Modules\Render\Texture.cpp" />
+    <ClCompile Include="Engine\Core\Modules\Render\OpenGL\OpenGLTexture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\AppFrame\AppFrame\AppFrame.vcxproj">
@@ -199,6 +202,7 @@
     <ClInclude Include="Engine\Core\Modules\Render\Buffer.h" />
     <ClInclude Include="Engine\Core\Application.h" />
     <ClInclude Include="Engine\Core\Modules\Render\BufferLayout.h" />
+    <ClInclude Include="Engine\Core\Modules\Render\Camera.h" />
     <ClInclude Include="Engine\Core\Modules\Render\GraphicsContext.h" />
     <ClInclude Include="Engine\Core\Modules\Render\GraphicsModule.h" />
     <ClInclude Include="Engine\Core\Modules\Render\OpenGL\OpenGLBuffer.h" />
@@ -212,6 +216,8 @@
     <ClInclude Include="Engine\Core\Modules\Render\Shader.h" />
     <ClInclude Include="Engine\Core\Modules\Render\Renderer.h" />
     <ClInclude Include="Engine\Core\Modules\Render\RendererAPI.h" />
+    <ClInclude Include="Engine\Core\Modules\Render\Texture.h" />
+    <ClInclude Include="Engine\Core\Modules\Render\OpenGL\OpenGLTexture.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -8,6 +8,8 @@ namespace Graphics {
 		public:
 			OpenGLRendererAPI();
 			
+			virtual void Init() override;
+
 			// Inherited via RendererAPI
 			virtual void SetClearColor(glm::vec4 & color) override;
 

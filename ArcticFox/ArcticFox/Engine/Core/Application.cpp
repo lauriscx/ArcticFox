@@ -7,14 +7,14 @@ Application::Application(AppFrame::AppConfig* config) : AppFrame::Application(co
 	 SubscribeToEvent(AppFrame::WindowCloses::Type());
 	 SubscribeToEvent(AppFrame::WindowResize::Type());
 	 SubscribeToEvent(AppFrame::Log::Type());//Used for Console module.
+
+	 AppFrame::PhysicalMountPoint * PhysicalSystem = new AppFrame::PhysicalMountPoint();
+	 PhysicalSystem->SetMountPoint("C:/Users/Kosmosas/Desktop/Application/");
+	 AppFrame::VFS::GetInstance()->Mount(PhysicalSystem);
 }
 
 void Application::Run() {
 	m_Close = false;
-
-	AppFrame::PhysicalMountPoint * PhysicalSystem = new AppFrame::PhysicalMountPoint();
-	PhysicalSystem->SetMountPoint("C:/Users/Kosmosas/Desktop/Application/");
-	AppFrame::VFS::GetInstance()->Mount(PhysicalSystem);
 
 	AddModule<AppFrame::ModuleWindow>(new AppFrame::ModuleWindow());
 	AddModule<AppFrame::ModuleConsole>(new AppFrame::ModuleConsole());
@@ -41,6 +41,7 @@ void Application::OnLateUpdate() {
 }
 
 bool Application::OnEvent(AppFrame::BasicEvent & event) {
+	AppFrame::Application::OnEvent(event);
 	if (AppFrame::WindowCloses* data = AppFrame::WindowCloses::Match(&event)) {
 		m_Close = true;
 		return true;
