@@ -184,6 +184,7 @@
     <ClCompile Include="Engine\Core\Modules\Render\OpenGL\OpenGLContext.cpp" />
     <ClCompile Include="Engine\Core\Modules\Render\OpenGL\OpenGLRendererAPI.cpp" />
     <ClCompile Include="Engine\Core\Modules\Render\RenderCommand.cpp" />
+    <ClCompile Include="Engine\Core\Resource\ResourceShader.cpp" />
     <ClCompile Include="Engine\Editor\Editor.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Engine\Core\Modules\Render\OpenGL\OpenGLShader.cpp" />
@@ -192,6 +193,8 @@
     <ClCompile Include="Engine\Core\Modules\Render\RendererAPI.cpp" />
     <ClCompile Include="Engine\Core\Modules\Render\Texture.cpp" />
     <ClCompile Include="Engine\Core\Modules\Render\OpenGL\OpenGLTexture.cpp" />
+    <ClCompile Include="Engine\Core\Modules\Render\FrameBuffer.cpp" />
+    <ClCompile Include="Engine\Core\Modules\Render\OpenGL\OpenGLFrameBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\AppFrame\AppFrame\AppFrame.vcxproj">
@@ -211,6 +214,7 @@
     <ClInclude Include="Engine\Core\Modules\Render\OpenGL\OpenGLContext.h" />
     <ClInclude Include="Engine\Core\Modules\Render\OpenGL\OpenGLRendererAPI.h" />
     <ClInclude Include="Engine\Core\Modules\Render\RenderCommand.h" />
+    <ClInclude Include="Engine\Core\Resource\ResourceShader.h" />
     <ClInclude Include="Engine\Editor\Editor.h" />
     <ClInclude Include="Engine\Core\Modules\Render\OpenGL\OpenGLShader.h" />
     <ClInclude Include="Engine\Core\Modules\Render\Shader.h" />
@@ -218,6 +222,8 @@
     <ClInclude Include="Engine\Core\Modules\Render\RendererAPI.h" />
     <ClInclude Include="Engine\Core\Modules\Render\Texture.h" />
     <ClInclude Include="Engine\Core\Modules\Render\OpenGL\OpenGLTexture.h" />
+    <ClInclude Include="Engine\Core\Modules\Render\FrameBuffer.h" />
+    <ClInclude Include="Engine\Core\Modules\Render\OpenGL\OpenGLFrameBuffer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

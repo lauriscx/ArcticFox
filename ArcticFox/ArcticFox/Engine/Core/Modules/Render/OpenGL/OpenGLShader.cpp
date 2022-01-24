@@ -5,34 +5,11 @@
 #include <glm/gtc/type_ptr.hpp>
 
 
-Graphics::OpenGL::OpenGLShader::OpenGLShader() {
-
-	std::string vert = "#version 330 core\n"
-		"layout(location = 0) in vec3 position;\n"
-		"layout(location = 1) in vec2 textCoords;\n"
-
-		"uniform mat4 u_ViewPeojection;\n"
-		"uniform mat4 u_Transform;\n"
-
-		"out vec2 Coords;\n"
-
-		"void main(){\n"
-		"Coords = textCoords;\n"
-		"gl_Position = u_ViewPeojection * u_Transform * vec4(position, 1.0);\n"
-		"}";
-	std::string frag = "#version 330 core\n"
-		"uniform sampler2D u_Image;\n"
-		"out vec4 color;\n"
-		"in vec2 Coords;\n"
-		"void main(){\n"
-		"color = texture(u_Image, Coords);\n"
-		"//color = vec4(Coords.x,Coords.y, 0, 1);\n"
-		"}";
-
+Graphics::OpenGL::OpenGLShader::OpenGLShader(const std::string& name, const std::string& vertex, const std::string& fragment) : m_Name(name) {
 	m_Shader = glCreateProgram();
 
 	m_VertexShader = glCreateShader(GL_VERTEX_SHADER);
-	const char* v = vert.c_str();
+	const char* v = vertex.c_str();
 	glShaderSource(m_VertexShader, 1, &v, 0);
 	glCompileShader(m_VertexShader);
 
@@ -47,7 +24,7 @@ Graphics::OpenGL::OpenGLShader::OpenGLShader() {
 	}
 
 	m_FragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-	const char* f = frag.c_str();
+	const char* f = fragment.c_str();
 	glShaderSource(m_FragmentShader, 1, &f, 0);
 	glCompileShader(m_FragmentShader);
 
@@ -94,4 +71,8 @@ void Graphics::OpenGL::OpenGLShader::UploadUniform(const std::string& name, int 
 
 Graphics::OpenGL::OpenGLShader::~OpenGLShader()
 {
+}
+
+const std::string & Graphics::OpenGL::OpenGLShader::GetName() const {
+	return m_Name;
 }

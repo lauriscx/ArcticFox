@@ -5,8 +5,10 @@ namespace Graphics {
 	namespace OpenGL {
 		class OpenGLShader : public Shader {
 		public:
-			OpenGLShader();
+			OpenGLShader(const std::string& name, const std::string& vertex, const std::string& fragment);
 			~OpenGLShader();
+
+			virtual const std::string& GetName() const override;
 
 			virtual void Bind() override;
 			virtual void Unbind() override;
@@ -18,6 +20,7 @@ namespace Graphics {
 			unsigned int m_VertexShader;
 			unsigned int m_FragmentShader;
 			unsigned int m_Shader;
+			std::string m_Name;
 		};
 	}
 }

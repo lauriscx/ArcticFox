@@ -32,7 +32,7 @@ private:
 	Graphics::GraphicsContext* m_GraphicsContext;
 	/*Graphics::OpenGL::Mesh* m_Mesh;
 	Graphics::OpenGL::Renderer* m_Renderer;*/
-	Graphics::Shader* m_Shader;
+	Graphics::ShaderLibrary m_ShaderLibrary;
 
 	Graphics::Texture* m_Texture;
 

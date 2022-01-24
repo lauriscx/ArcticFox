@@ -6,6 +6,8 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include "OpenGL/Glad/glad.h"
 
+#include "Engine/Core/Resource/ResourceShader.h"
+
 GraphicsModule::GraphicsModule() : m_Camera(-1.0f, 1.0f, -1.0f, 1.0f) {}
 glm::vec3 mPos(0, 0, 0);
 glm::vec3 mPosT(0, 0, 0);
@@ -41,7 +43,12 @@ void GraphicsModule::OnStart() {
 	VAO->AddVertexBuffer(VBO);
 	VAO->SetIndexBuffer(IBO);
 
-	m_Shader = Graphics::Shader::Create();
+	//Graphics::RecourceShader* vertex = AppFrame::ResourceManager::GetInstance()->GetResource<Graphics::RecourceShader>(std::filesystem::path("Shaders/BaseVertex.glsl"));
+	//Graphics::RecourceShader* fragment = AppFrame::ResourceManager::GetInstance()->GetResource<Graphics::RecourceShader>(std::filesystem::path("Shaders/BaseFragment.glsl"));
+	//std::string name("BaseShader");
+	m_ShaderLibrary.Load(/*name, */std::filesystem::path("Shaders/BaseVertex.glsl"), std::filesystem::path("Shaders/BaseFragment.glsl"));
+
+
 	Graphics::RenderCommand::Init();
 }
 
@@ -73,7 +80,7 @@ void GraphicsModule::OnUpdate(float deltaTime) {
 
 	Graphics::Renderer::BeginScene(m_Camera);
 	m_Texture->Bind(0);
-	Graphics::Renderer::Submit(VAO, m_Shader);
+	Graphics::Renderer::Submit(VAO, m_ShaderLibrary.Get("BaseVertex"));
 	Graphics::Renderer::EndScene();
 }
 
