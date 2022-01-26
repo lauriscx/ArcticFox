@@ -1,7 +1,6 @@
 #include "Editor.h"
 
 void Editor::OnStart() {
-	ImGui::GetIO().ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 }
 
 void Editor::OnEarlyUpdate(float deltaTime) {

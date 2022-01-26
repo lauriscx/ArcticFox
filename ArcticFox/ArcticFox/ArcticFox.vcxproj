@@ -195,6 +195,8 @@
     <ClCompile Include="Engine\Core\Modules\Render\OpenGL\OpenGLTexture.cpp" />
     <ClCompile Include="Engine\Core\Modules\Render\FrameBuffer.cpp" />
     <ClCompile Include="Engine\Core\Modules\Render\OpenGL\OpenGLFrameBuffer.cpp" />
+    <ClCompile Include="Engine\Core\Modules\OrthographicCameraController.cpp" />
+    <ClCompile Include="Engine\Core\Modules\Render\Render2D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\AppFrame\AppFrame\AppFrame.vcxproj">
@@ -224,6 +226,8 @@
     <ClInclude Include="Engine\Core\Modules\Render\OpenGL\OpenGLTexture.h" />
     <ClInclude Include="Engine\Core\Modules\Render\FrameBuffer.h" />
     <ClInclude Include="Engine\Core\Modules\Render\OpenGL\OpenGLFrameBuffer.h" />
+    <ClInclude Include="Engine\Core\Modules\OrthographicCameraController.h" />
+    <ClInclude Include="Engine\Core\Modules\Render\Render2D.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

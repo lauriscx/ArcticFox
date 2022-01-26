@@ -7,8 +7,11 @@
 #include "OpenGL/Glad/glad.h"
 
 #include "Engine/Core/Resource/ResourceShader.h"
+#include "Render2D.h"
 
-GraphicsModule::GraphicsModule() : m_Camera(-1.0f, 1.0f, -1.0f, 1.0f) {}
+
+
+GraphicsModule::GraphicsModule()/* : m_Camera(-1.0f, 1.0f, -1.0f, 1.0f),*/ : m_Controller(800.0f/600.0f) {}
 glm::vec3 mPos(0, 0, 0);
 glm::vec3 mPosT(0, 0, 0);
 glm::vec3 mRotT(0, 0, 0);
@@ -36,20 +39,21 @@ void GraphicsModule::OnStart() {
 	
 	m_Texture = Graphics::Texture2D::Create(texture);
 	
-	VAO = Graphics::VertexArray::Create();
+	/*VAO = Graphics::VertexArray::Create();
 	VBO = Graphics::VertexBuffer::Create(positions, sizeof(positions));
 	VBO->SetLayout({ {"a_Position", Graphics::DataType::FLOAT_3, false}, {"textCoords", Graphics::DataType::FLOAT_2, false} });
 	IBO = Graphics::IndexBuffer::Create(indice, sizeof(indice));
 	VAO->AddVertexBuffer(VBO);
-	VAO->SetIndexBuffer(IBO);
+	VAO->SetIndexBuffer(IBO);*/
 
 	//Graphics::RecourceShader* vertex = AppFrame::ResourceManager::GetInstance()->GetResource<Graphics::RecourceShader>(std::filesystem::path("Shaders/BaseVertex.glsl"));
 	//Graphics::RecourceShader* fragment = AppFrame::ResourceManager::GetInstance()->GetResource<Graphics::RecourceShader>(std::filesystem::path("Shaders/BaseFragment.glsl"));
 	//std::string name("BaseShader");
-	m_ShaderLibrary.Load(/*name, */std::filesystem::path("Shaders/BaseVertex.glsl"), std::filesystem::path("Shaders/BaseFragment.glsl"));
+	//m_ShaderLibrary.Load(/*name, */std::filesystem::path("Shaders/BaseVertex.glsl"), std::filesystem::path("Shaders/BaseFragment.glsl"));
 
 
-	Graphics::RenderCommand::Init();
+	Graphics::Renderer::Init();
+
 }
 
 void GraphicsModule::OnEarlyUpdate(float deltaTime) {
@@ -58,7 +62,7 @@ void GraphicsModule::OnEarlyUpdate(float deltaTime) {
 }
 
 void GraphicsModule::OnUpdate(float deltaTime) {
-
+	m_Controller.OnUpdate(deltaTime);
 
 	/*ImGui::Begin("Camera controls");
 	ImGui::SliderFloat3("Position", &mPos[0], -2, 2, "%f%", 1.0f);
@@ -71,35 +75,49 @@ void GraphicsModule::OnUpdate(float deltaTime) {
 	ImGui::SliderFloat3("Scale", &mScaT[0], -2, 2, "%f%", 1.0f);
 	ImGui::End();
 	*/
-	m_Camera.SetPosition(mPos);
-	m_Camera.SetRotation(rot);
+	//m_Camera.SetPosition(mPos);
+	//m_Camera.SetRotation(rot);
 
 	glm::mat4 tansform = glm::translate(glm::mat4(1.0f), mPosT) *
 		glm::rotate(glm::mat4(1.0f), mRotT.z, glm::vec3(0.0f, 0.0f, 1.0f)) * glm::rotate(glm::mat4(1.0f), mRotT.y, glm::vec3(0.0f, 1.0f, 0.0f)) *
 		glm::rotate(glm::mat4(1.0f), mRotT.x, glm::vec3(1.0f, 0.0f, 0.0f)) * glm::scale(glm::mat4(1.0f), mScaT);
 
-	Graphics::Renderer::BeginScene(m_Camera);
+	//Graphics::Renderer::BeginScene(m_Camera);
+	/*Graphics::Renderer::BeginScene(m_Controller.GetCamera());
 	m_Texture->Bind(0);
 	Graphics::Renderer::Submit(VAO, m_ShaderLibrary.Get("BaseVertex"));
-	Graphics::Renderer::EndScene();
+	Graphics::Renderer::EndScene();*/
+	Graphics::Render2D::BeginScene(m_Controller.GetCamera());
+	
+	Graphics::Render2D::DrawQuad({ -0.5f, 0 }, { 0.5f, 1.0f }, { 0.5f, 1, 0, 1 });
+	Graphics::Render2D::DrawQuad({  0.5f, 0 }, { 0.5f, 0.5f }, { 0.5f, 0, 0.5f, 1 }, m_Texture);
+	Graphics::Render2D::EndScene();
 }
 
 void GraphicsModule::OnLateUpdate(float deltaTime) {
 
 }
 
-void GraphicsModule::OnAppInput(int x, int y, int action, int key)
-{
+void GraphicsModule::OnAppInput(int x, int y, int action, int key) {
+	m_Controller.OnInput(x, y, action, key);
 }
 
 void GraphicsModule::OnAppEvent(AppFrame::BasicEvent * event) {
+	m_Controller.OnEvent(event);
 	if (auto resize = AppFrame::WindowResize::Match(event)) {
-		glViewport(0, 0, resize->GetX(), resize->GetY());
+		static_cast<Application*>(m_Context)->GetModule<AppFrame::ModuleConsole>()->Info("GraphicModule", "Resize");
+		Graphics::Renderer::SetViewPort({0, 0, resize->GetX(), resize->GetY() });
+	}
+	if (auto resize = AppFrame::WindowMinimized::Match(event)) {
+		static_cast<Application*>(m_Context)->GetModule<AppFrame::ModuleConsole>()->Info("GraphicModule", "Minimized");
+	}
+	if (auto resize = AppFrame::WindowMaximized::Match(event)) {
+		static_cast<Application*>(m_Context)->GetModule<AppFrame::ModuleConsole>()->Info("GraphicModule", "Maximize");
 	}
 }
 
-void GraphicsModule::OnStop()
-{
+void GraphicsModule::OnStop() {
+	Graphics::Render2D::ShutDown();
 }
 
 GraphicsModule::~GraphicsModule()

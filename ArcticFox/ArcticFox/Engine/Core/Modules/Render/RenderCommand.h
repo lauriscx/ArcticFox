@@ -11,6 +11,9 @@ namespace Graphics {
 		inline static void SetClearColor(glm::vec4 color) {
 			s_RendererAPI->SetClearColor(color);
 		}
+		inline static void SetViewPort(glm::vec4 size) {
+			s_RendererAPI->SetViewPort(size);
+		}
 		inline static void Clear() {
 			s_RendererAPI->Clear();
 		}

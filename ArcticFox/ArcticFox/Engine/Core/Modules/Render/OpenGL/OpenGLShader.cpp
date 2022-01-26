@@ -63,6 +63,25 @@ void Graphics::OpenGL::OpenGLShader::UploadUniform(const std::string& name, cons
 	glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(matrix));
 }
 
+void Graphics::OpenGL::OpenGLShader::UploadUniform(const std::string & name, const glm::vec4 & vector) {
+	glUseProgram(m_Shader);
+	int location = glGetUniformLocation(m_Shader, name.c_str());
+	glUniform4fv(location, 1, glm::value_ptr(vector));
+}
+
+void Graphics::OpenGL::OpenGLShader::UploadUniform(const std::string & name, const glm::vec3 & vector) {
+	glUseProgram(m_Shader);
+	int location = glGetUniformLocation(m_Shader, name.c_str());
+	glUniform3fv(location, 1, glm::value_ptr(vector));
+}
+
+void Graphics::OpenGL::OpenGLShader::UploadUniform(const std::string & name, const glm::vec2 & vector) {
+	glUseProgram(m_Shader);
+	int location = glGetUniformLocation(m_Shader, name.c_str());
+	glUniform2fv(location, 1, glm::value_ptr(vector));
+
+}
+
 void Graphics::OpenGL::OpenGLShader::UploadUniform(const std::string& name, int value) {
 	glUseProgram(m_Shader);
 	int location = glGetUniformLocation(m_Shader, name.c_str());

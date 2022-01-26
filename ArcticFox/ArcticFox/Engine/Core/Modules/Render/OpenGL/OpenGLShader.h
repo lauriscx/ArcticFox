@@ -14,6 +14,9 @@ namespace Graphics {
 			virtual void Unbind() override;
 
 			virtual void UploadUniform(const std::string& name, const glm::mat4& matrix) override;
+			virtual void UploadUniform(const std::string& name, const glm::vec4& vector) override;
+			virtual void UploadUniform(const std::string& name, const glm::vec3& vector) override;
+			virtual void UploadUniform(const std::string& name, const glm::vec2& vector) override;
 			virtual void UploadUniform(const std::string& name, int value) override;
 
 		private:

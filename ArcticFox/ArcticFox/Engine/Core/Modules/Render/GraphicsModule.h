@@ -11,6 +11,8 @@
 #include "Camera.h"
 #include "Texture.h"
 
+#include "../OrthographicCameraController.h"
+
 /*#include "Application/Modules/Render/Mesh.h"
 #include "Application/Modules/Render/Renderer.h"*/
 
@@ -29,6 +31,8 @@ public:
 
 	virtual ~GraphicsModule();
 private:
+	Graphics::OrthographicCameraController m_Controller;
+
 	Graphics::GraphicsContext* m_GraphicsContext;
 	/*Graphics::OpenGL::Mesh* m_Mesh;
 	Graphics::OpenGL::Renderer* m_Renderer;*/
@@ -40,5 +44,6 @@ private:
 	Graphics::VertexBuffer* VBO;
 	Graphics::IndexBuffer* IBO;
 
-	Graphics::OrthographicCamera m_Camera;
+	//Graphics::OrthographicCamera m_Camera;
+
 };

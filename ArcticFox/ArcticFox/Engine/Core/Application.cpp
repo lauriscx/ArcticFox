@@ -7,6 +7,9 @@ Application::Application(AppFrame::AppConfig* config) : AppFrame::Application(co
 	 SubscribeToEvent(AppFrame::WindowCloses::Type());
 	 SubscribeToEvent(AppFrame::WindowResize::Type());
 	 SubscribeToEvent(AppFrame::Log::Type());//Used for Console module.
+	 SubscribeToEvent(AppFrame::InputScroll::Type());//Used for Console module.
+	 SubscribeToEvent(AppFrame::WindowMinimized::Type());//Used for Console module.
+	 SubscribeToEvent(AppFrame::WindowMaximized::Type());//Used for Console module.
 
 	 AppFrame::PhysicalMountPoint * PhysicalSystem = new AppFrame::PhysicalMountPoint();
 	 PhysicalSystem->SetMountPoint("C:/Users/Kosmosas/Desktop/Application/");

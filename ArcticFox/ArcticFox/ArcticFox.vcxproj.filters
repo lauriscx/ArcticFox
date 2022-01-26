@@ -75,6 +75,12 @@
     <ClCompile Include="Engine\Core\Modules\Render\OpenGL\OpenGLFrameBuffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Core\Modules\OrthographicCameraController.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Core\Modules\Render\Render2D.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Core\Application.h">
@@ -141,6 +147,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Core\Modules\Render\OpenGL\OpenGLFrameBuffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Core\Modules\OrthographicCameraController.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Core\Modules\Render\Render2D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

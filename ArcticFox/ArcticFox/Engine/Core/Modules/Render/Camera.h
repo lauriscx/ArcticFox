@@ -4,8 +4,7 @@
 namespace Graphics {
 	class Camera {
 	public:
-		Camera();
-		~Camera();
+		virtual ~Camera() = default;
 
 	private:
 
@@ -15,6 +14,7 @@ namespace Graphics {
 	public:
 		//OrthographicCamera() {}
 		OrthographicCamera(float left, float right, float bottom, float top);
+		void SetProjection(float left, float right, float bottom, float top);
 
 		void SetPosition(const glm::vec3& position) { m_Position = position; RecalculateViewMatrix(); }
 		void SetRotation(float rotation) { m_Rotation = rotation;  RecalculateViewMatrix(); }

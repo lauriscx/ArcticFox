@@ -7,6 +7,12 @@ Graphics::OpenGL::OpenGLRendererAPI::OpenGLRendererAPI() {}
 void Graphics::OpenGL::OpenGLRendererAPI::Init() {
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	glEnable(GL_DEPTH_TEST);
+}
+
+void Graphics::OpenGL::OpenGLRendererAPI::SetViewPort(glm::vec4 & size) {
+	glViewport(size.x, size.y, size.z, size.w);
 }
 
 void Graphics::OpenGL::OpenGLRendererAPI::SetClearColor(glm::vec4 & color) {
