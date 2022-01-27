@@ -5,11 +5,14 @@ namespace Graphics {
 	namespace OpenGL {
 		class OpenGLVertexBuffer : public VertexBuffer {
 		public:
-			OpenGLVertexBuffer(void* data, int size);
+			OpenGLVertexBuffer(uint32_t size);
+			OpenGLVertexBuffer(void* data, uint32_t size);
 
 			virtual void SetLayout(const BufferLayout& layout) override;
 
 			virtual const BufferLayout& GetLayout() override;
+
+			virtual void SetData(void* data, uint32_t size) override;
 
 			virtual void Bind() override;
 			virtual void Unbind() override;
@@ -17,24 +20,24 @@ namespace Graphics {
 			~OpenGLVertexBuffer();
 
 		private:
-			unsigned int m_VBO;
+			uint32_t m_VBO;
 			BufferLayout m_Layout;
 		};
 
 		class OpenGLIndexBuffer : public IndexBuffer {
 		public:
-			OpenGLIndexBuffer(void* data, unsigned int count);
+			OpenGLIndexBuffer(void* data, uint32_t count);
 
 			virtual void Bind() override;
 			virtual void Unbind() override;
 
-			virtual unsigned int getCount() const override;
+			virtual uint32_t getCount() const override;
 
 			~OpenGLIndexBuffer();
 		private:
-			unsigned int m_IBO;
+			uint32_t m_IBO;
 
-			unsigned int m_Count;
+			uint32_t m_Count;
 		};
 
 		class OpenGLVertexArray : public VertexArray {
@@ -52,7 +55,7 @@ namespace Graphics {
 
 			~OpenGLVertexArray();
 		private:
-			unsigned int m_VAO;
+			uint32_t m_VAO;
 
 			IndexBuffer* m_IndexBuffer;
 			std::vector<VertexBuffer*> m_VertexBuffers;

@@ -16,9 +16,10 @@ glm::vec3 mPos(0, 0, 0);
 glm::vec3 mPosT(0, 0, 0);
 glm::vec3 mRotT(0, 0, 0);
 glm::vec3 mScaT(1, 1, 1);
-float rot = 0;
 
 void GraphicsModule::OnStart() {
+	x = 0;
+	y = 0;
 	m_GraphicsContext = new Graphics::OpenGL::OpenGLContext();
 	m_GraphicsContext->Init();
 
@@ -34,10 +35,11 @@ void GraphicsModule::OnStart() {
 
 	Graphics::RendererAPI::SetAPI(Graphics::RendererAPI::API::OpenGL);
 
-	//AppFrame::ResourceTexture* texture = AppFrame::ResourceManager::GetInstance()->GetResource<AppFrame::ResourceTexture>(std::filesystem::path("AirBallon.jpg"));
+	AppFrame::ResourceTexture* texture2 = AppFrame::ResourceManager::GetInstance()->GetResource<AppFrame::ResourceTexture>(std::filesystem::path("AirBallon.jpg"));
 	AppFrame::ResourceTexture* texture = AppFrame::ResourceManager::GetInstance()->GetResource<AppFrame::ResourceTexture>(std::filesystem::path("test.png"));
 	
 	m_Texture = Graphics::Texture2D::Create(texture);
+	m_Texture2 = Graphics::Texture2D::Create(texture2);
 	
 	/*VAO = Graphics::VertexArray::Create();
 	VBO = Graphics::VertexBuffer::Create(positions, sizeof(positions));
@@ -87,11 +89,29 @@ void GraphicsModule::OnUpdate(float deltaTime) {
 	m_Texture->Bind(0);
 	Graphics::Renderer::Submit(VAO, m_ShaderLibrary.Get("BaseVertex"));
 	Graphics::Renderer::EndScene();*/
+	Graphics::Render2D::ResetStats();
 	Graphics::Render2D::BeginScene(m_Controller.GetCamera());
-	
-	Graphics::Render2D::DrawQuad({ -0.5f, 0 }, { 0.5f, 1.0f }, { 0.5f, 1, 0, 1 });
-	Graphics::Render2D::DrawQuad({  0.5f, 0 }, { 0.5f, 0.5f }, { 0.5f, 0, 0.5f, 1 }, m_Texture);
+	Graphics::Render2D::DrawQuad({ 0.0f, 0.0f }, { 1.0f, 1.0f }, { 1.0f, 0.0f, 0.0f, 1.0f });
+	Graphics::Render2D::DrawQuad({ 1.0f, 1.0f }, { 0.5f, 0.5f }, m_Texture);
+	Graphics::Render2D::DrawQuad({ -1.0f, -1.0f, 0.0f}, { 0.5f, 0.5f }, { 1.0f, 0.0f, 0.0f, 1.0f }, m_Texture2, rotation);
+
+	for (float i = 0; i < x; i++) {
+		for (float a = 0; a < y; a++) {
+			Graphics::Render2D::DrawQuad({ i, a }, { 0.5f, 0.5f }, m_Texture);
+		}
+	}
+
 	Graphics::Render2D::EndScene();
+	auto stats = Graphics::Render2D::GetStats();
+	rotation += 0.1f;
+	ImGui::Begin("Render stats");
+	ImGui::Text("Draw calls %d", stats.m_DrawCalls);
+	ImGui::Text("Quad count %d", stats.m_QuodCount);
+	ImGui::Text("Vertex count %d", stats.GetTotalVertexCount());
+	ImGui::Text("Index count %d", stats.GetTotalIndexCount());
+	ImGui::SliderFloat("X", &x, 1.0f, 100.0f);
+	ImGui::SliderFloat("Y", &y, 1.0f, 100.0f);
+	ImGui::End();
 }
 
 void GraphicsModule::OnLateUpdate(float deltaTime) {

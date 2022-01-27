@@ -39,10 +39,14 @@ private:
 	Graphics::ShaderLibrary m_ShaderLibrary;
 
 	Graphics::Texture* m_Texture;
+	Graphics::Texture* m_Texture2;
 
 	Graphics::VertexArray* VAO;
 	Graphics::VertexBuffer* VBO;
 	Graphics::IndexBuffer* IBO;
+	float rotation = 0;
+	float x;
+	float y;
 
 	//Graphics::OrthographicCamera m_Camera;
 

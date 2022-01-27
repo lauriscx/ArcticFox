@@ -2,7 +2,13 @@
 
 #include "Glad/glad.h"
 
-Graphics::OpenGL::OpenGLVertexBuffer::OpenGLVertexBuffer(void* data, int size) {
+Graphics::OpenGL::OpenGLVertexBuffer::OpenGLVertexBuffer(uint32_t size) {
+	glGenBuffers(1, &m_VBO);
+
+	glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
+	glBufferData(GL_ARRAY_BUFFER, size, nullptr, GL_DYNAMIC_DRAW);
+}
+Graphics::OpenGL::OpenGLVertexBuffer::OpenGLVertexBuffer(void* data, uint32_t size) {
 	glGenBuffers(1, &m_VBO);
 
 	glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
@@ -14,6 +20,10 @@ void Graphics::OpenGL::OpenGLVertexBuffer::SetLayout(const BufferLayout& layout)
 const Graphics::BufferLayout& Graphics::OpenGL::OpenGLVertexBuffer::GetLayout() {
 	return m_Layout; 
 }
+void Graphics::OpenGL::OpenGLVertexBuffer::SetData(void * data, uint32_t size) {
+	glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
+	glBufferSubData(GL_ARRAY_BUFFER, 0, size, data);
+}
 void Graphics::OpenGL::OpenGLVertexBuffer::Bind() {
 	glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
 }
@@ -24,10 +34,10 @@ Graphics::OpenGL::OpenGLVertexBuffer::~OpenGLVertexBuffer() {
 	glDeleteBuffers(1, &m_VBO);
 }
 
-Graphics::OpenGL::OpenGLIndexBuffer::OpenGLIndexBuffer(void* data, unsigned int count) : m_Count(count) {
+Graphics::OpenGL::OpenGLIndexBuffer::OpenGLIndexBuffer(void* data, uint32_t count) : m_Count(count) {
 	glGenBuffers(1, &m_IBO);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(unsigned int), data, GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(uint32_t), data, GL_STATIC_DRAW);
 }
 void Graphics::OpenGL::OpenGLIndexBuffer::Bind() {
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IBO);
@@ -35,7 +45,7 @@ void Graphics::OpenGL::OpenGLIndexBuffer::Bind() {
 void Graphics::OpenGL::OpenGLIndexBuffer::Unbind() {
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
-unsigned int Graphics::OpenGL::OpenGLIndexBuffer::getCount() const {
+uint32_t Graphics::OpenGL::OpenGLIndexBuffer::getCount() const {
 	return m_Count;
 }
 Graphics::OpenGL::OpenGLIndexBuffer::~OpenGLIndexBuffer() {

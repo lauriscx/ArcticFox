@@ -6,11 +6,14 @@ namespace Graphics {
 	public:
 		VertexBuffer();
 
-		static VertexBuffer* Create(void* data, size_t size);
+		static VertexBuffer* Create(uint32_t size);
+		static VertexBuffer* Create(void* data, uint32_t size);
 
 		virtual void SetLayout(const BufferLayout& layout) = 0;
 
 		virtual const BufferLayout& GetLayout() = 0;
+
+		virtual void SetData(void* data, uint32_t size) = 0;
 
 		virtual void Bind() = 0;
 		virtual void Unbind() = 0;
@@ -22,12 +25,12 @@ namespace Graphics {
 	public:
 		IndexBuffer();
 
-		static IndexBuffer* Create(void* data,  unsigned int count);
+		static IndexBuffer* Create(void* data, uint32_t count);
 
 		virtual void Bind() = 0;
 		virtual void Unbind() = 0;
 
-		virtual unsigned int getCount() const = 0;
+		virtual uint32_t getCount() const = 0;
 
 		virtual ~IndexBuffer();
 	};

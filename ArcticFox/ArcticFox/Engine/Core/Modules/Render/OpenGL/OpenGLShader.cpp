@@ -88,6 +88,12 @@ void Graphics::OpenGL::OpenGLShader::UploadUniform(const std::string& name, int 
 	glUniform1i(location, value);
 }
 
+void Graphics::OpenGL::OpenGLShader::UploadUniform(const std::string & name, int * value, uint32_t count) {
+	glUseProgram(m_Shader);
+	int location = glGetUniformLocation(m_Shader, name.c_str());
+	glUniform1iv(location, count, value);
+}
+
 Graphics::OpenGL::OpenGLShader::~OpenGLShader()
 {
 }

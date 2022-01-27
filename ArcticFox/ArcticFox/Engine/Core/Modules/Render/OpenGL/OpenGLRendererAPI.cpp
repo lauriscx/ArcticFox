@@ -21,9 +21,9 @@ void Graphics::OpenGL::OpenGLRendererAPI::SetClearColor(glm::vec4 & color) {
 void Graphics::OpenGL::OpenGLRendererAPI::Clear() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 }
-void Graphics::OpenGL::OpenGLRendererAPI::DrawIndexed(VertexArray * vertexArray) {
+void Graphics::OpenGL::OpenGLRendererAPI::DrawIndexed(VertexArray * vertexArray, uint32_t count) {
 	//glDrawArrays(GL_TRIANGLES, 0, 3);
-	glDrawElements(GL_TRIANGLES, vertexArray->GetIndexBuffer()->getCount(), GL_UNSIGNED_INT, 0);
+	glDrawElements(GL_TRIANGLES, count ? count : vertexArray->GetIndexBuffer()->getCount(), GL_UNSIGNED_INT, 0);
 }
 
 Graphics::OpenGL::OpenGLRendererAPI::~OpenGLRendererAPI() {}

@@ -17,7 +17,7 @@ namespace Graphics {
 
 			virtual void Clear() override;
 
-			virtual void DrawIndexed(VertexArray * vertexArray) override;
+			virtual void DrawIndexed(VertexArray * vertexArray, uint32_t count = 0) override;
 			
 			~OpenGLRendererAPI();
 

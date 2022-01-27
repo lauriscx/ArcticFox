@@ -18,6 +18,7 @@ namespace Graphics {
 			virtual void UploadUniform(const std::string& name, const glm::vec3& vector) override;
 			virtual void UploadUniform(const std::string& name, const glm::vec2& vector) override;
 			virtual void UploadUniform(const std::string& name, int value) override;
+			virtual void UploadUniform(const std::string& name, int* value, uint32_t count) override;
 
 		private:
 			unsigned int m_VertexShader;

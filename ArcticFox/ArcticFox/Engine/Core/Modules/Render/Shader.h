@@ -21,6 +21,7 @@ namespace Graphics {
 		virtual void UploadUniform(const std::string& name, const glm::vec3& vector) = 0;
 		virtual void UploadUniform(const std::string& name, const glm::vec2& vector) = 0;
 		virtual void UploadUniform(const std::string& name, int value) = 0;
+		virtual void UploadUniform(const std::string& name, int* value, uint32_t count) = 0;
 
 		~Shader();
 	};

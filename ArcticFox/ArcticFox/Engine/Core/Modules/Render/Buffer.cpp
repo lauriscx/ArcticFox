@@ -2,7 +2,7 @@
 #include "RendererAPI.h"
 
 Graphics::VertexBuffer::VertexBuffer() {}
-Graphics::VertexBuffer * Graphics::VertexBuffer::Create(void * data, size_t size) {
+Graphics::VertexBuffer * Graphics::VertexBuffer::Create(void * data, uint32_t size) {
 	switch (RendererAPI::GetAPI()) {
 		case RendererAPI::API::None:		return nullptr;
 		case RendererAPI::API::OpenGL:		return new OpenGL::OpenGLVertexBuffer(data, size);
@@ -15,10 +15,23 @@ Graphics::VertexBuffer * Graphics::VertexBuffer::Create(void * data, size_t size
 
 	return nullptr;
 }
+Graphics::VertexBuffer * Graphics::VertexBuffer::Create(uint32_t size) {
+	switch (RendererAPI::GetAPI()) {
+	case RendererAPI::API::None:		return nullptr;
+	case RendererAPI::API::OpenGL:		return new OpenGL::OpenGLVertexBuffer(size);
+	case RendererAPI::API::Directx9:	return nullptr;
+	case RendererAPI::API::Directx10:	return nullptr;
+	case RendererAPI::API::Vulkan:		return nullptr;
+	case RendererAPI::API::Metal:		return nullptr;
+	default: return nullptr;
+	}
+
+	return nullptr;
+}
 Graphics::VertexBuffer::~VertexBuffer() {}
 
 Graphics::IndexBuffer::IndexBuffer() {}
-Graphics::IndexBuffer * Graphics::IndexBuffer::Create(void * data, unsigned int count) {
+Graphics::IndexBuffer * Graphics::IndexBuffer::Create(void * data, uint32_t count) {
 	switch (RendererAPI::GetAPI()) {
 		case RendererAPI::API::None:		return nullptr;
 		case RendererAPI::API::OpenGL:		return new OpenGL::OpenGLIndexBuffer(data, count);
