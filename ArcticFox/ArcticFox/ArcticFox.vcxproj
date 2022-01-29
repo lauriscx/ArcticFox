@@ -100,7 +100,7 @@
       <PreprocessorDefinitions>ENGINE_PLATFORM_WINDOWS;_MBCS;IMGUI_API=__declspec(dllimport);%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)../AppFrame/Libraries/glm/;$(SolutionDir)/ArcticFox/;$(SolutionDir)../AppFrame/AppFrame/src/;$(SolutionDir)../AppFrame/Libraries/glfw/include/;$(SolutionDir)../AppFrame/Libraries/glew/include/GL/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -119,7 +119,7 @@
       <PreprocessorDefinitions>ENGINE_PLATFORM_WINDOWS;_MBCS;IMGUI_API=__declspec(dllimport);%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)../AppFrame/Libraries/glm/;$(SolutionDir)/ArcticFox/;$(SolutionDir)../AppFrame/AppFrame/src/;$(SolutionDir)../AppFrame/Libraries/glfw/include/;$(SolutionDir)../AppFrame/Libraries/glew/include/GL/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -140,7 +140,7 @@
       <PreprocessorDefinitions>ENGINE_PLATFORM_WINDOWS;_MBCS;IMGUI_API=__declspec(dllimport);%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)../AppFrame/Libraries/glm/;$(SolutionDir)/ArcticFox/;$(SolutionDir)../AppFrame/AppFrame/src/;$(SolutionDir)../AppFrame/Libraries/glfw/include/;$(SolutionDir)../AppFrame/Libraries/glew/include/GL/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -163,7 +163,7 @@
       <PreprocessorDefinitions>ENGINE_PLATFORM_WINDOWS;_MBCS;IMGUI_API=__declspec(dllimport);%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)../AppFrame/Libraries/glm/;$(SolutionDir)/ArcticFox/;$(SolutionDir)../AppFrame/AppFrame/src/;$(SolutionDir)../AppFrame/Libraries/glfw/include/;$(SolutionDir)../AppFrame/Libraries/glew/include/GL/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

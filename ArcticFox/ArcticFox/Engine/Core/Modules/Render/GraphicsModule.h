@@ -12,6 +12,7 @@
 #include "Texture.h"
 
 #include "../OrthographicCameraController.h"
+#include "FrameBuffer.h"
 
 /*#include "Application/Modules/Render/Mesh.h"
 #include "Application/Modules/Render/Renderer.h"*/
@@ -44,6 +45,7 @@ private:
 	Graphics::VertexArray* VAO;
 	Graphics::VertexBuffer* VBO;
 	Graphics::IndexBuffer* IBO;
+	Graphics::FrameBuffer* FBO;
 	float rotation = 0;
 	float x;
 	float y;

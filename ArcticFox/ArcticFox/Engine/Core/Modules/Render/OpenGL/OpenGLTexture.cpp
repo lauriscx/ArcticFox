@@ -89,13 +89,17 @@ void Graphics::OpenGL::OpenGLTexture2D::SetData(void * data, uint32_t size) {
 	glTextureSubImage2D(m_Texture, 0, 0, 0, m_Width, m_Height, m_DataFormat, GL_UNSIGNED_BYTE, data);
 }
 
-void Graphics::OpenGL::OpenGLTexture2D::Bind(unsigned int slot) const {
+void Graphics::OpenGL::OpenGLTexture2D::Bind(uint32_t slot) const {
 	//glBindTexture(GL_TEXTURE0, m_Texture);
 	glBindTextureUnit(slot, m_Texture);
 }
 
 void Graphics::OpenGL::OpenGLTexture2D::Unbind() const {
 	glBindTexture(GL_TEXTURE0, 0);
+}
+
+uint32_t Graphics::OpenGL::OpenGLTexture2D::ID() {
+	return m_Texture;
 }
 
 Graphics::OpenGL::OpenGLTexture2D::~OpenGLTexture2D() {

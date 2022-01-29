@@ -52,7 +52,12 @@ void GraphicsModule::OnStart() {
 	//Graphics::RecourceShader* fragment = AppFrame::ResourceManager::GetInstance()->GetResource<Graphics::RecourceShader>(std::filesystem::path("Shaders/BaseFragment.glsl"));
 	//std::string name("BaseShader");
 	//m_ShaderLibrary.Load(/*name, */std::filesystem::path("Shaders/BaseVertex.glsl"), std::filesystem::path("Shaders/BaseFragment.glsl"));
+	Graphics::FrameBufferSpec specs;
 
+	specs.Width = 1280;
+	specs.Height = 720;
+
+	FBO = Graphics::FrameBuffer::Create(specs);
 
 	Graphics::Renderer::Init();
 
@@ -89,6 +94,10 @@ void GraphicsModule::OnUpdate(float deltaTime) {
 	m_Texture->Bind(0);
 	Graphics::Renderer::Submit(VAO, m_ShaderLibrary.Get("BaseVertex"));
 	Graphics::Renderer::EndScene();*/
+	FBO->Bind();
+	Graphics::RenderCommand::SetClearColor({ 0.1f, 0.5f, 0.3f, 1.0f });
+	Graphics::RenderCommand::Clear();
+	
 	Graphics::Render2D::ResetStats();
 	Graphics::Render2D::BeginScene(m_Controller.GetCamera());
 	Graphics::Render2D::DrawQuad({ 0.0f, 0.0f }, { 1.0f, 1.0f }, { 1.0f, 0.0f, 0.0f, 1.0f });
@@ -102,9 +111,15 @@ void GraphicsModule::OnUpdate(float deltaTime) {
 	}
 
 	Graphics::Render2D::EndScene();
+	FBO->Unbind();
 	auto stats = Graphics::Render2D::GetStats();
 	rotation += 0.1f;
 	ImGui::Begin("Render stats");
+	uint32_t coloroAttachment = FBO->GetColorAttachment0();
+	ImGui::Image((void*)coloroAttachment, ImVec2{ 320.0f, 180.0f }, { 0, 1 }, { 1, 0 });
+
+	uint32_t DepthAttachment = FBO->GetDepthAttachment();
+	//ImGui::Image((void*)DepthAttachment, ImVec2{ 320.0f, 180.0f }, { 0, 1 }, { 1, 0 });
 	ImGui::Text("Draw calls %d", stats.m_DrawCalls);
 	ImGui::Text("Quad count %d", stats.m_QuodCount);
 	ImGui::Text("Vertex count %d", stats.GetTotalVertexCount());

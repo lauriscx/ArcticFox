@@ -14,8 +14,10 @@ namespace Graphics {
 
 			virtual void SetData(void* data, uint32_t size) override;
 
-			virtual void Bind(unsigned int slot = 0) const override;
+			virtual void Bind(uint32_t slot = 0) const override;
 			virtual void Unbind() const override;
+
+			virtual uint32_t ID() override;
 
 			virtual ~OpenGLTexture2D();
 
