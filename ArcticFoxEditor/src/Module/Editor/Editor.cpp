@@ -88,12 +88,14 @@ void Editor::Editor::Docking()
 
 	// DockSpace
 	ImGuiIO& io = ImGui::GetIO();
+
 	if (io.ConfigFlags & ImGuiConfigFlags_DockingEnable)
 	{
 		ImGuiID dockspace_id = ImGui::GetID("DockSpace");
 		ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspace_flags);
+		//ImGui::DockBuilderSetNodeSize(dockspace_id, viewport->Size);
 
-		static auto first_time = true;
+		/*static auto first_time = true;
 		if (first_time)
 		{
 			first_time = false;
@@ -108,13 +110,14 @@ void Editor::Editor::Docking()
 			auto dock_id_left = ImGui::DockBuilderSplitNode(dockspace_id, ImGuiDir_Left, 0.4f, nullptr, &dockspace_id);
 			auto dock_id_right = ImGui::DockBuilderSplitNode(dockspace_id, ImGuiDir_Right, 0.4f, nullptr, &dockspace_id);
 			auto dock_id_down = ImGui::DockBuilderSplitNode(dockspace_id, ImGuiDir_Down, 0.4f, nullptr, &dockspace_id);
+			//auto dock_id_down = ImGui::DockBuilderSplitNode(dockspace_id, ImGuiDir_m, 0.4f, nullptr, &dockspace_id);
 
 			// we now dock our windows into the docking node we made above
 			ImGui::DockBuilderDockWindow("Entyties", dock_id_left);
 			ImGui::DockBuilderDockWindow("Properties", dock_id_right);
 			ImGui::DockBuilderDockWindow("FileExplorer", dock_id_down);
 			ImGui::DockBuilderFinish(dockspace_id);
-		}
+		}*/
 	}
 	ImGui::End();
 }

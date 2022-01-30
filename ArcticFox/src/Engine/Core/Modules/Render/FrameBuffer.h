@@ -18,6 +18,8 @@ namespace ArcticFox {
 			virtual void Bind() = 0;
 			virtual void Unbind() = 0;
 
+			virtual void Resize(uint32_t x, uint32_t y) = 0;
+
 			virtual uint32_t GetColorAttachment0() const = 0;
 			virtual uint32_t GetDepthAttachment() const = 0;
 

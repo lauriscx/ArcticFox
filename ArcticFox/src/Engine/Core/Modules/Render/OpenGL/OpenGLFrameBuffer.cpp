@@ -14,10 +14,17 @@ const ArcticFox::Graphics::FrameBufferSpec & ArcticFox::Graphics::OpenGL::OpenGL
 }
 
 void ArcticFox::Graphics::OpenGL::OpenGLFrameBuffer::Bind() {
+	glViewport(0, 0, m_Specs.Width, m_Specs.Height);
 	glBindFramebuffer(GL_FRAMEBUFFER, m_FrameBuffer);
 }
 void ArcticFox::Graphics::OpenGL::OpenGLFrameBuffer::Unbind() {
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+}
+
+void ArcticFox::Graphics::OpenGL::OpenGLFrameBuffer::Resize(uint32_t x, uint32_t y) {
+	m_Specs.Width = x;
+	m_Specs.Height = y;
+	Invalidate();
 }
 
 uint32_t ArcticFox::Graphics::OpenGL::OpenGLFrameBuffer::GetColorAttachment0() const {
@@ -29,10 +36,17 @@ uint32_t ArcticFox::Graphics::OpenGL::OpenGLFrameBuffer::GetDepthAttachment() co
 }
 
 ArcticFox::Graphics::OpenGL::OpenGLFrameBuffer::~OpenGLFrameBuffer() {
-	//glDeleteFramebuffers(1, &m_FrameBuffer);
+	glDeleteFramebuffers(1, &m_FrameBuffer);
+	glDeleteTextures(1, &m_ColorAttachment0);
+	glDeleteTextures(1, &m_DepthAttachment0);
 }
 
 void ArcticFox::Graphics::OpenGL::OpenGLFrameBuffer::Invalidate() {
+	if (m_FrameBuffer) {
+		glDeleteFramebuffers(1, &m_FrameBuffer);
+		glDeleteTextures(1, &m_ColorAttachment0);
+		glDeleteTextures(1, &m_DepthAttachment0);
+	}
 	glCreateFramebuffers(1, &m_FrameBuffer);
 	glBindFramebuffer(GL_FRAMEBUFFER, m_FrameBuffer);
 

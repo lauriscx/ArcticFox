@@ -9,10 +9,6 @@ ArcticFox::Application::Application(AppFrame::AppConfig* config) : AppFrame::App
 	 SubscribeToEvent(AppFrame::InputScroll::Type());//Used for Console module.
 	 SubscribeToEvent(AppFrame::WindowMinimized::Type());//Used for Console module.
 	 SubscribeToEvent(AppFrame::WindowMaximized::Type());//Used for Console module.
-
-	 AppFrame::PhysicalMountPoint * PhysicalSystem = new AppFrame::PhysicalMountPoint();
-	 PhysicalSystem->SetMountPoint("C:/Users/Kosmosas/Desktop/Application/");
-	 AppFrame::VFS::GetInstance()->Mount(PhysicalSystem);
 }
 
 void ArcticFox::Application::Run() {

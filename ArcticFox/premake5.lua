@@ -33,7 +33,7 @@ project "ArcticFox"
 		systemversion "latest"
 
 		defines {
-			"ENGINE_PLATFORM_WINDOWS",
+			--"ENGINE_PLATFORM_WINDOWS",
 			"_MBCS",
 			"IMGUI_API=__declspec(dllimport)"
 		}
