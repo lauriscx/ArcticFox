@@ -291,6 +291,11 @@ node_modules/
 **/*.Server/GeneratedArtifacts
 **/*.Server/ModelManifest.xml
 _Pvt_Extensions
+*.sln
+*.vcxproj
+*.vcxproj.filters
+
+*.ini
 
 # Paket dependency manager
 .paket/paket.exe
