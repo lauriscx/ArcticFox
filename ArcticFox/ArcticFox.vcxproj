@@ -1,0 +1,151 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{A87E0596-14E9-B90C-5D27-6BB2C9D09761}</ProjectGuid>
+    <IgnoreWarnCompileDuplicatedFilename>true</IgnoreWarnCompileDuplicatedFilename>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>ArcticFox</RootNamespace>
+    <LatestTargetPlatformVersion>$([Microsoft.Build.Utilities.ToolLocationHelper]::GetLatestSDKTargetPlatformVersion('Windows', '10.0'))</LatestTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>$(LatestTargetPlatformVersion)</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>..\bin\Debug-windows-x86_64\ArcticFox\</OutDir>
+    <IntDir>..\bin-int\Debug-windows-x86_64\ArcticFox\</IntDir>
+    <TargetName>ArcticFox</TargetName>
+    <TargetExt>.exe</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>..\bin\Release-windows-x86_64\ArcticFox\</OutDir>
+    <IntDir>..\bin-int\Release-windows-x86_64\ArcticFox\</IntDir>
+    <TargetName>ArcticFox</TargetName>
+    <TargetExt>.exe</TargetExt>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>;DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\AppFrame\Libraries\AL\include;..\AppFrame\Libraries\Entt\include\GL;..\AppFrame\Libraries\glew\include\GL;..\AppFrame\Libraries\glfw\include;..\AppFrame\Libraries\glm;..\AppFrame\Libraries\spdlog\include;..\AppFrame\Libraries\stb\include;..\AppFrame\AppFrame\src;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>;RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\AppFrame\Libraries\AL\include;..\AppFrame\Libraries\Entt\include\GL;..\AppFrame\Libraries\glew\include\GL;..\AppFrame\Libraries\glfw\include;..\AppFrame\Libraries\glm;..\AppFrame\Libraries\spdlog\include;..\AppFrame\Libraries\stb\include;..\AppFrame\AppFrame\src;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <Optimization>Full</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="Engine\Core\Application.h" />
+    <ClInclude Include="Engine\Core\Modules\OrthographicCameraController.h" />
+    <ClInclude Include="Engine\Core\Modules\Render\Buffer.h" />
+    <ClInclude Include="Engine\Core\Modules\Render\BufferLayout.h" />
+    <ClInclude Include="Engine\Core\Modules\Render\Camera.h" />
+    <ClInclude Include="Engine\Core\Modules\Render\FrameBuffer.h" />
+    <ClInclude Include="Engine\Core\Modules\Render\GraphicsContext.h" />
+    <ClInclude Include="Engine\Core\Modules\Render\GraphicsModule.h" />
+    <ClInclude Include="Engine\Core\Modules\Render\OpenGL\Glad\KHR\khrplatform.h" />
+    <ClInclude Include="Engine\Core\Modules\Render\OpenGL\Glad\glad.h" />
+    <ClInclude Include="Engine\Core\Modules\Render\OpenGL\OpenGLBuffer.h" />
+    <ClInclude Include="Engine\Core\Modules\Render\OpenGL\OpenGLContext.h" />
+    <ClInclude Include="Engine\Core\Modules\Render\OpenGL\OpenGLFrameBuffer.h" />
+    <ClInclude Include="Engine\Core\Modules\Render\OpenGL\OpenGLRendererAPI.h" />
+    <ClInclude Include="Engine\Core\Modules\Render\OpenGL\OpenGLShader.h" />
+    <ClInclude Include="Engine\Core\Modules\Render\OpenGL\OpenGLTexture.h" />
+    <ClInclude Include="Engine\Core\Modules\Render\Render2D.h" />
+    <ClInclude Include="Engine\Core\Modules\Render\RenderCommand.h" />
+    <ClInclude Include="Engine\Core\Modules\Render\Renderer.h" />
+    <ClInclude Include="Engine\Core\Modules\Render\RendererAPI.h" />
+    <ClInclude Include="Engine\Core\Modules\Render\Shader.h" />
+    <ClInclude Include="Engine\Core\Modules\Render\Texture.h" />
+    <ClInclude Include="Engine\Core\Resource\ResourceShader.h" />
+    <ClInclude Include="Engine\Editor\Editor.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Engine\Core\Application.cpp" />
+    <ClCompile Include="Engine\Core\Modules\OrthographicCameraController.cpp" />
+    <ClCompile Include="Engine\Core\Modules\Render\Buffer.cpp" />
+    <ClCompile Include="Engine\Core\Modules\Render\Camera.cpp" />
+    <ClCompile Include="Engine\Core\Modules\Render\FrameBuffer.cpp" />
+    <ClCompile Include="Engine\Core\Modules\Render\GraphicsModule.cpp" />
+    <ClCompile Include="Engine\Core\Modules\Render\OpenGL\OpenGLBuffer.cpp" />
+    <ClCompile Include="Engine\Core\Modules\Render\OpenGL\OpenGLContext.cpp" />
+    <ClCompile Include="Engine\Core\Modules\Render\OpenGL\OpenGLFrameBuffer.cpp" />
+    <ClCompile Include="Engine\Core\Modules\Render\OpenGL\OpenGLRendererAPI.cpp" />
+    <ClCompile Include="Engine\Core\Modules\Render\OpenGL\OpenGLShader.cpp" />
+    <ClCompile Include="Engine\Core\Modules\Render\OpenGL\OpenGLTexture.cpp" />
+    <ClCompile Include="Engine\Core\Modules\Render\Render2D.cpp" />
+    <ClCompile Include="Engine\Core\Modules\Render\RenderCommand.cpp" />
+    <ClCompile Include="Engine\Core\Modules\Render\Renderer.cpp" />
+    <ClCompile Include="Engine\Core\Modules\Render\RendererAPI.cpp" />
+    <ClCompile Include="Engine\Core\Modules\Render\Shader.cpp" />
+    <ClCompile Include="Engine\Core\Modules\Render\Texture.cpp" />
+    <ClCompile Include="Engine\Core\Resource\ResourceShader.cpp" />
+    <ClCompile Include="Engine\Editor\Editor.cpp" />
+    <ClCompile Include="main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AppFrame\AppFrame.vcxproj">
+      <Project>{91935930-7D60-B43B-A679-A2E392A5E9C9}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

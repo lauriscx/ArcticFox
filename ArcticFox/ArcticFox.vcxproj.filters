@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Engine">
+      <UniqueIdentifier>{DBC7D3B0-C769-FE86-B024-12DB9C6585D7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Core">
+      <UniqueIdentifier>{130D9B61-7FC2-1357-08B7-0D2E746B0A5B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Core\Modules">
+      <UniqueIdentifier>{DBFC2E55-475E-0C63-D0CB-52153C2C4322}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Core\Modules\Render">
+      <UniqueIdentifier>{EA76E6C7-D686-9298-3F40-F7B62B6F8131}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Core\Modules\Render\OpenGL">
+      <UniqueIdentifier>{DEF4CE57-4A63-24D7-934C-DFD6FFF91973}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Core\Modules\Render\OpenGL\Glad">
+      <UniqueIdentifier>{85F69B9C-7148-738C-5A67-B09C46588C75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Core\Modules\Render\OpenGL\Glad\KHR">
+      <UniqueIdentifier>{79BF28DF-6527-EFAC-CE92-03C3BA190699}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Core\Resource">
+      <UniqueIdentifier>{8A5427B9-76E3-B082-1F02-C57D0B70C128}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Editor">
+      <UniqueIdentifier>{B1407138-1D01-ED6E-E63B-36EC52BB314B}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Engine\Core\Application.h">
+      <Filter>Engine\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Core\Modules\OrthographicCameraController.h">
+      <Filter>Engine\Core\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Core\Modules\Render\Buffer.h">
+      <Filter>Engine\Core\Modules\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Core\Modules\Render\BufferLayout.h">
+      <Filter>Engine\Core\Modules\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Core\Modules\Render\Camera.h">
+      <Filter>Engine\Core\Modules\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Core\Modules\Render\FrameBuffer.h">
+      <Filter>Engine\Core\Modules\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Core\Modules\Render\GraphicsContext.h">
+      <Filter>Engine\Core\Modules\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Core\Modules\Render\GraphicsModule.h">
+      <Filter>Engine\Core\Modules\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Core\Modules\Render\OpenGL\Glad\KHR\khrplatform.h">
+      <Filter>Engine\Core\Modules\Render\OpenGL\Glad\KHR</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Core\Modules\Render\OpenGL\Glad\glad.h">
+      <Filter>Engine\Core\Modules\Render\OpenGL\Glad</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Core\Modules\Render\OpenGL\OpenGLBuffer.h">
+      <Filter>Engine\Core\Modules\Render\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Core\Modules\Render\OpenGL\OpenGLContext.h">
+      <Filter>Engine\Core\Modules\Render\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Core\Modules\Render\OpenGL\OpenGLFrameBuffer.h">
+      <Filter>Engine\Core\Modules\Render\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Core\Modules\Render\OpenGL\OpenGLRendererAPI.h">
+      <Filter>Engine\Core\Modules\Render\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Core\Modules\Render\OpenGL\OpenGLShader.h">
+      <Filter>Engine\Core\Modules\Render\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Core\Modules\Render\OpenGL\OpenGLTexture.h">
+      <Filter>Engine\Core\Modules\Render\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Core\Modules\Render\Render2D.h">
+      <Filter>Engine\Core\Modules\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Core\Modules\Render\RenderCommand.h">
+      <Filter>Engine\Core\Modules\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Core\Modules\Render\Renderer.h">
+      <Filter>Engine\Core\Modules\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Core\Modules\Render\RendererAPI.h">
+      <Filter>Engine\Core\Modules\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Core\Modules\Render\Shader.h">
+      <Filter>Engine\Core\Modules\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Core\Modules\Render\Texture.h">
+      <Filter>Engine\Core\Modules\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Core\Resource\ResourceShader.h">
+      <Filter>Engine\Core\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Editor\Editor.h">
+      <Filter>Engine\Editor</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Engine\Core\Application.cpp">
+      <Filter>Engine\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Core\Modules\OrthographicCameraController.cpp">
+      <Filter>Engine\Core\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Core\Modules\Render\Buffer.cpp">
+      <Filter>Engine\Core\Modules\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Core\Modules\Render\Camera.cpp">
+      <Filter>Engine\Core\Modules\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Core\Modules\Render\FrameBuffer.cpp">
+      <Filter>Engine\Core\Modules\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Core\Modules\Render\GraphicsModule.cpp">
+      <Filter>Engine\Core\Modules\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Core\Modules\Render\OpenGL\OpenGLBuffer.cpp">
+      <Filter>Engine\Core\Modules\Render\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Core\Modules\Render\OpenGL\OpenGLContext.cpp">
+      <Filter>Engine\Core\Modules\Render\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Core\Modules\Render\OpenGL\OpenGLFrameBuffer.cpp">
+      <Filter>Engine\Core\Modules\Render\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Core\Modules\Render\OpenGL\OpenGLRendererAPI.cpp">
+      <Filter>Engine\Core\Modules\Render\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Core\Modules\Render\OpenGL\OpenGLShader.cpp">
+      <Filter>Engine\Core\Modules\Render\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Core\Modules\Render\OpenGL\OpenGLTexture.cpp">
+      <Filter>Engine\Core\Modules\Render\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Core\Modules\Render\Render2D.cpp">
+      <Filter>Engine\Core\Modules\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Core\Modules\Render\RenderCommand.cpp">
+      <Filter>Engine\Core\Modules\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Core\Modules\Render\Renderer.cpp">
+      <Filter>Engine\Core\Modules\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Core\Modules\Render\RendererAPI.cpp">
+      <Filter>Engine\Core\Modules\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Core\Modules\Render\Shader.cpp">
+      <Filter>Engine\Core\Modules\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Core\Modules\Render\Texture.cpp">
+      <Filter>Engine\Core\Modules\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Core\Resource\ResourceShader.cpp">
+      <Filter>Engine\Core\Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Editor\Editor.cpp">
+      <Filter>Engine\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp" />
+  </ItemGroup>
+</Project>
