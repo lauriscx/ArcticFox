@@ -1,6 +1,6 @@
 
-project "ArcticFox"
-	kind "StaticLib"
+project "ArcticFoxEditor"
+	kind "ConsoleApp"
 	language "C++"
 	targetdir ("../Build/bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("../Build/bin-int/" .. outputdir .. "/%{prj.name}")
@@ -14,6 +14,7 @@ project "ArcticFox"
 
 	includedirs {
 		"%{wks.location}/AppFrame/src/",
+		"%{wks.location}/ArcticFox/src/",
 		"%{prj.location}/src/",
 		"%{IncludeDir.AL}",
 		"%{IncludeDir.glew}",
@@ -24,7 +25,7 @@ project "ArcticFox"
 	}
 
 	links {
-		"AppFrame"
+		"ArcticFox"
 	}
 
 	filter "system:windows"

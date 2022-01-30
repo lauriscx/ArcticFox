@@ -5,7 +5,7 @@ workspace "ArcticFox"
 		"Release"
 	}
 
-	startproject "ArcticFox"
+	startproject "ArcticFoxEditor"
 	
 	
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
@@ -25,3 +25,5 @@ LibraryDir["GLFW"] = "%{wks.location}/vendor/GLFW/lib/"
 
 include "AppFrame"
 include "ArcticFox"
+include "Game"
+include "ArcticFoxEditor"
