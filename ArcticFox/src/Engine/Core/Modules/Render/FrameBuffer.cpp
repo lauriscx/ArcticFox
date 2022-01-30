@@ -15,3 +15,5 @@ ArcticFox::Graphics::FrameBuffer * ArcticFox::Graphics::FrameBuffer::Create(cons
 
 	return nullptr;
 }
+
+ArcticFox::Graphics::FrameBuffer::~FrameBuffer() {}

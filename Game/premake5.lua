@@ -21,7 +21,8 @@ project "Game"
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.glm}", 
 		"%{IncludeDir.spdlog}",
-		"%{IncludeDir.stb}"
+		"%{IncludeDir.stb}",
+		"%{IncludeDir.entt}"
 	}
 
 	links {

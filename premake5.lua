@@ -17,6 +17,7 @@ IncludeDir["GLFW"] = "%{wks.location}/vendor/GLFW/include"
 IncludeDir["glm"] = "%{wks.location}/vendor/glm"
 IncludeDir["spdlog"] = "%{wks.location}/vendor/spdlog/include"
 IncludeDir["stb"] = "%{wks.location}/vendor/stb/include"
+IncludeDir["entt"] = "%{wks.location}/vendor/entt/include"
 
 LibraryDir = {}
 LibraryDir["AL"] = "%{wks.location}/vendor/AL/lib/Win64/"

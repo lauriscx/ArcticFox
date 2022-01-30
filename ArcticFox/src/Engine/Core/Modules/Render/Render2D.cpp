@@ -130,6 +130,42 @@ void ArcticFox::Graphics::Render2D::BeginScene(const OrthographicCamera & camera
 	s_2DRenderData->QuadVertexPtr = s_2DRenderData->QuadVertexBase;
 }
 
+void ArcticFox::Graphics::Render2D::DrawQuad(const glm::mat4 matrix, const glm::vec4 & color) {
+	if (s_2DRenderData->QuadIndexCount >= Render2DCache::maxIndices) {
+		EndScene();
+	}
+
+	int TextureIndex = 0;
+
+	s_2DRenderData->QuadVertexPtr->Position = matrix * s_2DRenderData->QoudPositionTemplate[0];
+	s_2DRenderData->QuadVertexPtr->Color = color;
+	s_2DRenderData->QuadVertexPtr->TexCoord = { 0.0f, 0.0f };
+	s_2DRenderData->QuadVertexPtr->ImageIndex = TextureIndex;
+	s_2DRenderData->QuadVertexPtr++;
+
+	s_2DRenderData->QuadVertexPtr->Position = matrix * s_2DRenderData->QoudPositionTemplate[1];
+	s_2DRenderData->QuadVertexPtr->Color = color;
+	s_2DRenderData->QuadVertexPtr->TexCoord = { 1.0f, 0.0f };
+	s_2DRenderData->QuadVertexPtr->ImageIndex = TextureIndex;
+	s_2DRenderData->QuadVertexPtr++;
+
+	s_2DRenderData->QuadVertexPtr->Position = matrix * s_2DRenderData->QoudPositionTemplate[2];
+	s_2DRenderData->QuadVertexPtr->Color = color;
+	s_2DRenderData->QuadVertexPtr->TexCoord = { 1.0f, 1.0f };
+	s_2DRenderData->QuadVertexPtr->ImageIndex = TextureIndex;
+	s_2DRenderData->QuadVertexPtr++;
+
+	s_2DRenderData->QuadVertexPtr->Position = matrix * s_2DRenderData->QoudPositionTemplate[3];
+	s_2DRenderData->QuadVertexPtr->Color = color;
+	s_2DRenderData->QuadVertexPtr->TexCoord = { 0.0f, 1.0f };
+	s_2DRenderData->QuadVertexPtr->ImageIndex = TextureIndex;
+	s_2DRenderData->QuadVertexPtr++;
+
+	s_2DRenderData->QuadIndexCount += 6;
+
+	s_2DRenderData->m_Statistics.m_QuodCount++;
+}
+
 void ArcticFox::Graphics::Render2D::DrawQuad(const glm::vec2 & position, const glm::vec2 & size, const glm::vec4 & color) {
 	if (s_2DRenderData->QuadIndexCount >= Render2DCache::maxIndices) {
 		EndScene();

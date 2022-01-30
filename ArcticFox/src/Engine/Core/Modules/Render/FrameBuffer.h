@@ -24,6 +24,8 @@ namespace ArcticFox {
 			virtual uint32_t GetDepthAttachment() const = 0;
 
 			static FrameBuffer* Create(const FrameBufferSpec& spec);
+
+			virtual ~FrameBuffer();
 		};
 	}
 }

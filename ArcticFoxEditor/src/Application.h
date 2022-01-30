@@ -11,6 +11,8 @@
 
 #include "Engine/Core/Modules/OrthographicCameraController.h"
 #include "Engine/Core/Modules/Render/FrameBuffer.h"
+#include "Engine/Scene.h"
+#include "Engine/Core/ECS/Entity.h"
 
 /*#include "Application/Modules/Render/Mesh.h"
 #include "Application/Modules/Render/Renderer.h"*/
@@ -50,5 +52,8 @@ namespace Editor {
 		float y;
 
 		glm::vec2 m_vieportSize;
+
+		ArcticFox::Scene m_Scene;
+		ArcticFox::Entity entity;
 	};
 }
