@@ -1,5 +1,6 @@
 #pragma once
 #include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
 namespace ArcticFox {
 	namespace Graphics {
@@ -16,20 +17,49 @@ namespace ArcticFox {
 
 		class SceneCamera : public Camera {
 		public:
+			enum class ProjectionType {
+				Perspective = 0,
+				Orthographic = 1
+			};
+		public:
 			SceneCamera() { RecalculateProjection(); }
 			virtual ~SceneCamera() = default;
 
 			void SetOrthographic(float size, float near, float far);
+			void SetPerspective(float fov, float near, float far);
 			void SetViewPortSize(uint32_t width, uint32_t height);
 
 			float GetOrthoGraphicSize() const { return m_OrthographicSize; }
 			void SetOrthoGraphicSize(float size) { m_OrthographicSize = size; RecalculateProjection(); }
+			ProjectionType GetProjectionType() const { return m_ProjectionType; }
+			void SetProjectionType(ProjectionType type) { m_ProjectionType = type; RecalculateProjection(); }
+
+			float GetOrthoNearClipt() const { return m_OrthographicNear; }
+			float GetOrthoFarClipt() const { return m_OrthographicFar; }
+
+			void SetOrthographicNearClip(float Near) { m_OrthographicNear = Near; RecalculateProjection(); }
+			void SetOrthographicFarClip(float far) { m_OrthographicFar = far; RecalculateProjection(); }
+
+			float GetPerspectiveNearClipt() const { return m_PerspectivecNear; }
+			float GetPerspectiveFarClipt() const { return m_PerspectivecFar; }
+			float GetPerspectiveFOV() const { return m_PerspectiveFOV; }
+
+			void SetPerspectiveFOV(float fow) { m_PerspectiveFOV = fow; RecalculateProjection(); }
+			void SetPerspectiveNearClip(float Near) { m_PerspectivecNear = Near; RecalculateProjection(); }
+			void SetPerspectiveFarClip(float far) { m_PerspectivecFar = far; RecalculateProjection(); }
 
 		private:
 			void RecalculateProjection();
+			
+		private:
+			ProjectionType m_ProjectionType = ProjectionType::Perspective;
 			float m_OrthographicSize = 10.0f;
 			float m_OrthographicNear = -1.0f;
 			float m_OrthographicFar = 1.0f;
+
+			float m_PerspectiveFOV = glm::radians(45.0f);
+			float m_PerspectivecNear = 0.01f;
+			float m_PerspectivecFar = 100.0f;
 
 			float m_AspectRation = 0;
 		};

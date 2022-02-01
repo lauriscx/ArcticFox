@@ -73,22 +73,23 @@ void Editor::Application::OnUpdate() {
 	ArcticFox::Application::OnUpdate();
 	m_Controller.OnUpdate(0);
 
+	auto& CamTrans = cameraEntity.GetComponent<ArcticFox::TransformComponent>();
+	//CamTrans = glm::translate(glm::mat4(1), CamPos);
+
 	if (AppFrame::InputManager::GetInstance()->IsButtonPressed(AppFrame::Key::KEY_A)) {
-		CamPos.x -=  0.1f;
+		CamTrans.Position.x -=  0.1f;
 	}
 	else if (AppFrame::InputManager::GetInstance()->IsButtonPressed(AppFrame::Key::KEY_D)) {
-		CamPos.x += 0.1f;
+		CamTrans.Position.x += 0.1f;
 	}
 
 	if (AppFrame::InputManager::GetInstance()->IsButtonPressed(AppFrame::Key::KEY_W)) {
-		CamPos.y += 0.1f;
+		CamTrans.Position.y += 0.1f;
 	}
 	else if (AppFrame::InputManager::GetInstance()->IsButtonPressed(AppFrame::Key::KEY_S)) {
-		CamPos.y -= 0.1f;
+		CamTrans.Position.y -= 0.1f;
 	}
 
-	auto& CamTrans = cameraEntity.GetComponent<ArcticFox::TransformComponent>();
-	CamTrans = glm::translate(glm::mat4(1), CamPos);
 
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
 	ImGui::Begin("ViewPort");
@@ -125,17 +126,6 @@ void Editor::Application::OnUpdate() {
 	
 	m_SceneHierarchyPanel.OnImGuiRender();
 
-	ImGui::Begin("Render stats");
-	uint32_t DepthAttachment = FBO->GetDepthAttachment();
-	//ImGui::Image((void*)DepthAttachment, ImVec2{ 320.0f, 180.0f }, { 0, 1 }, { 1, 0 });
-	ImGui::Text("Draw calls %d", stats.m_DrawCalls);
-	ImGui::Text("Quad count %d", stats.m_QuodCount);
-	ImGui::Text("Vertex count %d", stats.GetTotalVertexCount());
-	ImGui::Text("Index count %d", stats.GetTotalIndexCount());
-	ImGui::SliderFloat("X", &x, 1.0f, 100.0f);
-	ImGui::SliderFloat("Y", &y, 1.0f, 100.0f);
-	ImGui::SliderFloat3("Color", &compoenent.m_Color.r, 0.0f, 1.0f);
-	ImGui::End();
 	ImGui::PopStyleVar();
 }
 bool Editor::Application::OnInput(const AppFrame::InputData& input) {

@@ -17,6 +17,10 @@ ArcticFox::Entity ArcticFox::Scene::CreateEntity(std::string name) {
 	return entity;
 }
 
+void ArcticFox::Scene::DestroyEntity(Entity entity) {
+	m_Registry.destroy(entity);
+}
+
 void ArcticFox::Scene::Update(float deltaTime) {
 	//Scripts
 
@@ -24,7 +28,7 @@ void ArcticFox::Scene::Update(float deltaTime) {
 
 	//Render 2D
 	Graphics::Camera* mainCamera = nullptr;
-	glm::mat4* mainCameraTransform = nullptr;
+	glm::mat4 mainCameraTransform = glm::mat4(1.0f);
 	{
 		auto view = m_Registry.view<TransformComponent, CameraComponent>();
 		for (auto entity : view) {
@@ -32,7 +36,7 @@ void ArcticFox::Scene::Update(float deltaTime) {
 
 			if (camera.Primary) {
 				mainCamera = &camera.m_Camera;
-				mainCameraTransform = &transform.m_Transform;
+				mainCameraTransform = transform.GetTranformation();
 				break;
 			}
 		}
@@ -40,11 +44,11 @@ void ArcticFox::Scene::Update(float deltaTime) {
 
 	{
 		if (mainCamera) {
-			ArcticFox::Graphics::Render2D::BeginScene(*mainCamera, *mainCameraTransform);
+			ArcticFox::Graphics::Render2D::BeginScene(*mainCamera, mainCameraTransform);
 			auto group = m_Registry.group<TransformComponent>(entt::get<SpriteRenderComponent>);
 			for (auto entity : group) {
 				auto&[transform, sprite] = group.get<TransformComponent, SpriteRenderComponent>(entity);
-				Graphics::Render2D::DrawQuad(transform, sprite.m_Color);
+				Graphics::Render2D::DrawQuad(transform.GetTranformation(), sprite.m_Color);
 			}
 			ArcticFox::Graphics::Render2D::EndScene();
 		}

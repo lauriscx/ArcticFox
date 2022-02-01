@@ -9,6 +9,7 @@ namespace ArcticFox {
 		Scene();
 
 		Entity CreateEntity(std::string name);
+		void DestroyEntity(Entity entity);
 
 		void Update(float deltaTime);
 

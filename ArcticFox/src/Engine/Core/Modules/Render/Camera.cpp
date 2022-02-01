@@ -19,9 +19,21 @@ void ArcticFox::Graphics::OrthographicCamera::RecalculateViewMatrix() {
 }
 
 void ArcticFox::Graphics::SceneCamera::SetOrthographic(float size, float near, float far) {
+	m_ProjectionType = ProjectionType::Orthographic;
+
 	m_OrthographicSize = size;
 	m_OrthographicNear = near;
 	m_OrthographicFar = far;
+
+	RecalculateProjection();
+}
+
+void ArcticFox::Graphics::SceneCamera::SetPerspective(float fov, float near, float far) {
+	m_ProjectionType = ProjectionType::Perspective;
+
+	m_PerspectiveFOV = fov;
+	m_PerspectivecFar = far;
+	m_PerspectivecNear = near;
 
 	RecalculateProjection();
 }
@@ -32,10 +44,16 @@ void ArcticFox::Graphics::SceneCamera::SetViewPortSize(uint32_t width, uint32_t 
 }
 
 void ArcticFox::Graphics::SceneCamera::RecalculateProjection() {
-	float orthoLeft = -m_OrthographicSize * 0.5f * m_AspectRation;
-	float orthoRight = m_OrthographicSize * 0.5f * m_AspectRation;
-	float orthoBottom = -m_OrthographicSize * 0.5f;
-	float orthoTop = m_OrthographicSize * 0.5f;
+	if (m_ProjectionType == ProjectionType::Perspective) {
+		m_ProjectionMatrix = glm::perspective(m_PerspectiveFOV, m_AspectRation, m_PerspectivecNear, m_PerspectivecFar);
+	}
+	else
+	{
+		float orthoLeft = -m_OrthographicSize * 0.5f * m_AspectRation;
+		float orthoRight = m_OrthographicSize * 0.5f * m_AspectRation;
+		float orthoBottom = -m_OrthographicSize * 0.5f;
+		float orthoTop = m_OrthographicSize * 0.5f;
 
-	m_ProjectionMatrix = glm::ortho(orthoLeft, orthoRight, orthoBottom, orthoTop, m_OrthographicNear, m_OrthographicFar);
+		m_ProjectionMatrix = glm::ortho(orthoLeft, orthoRight, orthoBottom, orthoTop, m_OrthographicNear, m_OrthographicFar);
+	}
 }

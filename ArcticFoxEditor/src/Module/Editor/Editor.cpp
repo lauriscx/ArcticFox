@@ -1,4 +1,6 @@
 #include "Editor.h"
+#include "Engine/Core/Modules/Render/Render2D.h"
+
 
 void Editor::Editor::OnStart() {
 }
@@ -10,6 +12,15 @@ void Editor::Editor::OnUpdate(float deltaTime) {
 	Docking();
 	EntytiesList();
 	Menu();
+
+	auto stats = ArcticFox::Graphics::Render2D::GetStats();
+	ImGui::Begin("Render stats");
+	ImGui::Text("Draw calls %d", stats.m_DrawCalls);
+	ImGui::Text("Quad count %d", stats.m_QuodCount);
+	ImGui::Text("Vertex count %d", stats.GetTotalVertexCount());
+	ImGui::Text("Index count %d", stats.GetTotalIndexCount());
+	ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+	ImGui::End();
 }
 
 void Editor::Editor::OnLateUpdate(float deltaTime) {
@@ -41,13 +52,6 @@ void Editor::Editor::Menu() {
 }
 void Editor::Editor::EntytiesList()  {
 
-	ImGui::Begin("Entyties");
-	ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-	ImGui::End();
-
-	ImGui::Begin("Properties");
-	ImGui::Text("Hello, down!");
-	ImGui::End();
 
 	ImGui::Begin("FileExplorer");
 	ImGui::Text("Hello, down!");
