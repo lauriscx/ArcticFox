@@ -12,7 +12,7 @@ namespace ArcticFox {
 
 			void OnUpdate(float deltaTime);
 			void OnEvent(AppFrame::BasicEvent* event);
-			virtual bool OnInput(int x, int y, int action, int key) override;
+			virtual bool OnInput(const AppFrame::InputData& input) override;
 
 			OrthographicCamera& GetCamera();
 			const OrthographicCamera& GetCamera() const;

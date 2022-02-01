@@ -13,6 +13,8 @@
 #include "Engine/Core/Modules/Render/FrameBuffer.h"
 #include "Engine/Scene.h"
 #include "Engine/Core/ECS/Entity.h"
+#include <AppFrame.h>
+#include "Module/Editor/Panels/SceneHierarchyPanel.h"
 
 /*#include "Application/Modules/Render/Mesh.h"
 #include "Application/Modules/Render/Renderer.h"*/
@@ -26,7 +28,7 @@ namespace Editor {
 		virtual void OnEarlyUpdate() override;
 		virtual void OnUpdate() override;
 		virtual void OnLateUpdate() override;
-		virtual bool OnInput(int x, int y, int action, int key) override;
+		virtual bool OnInput(const AppFrame::InputData& input) override;
 		virtual bool OnEvent(AppFrame::BasicEvent & event) override;
 		virtual void Stop() override;
 
@@ -52,8 +54,12 @@ namespace Editor {
 		float y;
 
 		glm::vec2 m_vieportSize;
+		glm::vec3 CamPos = {0.0f, 0.0f, 0.0f};
 
 		ArcticFox::Scene m_Scene;
 		ArcticFox::Entity entity;
+		ArcticFox::Entity entity1;
+		ArcticFox::Entity cameraEntity;
+		SceneHierarchyPanel m_SceneHierarchyPanel;
 	};
 }

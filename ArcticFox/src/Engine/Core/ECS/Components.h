@@ -6,11 +6,12 @@
 
 namespace ArcticFox {
 	struct CameraComponent {
-		Graphics::Camera m_Camera;
+		Graphics::SceneCamera m_Camera;
+		bool Primary = false;
+		bool FixedAspectRatio = false;
 
 		CameraComponent() = default;
 		CameraComponent(const CameraComponent&) = default;
-		CameraComponent(const Graphics::Camera & camera) : m_Camera(camera) {}
 	};
 
 

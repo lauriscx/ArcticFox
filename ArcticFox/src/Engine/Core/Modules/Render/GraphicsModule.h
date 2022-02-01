@@ -16,7 +16,7 @@ namespace ArcticFox {
 		virtual void OnEarlyUpdate(float deltaTime) override;
 		virtual void OnUpdate(float deltaTime) override;
 		virtual void OnLateUpdate(float deltaTime) override;
-		virtual void OnAppInput(int x, int y, int action, int key) override;
+		virtual void OnAppInput(const AppFrame::InputData& input) override;
 		virtual void OnAppEvent(AppFrame::BasicEvent* event);
 		virtual void OnStop() override;
 

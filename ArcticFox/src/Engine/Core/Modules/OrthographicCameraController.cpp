@@ -5,7 +5,31 @@
 ArcticFox::Graphics::OrthographicCameraController::OrthographicCameraController(float aspectRatio) : m_AspectRatio(aspectRatio), m_camera(-m_AspectRatio * m_ZoomLevel, m_AspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel) { }
 ArcticFox::Graphics::OrthographicCameraController::~OrthographicCameraController() { }
 
-void ArcticFox::Graphics::OrthographicCameraController::OnUpdate(float deltaTime) {}
+void ArcticFox::Graphics::OrthographicCameraController::OnUpdate(float deltaTime) {
+	if (AppFrame::InputManager::GetInstance()->IsButtonPressed(AppFrame::Key::KEY_A)) {
+		m_Position.x -= m_CameraSpeed * 0.1f;
+	}
+	else if (AppFrame::InputManager::GetInstance()->IsButtonPressed(AppFrame::Key::KEY_D)) {
+		m_Position.x += m_CameraSpeed * 0.1f;
+	}
+
+	if (AppFrame::InputManager::GetInstance()->IsButtonPressed(AppFrame::Key::KEY_W)) {
+		m_Position.y += m_CameraSpeed * 0.1f;
+	}
+	else if (AppFrame::InputManager::GetInstance()->IsButtonPressed(AppFrame::Key::KEY_S)) {
+		m_Position.y -= m_CameraSpeed * 0.1f;
+	}
+
+	if (AppFrame::InputManager::GetInstance()->IsButtonPressed(AppFrame::Key::KEY_Q)) {
+		m_Rotation += m_RotationSpeed;
+	}
+	else if (AppFrame::InputManager::GetInstance()->IsButtonPressed(AppFrame::Key::KEY_E)) {
+		m_Rotation -= m_RotationSpeed;
+	}
+	m_camera.SetPosition(m_Position);
+	m_camera.SetRotation(m_Rotation);
+
+}
 
 void ArcticFox::Graphics::OrthographicCameraController::OnEvent(AppFrame::BasicEvent* event) {
 	if (auto resize = AppFrame::WindowResize::Match(event)) {
@@ -19,31 +43,31 @@ void ArcticFox::Graphics::OrthographicCameraController::OnEvent(AppFrame::BasicE
 		m_camera.SetProjection(-m_AspectRatio * m_ZoomLevel, m_AspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel);
 	}
 }
-bool ArcticFox::Graphics::OrthographicCameraController::OnInput(int x, int y, int action, int key) {
-	if (action == GLFW_PRESS || GLFW_REPEAT) {
-		if (key == GLFW_KEY_A) {
+bool ArcticFox::Graphics::OrthographicCameraController::OnInput(const AppFrame::InputData& input) {
+	/*if (input.action == GLFW_PRESS || GLFW_REPEAT) {
+		if (input.key == GLFW_KEY_A) {
 			m_Position.x -= m_CameraSpeed * 0.1f;
 		}
-		else if (key == GLFW_KEY_D) {
+		else if (input.key == GLFW_KEY_D) {
 			m_Position.x += m_CameraSpeed * 0.1f;
 		}
 
-		if (key == GLFW_KEY_W) {
+		if (input.key == GLFW_KEY_W) {
 			m_Position.y += m_CameraSpeed * 0.1f;
 		}
-		else if (key == GLFW_KEY_S) {
+		else if (input.key == GLFW_KEY_S) {
 			m_Position.y -= m_CameraSpeed * 0.1f;
 		}
 
-		if (key == GLFW_KEY_Q) {
+		if (input.key == GLFW_KEY_Q) {
 			m_Rotation += m_RotationSpeed;
 		}
-		else if (key == GLFW_KEY_E) {
+		else if (input.key == GLFW_KEY_E) {
 			m_Rotation -= m_RotationSpeed;
 		}
 		m_camera.SetPosition(m_Position);
 		m_camera.SetRotation(m_Rotation);
-	}
+	}*/
 	return false;
 }
 

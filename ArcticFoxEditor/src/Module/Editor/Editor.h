@@ -18,5 +18,6 @@ namespace Editor {
 		void Menu();
 		void EntytiesList();
 		void Docking();
+
 	};
 }

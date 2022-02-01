@@ -53,6 +53,17 @@ void Editor::Application::Run() {
 	entity = m_Scene.CreateEntity("Square");
 
 	entity.AddComponent<ArcticFox::SpriteRenderComponent>(glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
+
+	cameraEntity = m_Scene.CreateEntity("Camera");
+	auto& camera = cameraEntity.AddComponent<ArcticFox::CameraComponent>();
+	camera.Primary = true;
+
+
+	m_SceneHierarchyPanel.SetContext(&m_Scene);
+
+	/*entity1 = m_Scene.CreateEntity("Square14");
+
+	entity1.AddComponent<ArcticFox::SpriteRenderComponent>(glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));*/
 }
 
 void Editor::Application::OnEarlyUpdate() {
@@ -62,25 +73,42 @@ void Editor::Application::OnUpdate() {
 	ArcticFox::Application::OnUpdate();
 	m_Controller.OnUpdate(0);
 
+	if (AppFrame::InputManager::GetInstance()->IsButtonPressed(AppFrame::Key::KEY_A)) {
+		CamPos.x -=  0.1f;
+	}
+	else if (AppFrame::InputManager::GetInstance()->IsButtonPressed(AppFrame::Key::KEY_D)) {
+		CamPos.x += 0.1f;
+	}
+
+	if (AppFrame::InputManager::GetInstance()->IsButtonPressed(AppFrame::Key::KEY_W)) {
+		CamPos.y += 0.1f;
+	}
+	else if (AppFrame::InputManager::GetInstance()->IsButtonPressed(AppFrame::Key::KEY_S)) {
+		CamPos.y -= 0.1f;
+	}
+
+	auto& CamTrans = cameraEntity.GetComponent<ArcticFox::TransformComponent>();
+	CamTrans = glm::translate(glm::mat4(1), CamPos);
+
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
 	ImGui::Begin("ViewPort");
 	ImVec2 vieportSize = ImGui::GetContentRegionAvail();
 	if (glm::vec2(vieportSize.x, vieportSize.y) != m_vieportSize) {
 		m_vieportSize = { vieportSize.x, vieportSize.y };
 		FBO->Resize(vieportSize.x, vieportSize.y);
+		m_Scene.OnVieportResize(vieportSize.x, vieportSize.y);
 		auto resize = AppFrame::WindowResize(vieportSize.x, vieportSize.y);
 		m_Controller.OnEvent(&resize);
 	}
+
 	FBO->Bind();
 
 	ArcticFox::Graphics::RenderCommand::SetClearColor({ 0.0f, 0.0f, 0.0f, 1.0f });
 	ArcticFox::Graphics::RenderCommand::Clear();
-
 	ArcticFox::Graphics::Render2D::ResetStats();
-	ArcticFox::Graphics::Render2D::BeginScene(m_Controller.GetCamera());
+
 	m_Scene.Update(0);
-	ArcticFox::Graphics::Render2D::EndScene();
-	
+
 	FBO->Unbind();
 	
 	auto stats = ArcticFox::Graphics::Render2D::GetStats();
@@ -92,7 +120,11 @@ void Editor::Application::OnUpdate() {
 
 	//auto& entityColor = m_Scene.m_Registry.get<ArcticFox::SpriteRenderComponent>()
 	auto& compoenent = entity.GetComponent<ArcticFox::SpriteRenderComponent>();
+	/*auto& compoenent1 = entity1.GetComponent<ArcticFox::TransformComponent>();
+	compoenent1 = glm::translate(glm::mat4(1.0f), glm::vec3(-1, 0, 0));*/
 	
+	m_SceneHierarchyPanel.OnImGuiRender();
+
 	ImGui::Begin("Render stats");
 	uint32_t DepthAttachment = FBO->GetDepthAttachment();
 	//ImGui::Image((void*)DepthAttachment, ImVec2{ 320.0f, 180.0f }, { 0, 1 }, { 1, 0 });
@@ -106,8 +138,7 @@ void Editor::Application::OnUpdate() {
 	ImGui::End();
 	ImGui::PopStyleVar();
 }
-bool Editor::Application::OnInput(int x, int y, int action, int key) {
-	m_Controller.OnInput(x, y, action, key);
+bool Editor::Application::OnInput(const AppFrame::InputData& input) {
 	return true;
 }
 void Editor::Application::OnLateUpdate() {

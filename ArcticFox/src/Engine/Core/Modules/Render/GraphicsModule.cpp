@@ -31,7 +31,7 @@ void ArcticFox::GraphicsModule::OnLateUpdate(float deltaTime) {
 
 }
 
-void ArcticFox::GraphicsModule::OnAppInput(int x, int y, int action, int key) {
+void ArcticFox::GraphicsModule::OnAppInput(const AppFrame::InputData& input) {
 }
 
 void ArcticFox::GraphicsModule::OnAppEvent(AppFrame::BasicEvent * event) {
