@@ -21,7 +21,8 @@ project "ArcticFox"
 		"%{IncludeDir.glm}", 
 		"%{IncludeDir.spdlog}",
 		"%{IncludeDir.stb}",
-		"%{IncludeDir.entt}"
+		"%{IncludeDir.entt}",
+		"%{IncludeDir.yaml}"
 	}
 
 	links {

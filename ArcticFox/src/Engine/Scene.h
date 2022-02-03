@@ -17,6 +17,9 @@ namespace ArcticFox {
 		virtual bool OnEvent(AppFrame::BasicEvent & event) override;
 
 		void OnVieportResize(uint32_t width, uint32_t height);
+		void UpdateVieportResize();
+
+		Entity GetPrimaryCamera();
 
 		inline entt::registry& GetRegistry() { return m_Registry; }
 
@@ -26,5 +29,6 @@ namespace ArcticFox {
 
 		entt::registry m_Registry;
 		friend class Entity;
+		friend class SceneSerializer;
 	};
 }

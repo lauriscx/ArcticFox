@@ -6,6 +6,7 @@
 #include "Engine/Core/ECS/Components.h"
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/glm.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 Editor::Application::Application(AppFrame::AppConfig* config) : ArcticFox::Application(config), m_Controller(800.0f / 600.0f), m_vieportSize(0, 0) { }
 glm::vec3 mPos(0, 0, 0);
@@ -50,13 +51,13 @@ void Editor::Application::Run() {
 	FBO = ArcticFox::Graphics::FrameBuffer::Create(specs);
 
 
-	entity = m_Scene.CreateEntity("Square");
+	/*entity = m_Scene.CreateEntity("Square");
 
 	entity.AddComponent<ArcticFox::SpriteRenderComponent>(glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
 
 	cameraEntity = m_Scene.CreateEntity("Camera");
 	auto& camera = cameraEntity.AddComponent<ArcticFox::CameraComponent>();
-	camera.Primary = true;
+	camera.Primary = true;*/
 
 
 	m_SceneHierarchyPanel.SetContext(&m_Scene);
@@ -73,7 +74,7 @@ void Editor::Application::OnUpdate() {
 	ArcticFox::Application::OnUpdate();
 	m_Controller.OnUpdate(0);
 
-	auto& CamTrans = cameraEntity.GetComponent<ArcticFox::TransformComponent>();
+	/*auto& CamTrans = cameraEntity.GetComponent<ArcticFox::TransformComponent>();
 	//CamTrans = glm::translate(glm::mat4(1), CamPos);
 
 	if (AppFrame::InputManager::GetInstance()->IsButtonPressed(AppFrame::Key::KEY_A)) {
@@ -88,7 +89,7 @@ void Editor::Application::OnUpdate() {
 	}
 	else if (AppFrame::InputManager::GetInstance()->IsButtonPressed(AppFrame::Key::KEY_S)) {
 		CamTrans.Position.y -= 0.1f;
-	}
+	}*/
 
 
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
@@ -97,11 +98,10 @@ void Editor::Application::OnUpdate() {
 	if (glm::vec2(vieportSize.x, vieportSize.y) != m_vieportSize) {
 		m_vieportSize = { vieportSize.x, vieportSize.y };
 		FBO->Resize(vieportSize.x, vieportSize.y);
-		m_Scene.OnVieportResize(vieportSize.x, vieportSize.y);
+		m_Scene.OnVieportResize(vieportSize.x * 2, vieportSize.y * 2);
 		auto resize = AppFrame::WindowResize(vieportSize.x, vieportSize.y);
 		m_Controller.OnEvent(&resize);
 	}
-
 	FBO->Bind();
 
 	ArcticFox::Graphics::RenderCommand::SetClearColor({ 0.0f, 0.0f, 0.0f, 1.0f });
@@ -117,10 +117,59 @@ void Editor::Application::OnUpdate() {
 
 	uint32_t coloroAttachment = FBO->GetColorAttachment0();
 	ImGui::Image((void*)coloroAttachment, vieportSize, { 0, 1 }, { 1, 0 });
+	
+	if (AppFrame::InputManager::GetInstance()->IsKeyPressed(AppFrame::Key::KEY_T)) {
+		m_GuizmosType = ImGuizmo::OPERATION::TRANSLATE;
+	} else if (AppFrame::InputManager::GetInstance()->IsKeyPressed(AppFrame::Key::KEY_R)) {
+		m_GuizmosType = ImGuizmo::OPERATION::ROTATE;
+	} else if (AppFrame::InputManager::GetInstance()->IsKeyPressed(AppFrame::Key::KEY_S)) {
+		m_GuizmosType = ImGuizmo::OPERATION::SCALE;
+	} else if (AppFrame::InputManager::GetInstance()->IsKeyPressed(AppFrame::Key::KEY_ESCAPE)) {
+		m_GuizmosType = -1;
+	}
+
+	ArcticFox::Entity entity = m_SceneHierarchyPanel.GetSelectedEntity();
+	if (entity && m_GuizmosType != -1) {
+		ImGuizmo::SetOrthographic(false);
+		ImGuizmo::SetDrawlist();
+		ImGuizmo::SetRect(ImGui::GetWindowPos().x, ImGui::GetWindowPos().y, ImGui::GetWindowWidth(), ImGui::GetWindowHeight());
+
+		ArcticFox::Entity& cameraEnti = m_Scene.GetPrimaryCamera();
+		const auto& camera = cameraEnti.GetComponent<ArcticFox::CameraComponent>().m_Camera;
+		const glm::mat4& projectio = camera.GetProjectionMatrix();
+		glm::mat4 cameraView = glm::inverse(cameraEnti.GetComponent<ArcticFox::TransformComponent>().GetTranformation());
+
+		auto& tc = entity.GetComponent<ArcticFox::TransformComponent>();
+		glm::mat4 transform = tc.GetTranformation();
+
+		bool snap = AppFrame::InputManager::GetInstance()->IsKeyPressed(AppFrame::Key::KEY_LEFT_CONTROL);
+		float snapValue = 0.5f;
+		if (m_GuizmosType == ImGuizmo::OPERATION::ROTATE) {
+			snapValue = 45.0f;
+		}
+
+		float snapValues[3] = { snapValue, snapValue, snapValue };
+
+		ImGuizmo::Manipulate(glm::value_ptr(cameraView), glm::value_ptr(projectio), ImGuizmo::OPERATION(m_GuizmosType), ImGuizmo::LOCAL, glm::value_ptr(transform), 0, snap ? snapValues : nullptr);
+
+		if (ImGuizmo::IsUsing()) {
+			glm::vec3 Position;
+			glm::vec3 Rotation;
+			glm::vec3 Scale;
+
+			ImGui::ModifiedDecomposeTransform(transform, Position, Rotation, Scale);
+
+			tc.Position = Position;
+			tc.Rotation += Rotation - tc.Rotation;
+			tc.Scale = Scale;
+		}
+	}
 	ImGui::End();
 
+
+
 	//auto& entityColor = m_Scene.m_Registry.get<ArcticFox::SpriteRenderComponent>()
-	auto& compoenent = entity.GetComponent<ArcticFox::SpriteRenderComponent>();
+	//auto& compoenent = entity.GetComponent<ArcticFox::SpriteRenderComponent>();
 	/*auto& compoenent1 = entity1.GetComponent<ArcticFox::TransformComponent>();
 	compoenent1 = glm::translate(glm::mat4(1.0f), glm::vec3(-1, 0, 0));*/
 	

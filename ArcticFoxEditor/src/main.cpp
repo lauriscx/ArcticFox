@@ -1,4 +1,6 @@
 #include "Application.h"
+#include <AppFrame.h>
+
 
 int main() {
 	//std::cout << "Start with memory " << m_MemoryAllocated << std::endl;

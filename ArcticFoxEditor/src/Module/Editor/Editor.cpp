@@ -36,26 +36,10 @@ void Editor::Editor::GameView() {
 }
 
 void Editor::Editor::Menu() {
-	if(ImGui::BeginMainMenuBar())
-	{
-	  if (ImGui::BeginMenu("File"))
-	  {
-		 if(ImGui::MenuItem("New"))
-		 {
-			//Do something
-		 }
-		 ImGui::EndMenu();
-	   }
 
-	   ImGui::EndMainMenuBar();
-	}
 }
 void Editor::Editor::EntytiesList()  {
 
-
-	ImGui::Begin("FileExplorer");
-	ImGui::Text("Hello, down!");
-	ImGui::End();
 }
 
 void Editor::Editor::Docking()

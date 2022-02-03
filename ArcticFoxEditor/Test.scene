@@ -1,0 +1,8 @@
+Scene: Name
+Entities:
+  - Entity: 8008510
+    TagComponent:
+      Tag: Camera
+  - Entity: 8008510
+    TagComponent:
+      Tag: Square

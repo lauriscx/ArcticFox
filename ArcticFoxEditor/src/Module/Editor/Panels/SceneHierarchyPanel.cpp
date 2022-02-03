@@ -4,6 +4,7 @@
 #include "entt.hpp"
 #include "glm/gtc/type_ptr.hpp"
 #include "Engine/Core/Modules/Render/Camera.h"
+#include "Engine/SceneSerializer.h"
 
 Editor::SceneHierarchyPanel::SceneHierarchyPanel(ArcticFox::Scene * scene) : m_Scene(scene) {
 	
@@ -13,12 +14,52 @@ void Editor::SceneHierarchyPanel::SetContext(ArcticFox::Scene * scene) {
 	m_Scene = scene;
 }
 
+ArcticFox::Entity Editor::SceneHierarchyPanel::GetSelectedEntity() const {
+	return m_SelectionContext;
+}
+
 void Editor::SceneHierarchyPanel::OnImGuiRender() {
+	if (ImGui::BeginMainMenuBar())
+	{
+		if (ImGui::BeginMenu("File"))
+		{
+			if (ImGui::MenuItem("New"))
+			{
+				//Do something
+			}
+			if (ImGui::MenuItem("Save As...", "Ctrl+Shift+S")) {
+				ArcticFox::SceneSerializer serializer(m_Scene);
+				//serializer.Serialize("Test.scene");
+				std::string path = AppFrame::Device::SaveFile("Arctic Fox Scene file (*.scene)\0*.scene\0");
+				serializer.Serialize(path);
+			}
+			if (ImGui::MenuItem("Open", "Ctrl+O")) {
+				m_Scene->GetRegistry().clear();
+				m_SelectionContext = {};
+
+				ArcticFox::SceneSerializer serializer(m_Scene);
+				//serializer.Serialize("Test.scene");
+				std::string path = AppFrame::Device::OpenFile("Arctic Fox Scene file (*.scene)\0*.scene\0");
+				serializer.Derialize(path);
+
+				m_Scene->UpdateVieportResize();
+			}
+			ImGui::EndMenu();
+		}
+
+		ImGui::EndMainMenuBar();
+	}
+
 	ImGui::Begin("Scene hierarchy");
 
 	m_Scene->GetRegistry().each([&](auto entityID) {
 		DrawEntityNode({ entityID, m_Scene });
 	});
+
+
+	ImGui::Begin("FileExplorer");
+
+	ImGui::End();
 
 	if (ImGui::IsMouseDown(0) && ImGui::IsWindowHovered()) {
 		m_SelectionContext = {};

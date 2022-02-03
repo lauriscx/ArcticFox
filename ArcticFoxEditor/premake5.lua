@@ -26,7 +26,8 @@ project "ArcticFoxEditor"
 	}
 
 	links {
-		"ArcticFox"
+		"ArcticFox",
+		"yaml-cpp"
 	}
 
 	filter "system:windows"

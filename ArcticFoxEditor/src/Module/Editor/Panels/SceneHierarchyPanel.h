@@ -14,6 +14,8 @@ namespace Editor {
 
 		void SetContext(ArcticFox::Scene* scene);
 
+		ArcticFox::Entity GetSelectedEntity() const;
+
 		void OnImGuiRender();
 	private:
 		void DrawEntityNode(ArcticFox::Entity entity);

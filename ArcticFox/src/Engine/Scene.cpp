@@ -81,4 +81,26 @@ void ArcticFox::Scene::OnVieportResize(uint32_t width, uint32_t height) {
 
 }
 
+void ArcticFox::Scene::UpdateVieportResize() {
+	auto view = m_Registry.view<CameraComponent>();
+	for (auto entity : view) {
+		auto& cameraComp = view.get<CameraComponent>(entity);
+		if (!cameraComp.FixedAspectRatio) {
+			cameraComp.m_Camera.SetViewPortSize(m_ViewPortWidth, m_ViewPortHeight);
+		}
+	}
+}
+
+ArcticFox::Entity ArcticFox::Scene::GetPrimaryCamera() {
+	auto view = m_Registry.view<CameraComponent>();
+	for (auto entity : view) {
+		auto& cameraComp = view.get<CameraComponent>(entity);
+		if (cameraComp.Primary) {
+			return Entity{ entity, this };
+		}
+	}
+
+	return {};
+}
+
 ArcticFox::Scene::~Scene() {}

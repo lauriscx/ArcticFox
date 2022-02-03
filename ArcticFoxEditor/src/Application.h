@@ -53,6 +53,8 @@ namespace Editor {
 		float x;
 		float y;
 
+		int m_GuizmosType = -1;
+
 		glm::vec2 m_vieportSize;
 		glm::vec3 CamPos = {0.0f, 0.0f, 0.0f};
 
