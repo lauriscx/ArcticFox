@@ -3,6 +3,9 @@
 #include <AppFrame.h>
 
 namespace ArcticFox {
+	namespace Graphics {
+		class SceneCamera;
+	}
 	class Entity;
 	class Scene : public AppFrame::EventHandler {
 	public:
@@ -11,7 +14,8 @@ namespace ArcticFox {
 		Entity CreateEntity(std::string name);
 		void DestroyEntity(Entity entity);
 
-		void Update(float deltaTime);
+		void OnUpdateRuntime(float deltaTime);
+		void OnUpdateEditor(float deltaTime, ArcticFox::Graphics::SceneCamera& camera);
 
 		// Inherited via EventHandler
 		virtual bool OnEvent(AppFrame::BasicEvent & event) override;

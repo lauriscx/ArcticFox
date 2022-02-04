@@ -21,7 +21,7 @@ void ArcticFox::Scene::DestroyEntity(Entity entity) {
 	m_Registry.destroy(entity);
 }
 
-void ArcticFox::Scene::Update(float deltaTime) {
+void ArcticFox::Scene::OnUpdateRuntime(float deltaTime) {
 	//Scripts
 
 	//Physics
@@ -57,6 +57,17 @@ void ArcticFox::Scene::Update(float deltaTime) {
 
 	//Render 3D
 }
+
+void ArcticFox::Scene::OnUpdateEditor(float deltaTime, ArcticFox::Graphics::SceneCamera & camera) {
+	ArcticFox::Graphics::Render2D::BeginScene(camera);
+	auto group = m_Registry.group<TransformComponent>(entt::get<SpriteRenderComponent>);
+	for (auto entity : group) {
+		auto&[transform, sprite] = group.get<TransformComponent, SpriteRenderComponent>(entity);
+		Graphics::Render2D::DrawQuad(transform.GetTranformation(), sprite.m_Color);
+	}
+	ArcticFox::Graphics::Render2D::EndScene();
+}
+
 
 bool ArcticFox::Scene::OnEvent(AppFrame::BasicEvent & event) {
 	if (auto resize = AppFrame::WindowResize::Match(&event)) {

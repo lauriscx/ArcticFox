@@ -37,21 +37,12 @@ namespace Editor {
 
 		ArcticFox::Graphics::OrthographicCameraController m_Controller;
 
-
-		/*Graphics::OpenGL::Mesh* m_Mesh;
-		Graphics::OpenGL::Renderer* m_Renderer;*/
 		ArcticFox::Graphics::ShaderLibrary m_ShaderLibrary;
 
 		ArcticFox::Graphics::Texture* m_Texture;
 		ArcticFox::Graphics::Texture* m_Texture2;
 
-		ArcticFox::Graphics::VertexArray* VAO;
-		ArcticFox::Graphics::VertexBuffer* VBO;
-		ArcticFox::Graphics::IndexBuffer* IBO;
 		ArcticFox::Graphics::FrameBuffer* FBO;
-		float rotation = 0;
-		float x;
-		float y;
 
 		int m_GuizmosType = -1;
 
@@ -59,9 +50,6 @@ namespace Editor {
 		glm::vec3 CamPos = {0.0f, 0.0f, 0.0f};
 
 		ArcticFox::Scene m_Scene;
-		ArcticFox::Entity entity;
-		ArcticFox::Entity entity1;
-		ArcticFox::Entity cameraEntity;
 		SceneHierarchyPanel m_SceneHierarchyPanel;
 	};
 }

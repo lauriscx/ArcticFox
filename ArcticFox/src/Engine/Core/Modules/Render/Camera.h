@@ -64,6 +64,13 @@ namespace ArcticFox {
 			float m_AspectRation = 0;
 		};
 
+		class EditorCamera : public Camera {
+		public: 
+			EditorCamera() = default;
+			EditorCamera(float fov, float aspectRatio, float near, float far);
+
+		};
+
 		class OrthographicCamera : public Camera {
 		public:
 			//OrthographicCamera() {}

@@ -23,48 +23,13 @@ void Editor::Application::Run() {
 
 	ArcticFox::Application::Run();
 
-	x = 0;
-	y = 0;
-
-	AppFrame::ResourceTexture* texture2 = AppFrame::ResourceManager::GetInstance()->GetResource<AppFrame::ResourceTexture>(std::filesystem::path("AirBallon.jpg"));
-	AppFrame::ResourceTexture* texture = AppFrame::ResourceManager::GetInstance()->GetResource<AppFrame::ResourceTexture>(std::filesystem::path("test.png"));
-
-	m_Texture = ArcticFox::Graphics::Texture2D::Create(texture);
-	m_Texture2 = ArcticFox::Graphics::Texture2D::Create(texture2);
-
-	/*VAO = Graphics::VertexArray::Create();
-	VBO = Graphics::VertexBuffer::Create(positions, sizeof(positions));
-	VBO->SetLayout({ {"a_Position", Graphics::DataType::FLOAT_3, false}, {"textCoords", Graphics::DataType::FLOAT_2, false} });
-	IBO = Graphics::IndexBuffer::Create(indice, sizeof(indice));
-	VAO->AddVertexBuffer(VBO);
-	VAO->SetIndexBuffer(IBO);*/
-
-	//Graphics::RecourceShader* vertex = AppFrame::ResourceManager::GetInstance()->GetResource<Graphics::RecourceShader>(std::filesystem::path("Shaders/BaseVertex.glsl"));
-	//Graphics::RecourceShader* fragment = AppFrame::ResourceManager::GetInstance()->GetResource<Graphics::RecourceShader>(std::filesystem::path("Shaders/BaseFragment.glsl"));
-	//std::string name("BaseShader");
-	//m_ShaderLibrary.Load(/*name, */std::filesystem::path("Shaders/BaseVertex.glsl"), std::filesystem::path("Shaders/BaseFragment.glsl"));
 	ArcticFox::Graphics::FrameBufferSpec specs;
-
 	specs.Width = 1280;
 	specs.Height = 720;
 
 	FBO = ArcticFox::Graphics::FrameBuffer::Create(specs);
 
-
-	/*entity = m_Scene.CreateEntity("Square");
-
-	entity.AddComponent<ArcticFox::SpriteRenderComponent>(glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
-
-	cameraEntity = m_Scene.CreateEntity("Camera");
-	auto& camera = cameraEntity.AddComponent<ArcticFox::CameraComponent>();
-	camera.Primary = true;*/
-
-
 	m_SceneHierarchyPanel.SetContext(&m_Scene);
-
-	/*entity1 = m_Scene.CreateEntity("Square14");
-
-	entity1.AddComponent<ArcticFox::SpriteRenderComponent>(glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));*/
 }
 
 void Editor::Application::OnEarlyUpdate() {
@@ -73,24 +38,6 @@ void Editor::Application::OnEarlyUpdate() {
 void Editor::Application::OnUpdate() {
 	ArcticFox::Application::OnUpdate();
 	m_Controller.OnUpdate(0);
-
-	/*auto& CamTrans = cameraEntity.GetComponent<ArcticFox::TransformComponent>();
-	//CamTrans = glm::translate(glm::mat4(1), CamPos);
-
-	if (AppFrame::InputManager::GetInstance()->IsButtonPressed(AppFrame::Key::KEY_A)) {
-		CamTrans.Position.x -=  0.1f;
-	}
-	else if (AppFrame::InputManager::GetInstance()->IsButtonPressed(AppFrame::Key::KEY_D)) {
-		CamTrans.Position.x += 0.1f;
-	}
-
-	if (AppFrame::InputManager::GetInstance()->IsButtonPressed(AppFrame::Key::KEY_W)) {
-		CamTrans.Position.y += 0.1f;
-	}
-	else if (AppFrame::InputManager::GetInstance()->IsButtonPressed(AppFrame::Key::KEY_S)) {
-		CamTrans.Position.y -= 0.1f;
-	}*/
-
 
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
 	ImGui::Begin("ViewPort");
@@ -108,12 +55,11 @@ void Editor::Application::OnUpdate() {
 	ArcticFox::Graphics::RenderCommand::Clear();
 	ArcticFox::Graphics::Render2D::ResetStats();
 
-	m_Scene.Update(0);
+	m_Scene.OnUpdateRuntime(0);
 
 	FBO->Unbind();
 	
 	auto stats = ArcticFox::Graphics::Render2D::GetStats();
-	rotation += 0.1f;
 
 	uint32_t coloroAttachment = FBO->GetColorAttachment0();
 	ImGui::Image((void*)coloroAttachment, vieportSize, { 0, 1 }, { 1, 0 });
@@ -165,13 +111,6 @@ void Editor::Application::OnUpdate() {
 		}
 	}
 	ImGui::End();
-
-
-
-	//auto& entityColor = m_Scene.m_Registry.get<ArcticFox::SpriteRenderComponent>()
-	//auto& compoenent = entity.GetComponent<ArcticFox::SpriteRenderComponent>();
-	/*auto& compoenent1 = entity1.GetComponent<ArcticFox::TransformComponent>();
-	compoenent1 = glm::translate(glm::mat4(1.0f), glm::vec3(-1, 0, 0));*/
 	
 	m_SceneHierarchyPanel.OnImGuiRender();
 

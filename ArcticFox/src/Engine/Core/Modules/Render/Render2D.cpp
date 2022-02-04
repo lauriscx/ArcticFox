@@ -133,6 +133,16 @@ void ArcticFox::Graphics::Render2D::BeginScene(const Camera & camera, const glm:
 	s_2DRenderData->QuadVertexPtr = s_2DRenderData->QuadVertexBase;
 }
 
+void ArcticFox::Graphics::Render2D::BeginScene(const Camera & camera) {
+	glm::mat4 viewProjection = camera.GetProjectionMatrix();
+
+	s_2DRenderData->m_Shader->Bind();
+	s_2DRenderData->m_Shader->UploadUniform("u_ViewPeojection", viewProjection);
+	s_2DRenderData->TextureSlotIndex = 1;
+	s_2DRenderData->QuadIndexCount = 0;
+	s_2DRenderData->QuadVertexPtr = s_2DRenderData->QuadVertexBase;
+}
+
 void ArcticFox::Graphics::Render2D::BeginScene(const OrthographicCamera & camera) {
 	s_2DRenderData->m_Shader->Bind();
 	s_2DRenderData->m_Shader->UploadUniform("u_ViewPeojection", camera.GetViewProjectionMatrix());

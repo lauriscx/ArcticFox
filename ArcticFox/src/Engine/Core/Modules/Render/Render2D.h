@@ -9,6 +9,7 @@ namespace ArcticFox {
 			static void Init();
 
 			static void BeginScene(const Camera& camera, const glm::mat4& transform);
+			static void BeginScene(const Camera& camera);
 			static void BeginScene(const OrthographicCamera& camera);
 
 			static void DrawQuad(const glm::mat4 matrix, const glm::vec4& color);
