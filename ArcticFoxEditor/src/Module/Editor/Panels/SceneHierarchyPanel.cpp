@@ -159,8 +159,9 @@ void Editor::SceneHierarchyPanel::DrawComponents(ArcticFox::Entity entity) {
 			if (ImGui::DragFloat3("Position", glm::value_ptr(transformCom.Position), 0.25f)) {
 
 			}
-			if (ImGui::DragFloat3("Rotation", glm::value_ptr(transformCom.Rotation), 0.25f)) {
-
+			glm::vec3 rotation = glm::degrees(transformCom.Rotation);
+			if (ImGui::DragFloat3("Rotation", glm::value_ptr(rotation), 0.25f)) {
+				transformCom.Rotation = glm::radians(rotation);
 			}
 			if (ImGui::DragFloat3("Scale", glm::value_ptr(transformCom.Scale), 0.25f)) {
 
