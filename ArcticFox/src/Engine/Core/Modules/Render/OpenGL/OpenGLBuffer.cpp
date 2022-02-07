@@ -56,7 +56,111 @@ ArcticFox::Graphics::OpenGL::OpenGLVertexArray::OpenGLVertexArray() {
 	glGenVertexArrays(1, &m_VAO);
 }
 void ArcticFox::Graphics::OpenGL::OpenGLVertexArray::AddVertexBuffer(VertexBuffer* buffer) {
+	auto ParseDataType = [](DataType type) {
+		switch (type) {
+		case Graphics::DataType::NONE:		return GL_FLOAT;
+		case Graphics::DataType::FLOAT_1:	return GL_FLOAT;
+		case Graphics::DataType::FLOAT_2:	return GL_FLOAT;
+		case Graphics::DataType::FLOAT_3:	return GL_FLOAT;
+		case Graphics::DataType::FLOAT_4:	return GL_FLOAT;
+		case Graphics::DataType::FLOAT_9:	return GL_FLOAT;
+		case Graphics::DataType::FLOAT_16:	return GL_FLOAT;
+		case Graphics::DataType::UINT_1:	return GL_UNSIGNED_INT;
+		case Graphics::DataType::UINT_2:	return GL_UNSIGNED_INT;
+		case Graphics::DataType::UINT_3:	return GL_UNSIGNED_INT;
+		case Graphics::DataType::UINT_4:	return GL_UNSIGNED_INT;
+		case Graphics::DataType::UINT_9:	return GL_UNSIGNED_INT;
+		case Graphics::DataType::UINT_16:	return GL_UNSIGNED_INT;
+		case Graphics::DataType::INT_1:		return GL_INT;
+		case Graphics::DataType::INT_2:		return GL_INT;
+		case Graphics::DataType::INT_3:		return GL_INT;
+		case Graphics::DataType::INT_4:		return GL_INT;
+		case Graphics::DataType::INT_9:		return GL_INT;
+		case Graphics::DataType::INT_16:	return GL_INT;
+		case Graphics::DataType::BOOL_1:	return GL_BOOL;
+		case Graphics::DataType::BOOL_2:	return GL_BOOL;
+		case Graphics::DataType::BOOL_3:	return GL_BOOL;
+		case Graphics::DataType::BOOL_4:	return GL_BOOL;
+		case Graphics::DataType::BOOL_9:	return GL_BOOL;
+		case Graphics::DataType::BOOL_16:	return GL_BOOL;
+		case Graphics::DataType::COUNT:		return GL_FLOAT;
+		default: return GL_FLOAT;
+		}
+		return GL_FLOAT;
+	};
+	
 	glBindVertexArray(m_VAO);
+	
+	buffer->Bind();
+	const auto& layout = buffer->GetLayout();
+	for (int i = 0; i < layout.GetElements().size(); i++) {
+
+		BufferElement element = layout.GetElements()[i];
+		switch (element.m_Type) {
+			case Graphics::DataType::FLOAT_1: {
+				glEnableVertexAttribArray(i);
+				glVertexAttribPointer(i, element.m_Components, (GLenum)ParseDataType(element.m_Type), element.m_Normalized ? GL_TRUE : GL_FALSE, layout.GetStride(), (const void*)element.m_Offset);
+				break;
+			}
+			case Graphics::DataType::FLOAT_2: {
+				glEnableVertexAttribArray(i);
+				glVertexAttribPointer(i, element.m_Components, (GLenum)ParseDataType(element.m_Type), element.m_Normalized ? GL_TRUE : GL_FALSE, layout.GetStride(), (const void*)element.m_Offset);
+				break;
+			}
+			case Graphics::DataType::FLOAT_3: {
+				glEnableVertexAttribArray(i);
+				glVertexAttribPointer(i, element.m_Components, (GLenum)ParseDataType(element.m_Type), element.m_Normalized ? GL_TRUE : GL_FALSE, layout.GetStride(), (const void*)element.m_Offset);
+				break;
+			}
+			case Graphics::DataType::FLOAT_4: {
+				glEnableVertexAttribArray(i);
+				glVertexAttribPointer(i, element.m_Components, (GLenum)ParseDataType(element.m_Type), element.m_Normalized ? GL_TRUE : GL_FALSE, layout.GetStride(), (const void*)element.m_Offset);
+				break;
+			}
+			case Graphics::DataType::FLOAT_9: {}
+			case Graphics::DataType::FLOAT_16: {}
+			case Graphics::DataType::UINT_1: {}
+			case Graphics::DataType::UINT_2: {}
+			case Graphics::DataType::UINT_3: {}
+			case Graphics::DataType::UINT_4: {}
+			case Graphics::DataType::UINT_9: {}
+			case Graphics::DataType::UINT_16: {}
+			case Graphics::DataType::INT_1: {
+				glEnableVertexAttribArray(i);
+				glVertexAttribIPointer(i, element.m_Components, (GLenum)ParseDataType(element.m_Type), layout.GetStride(), (const void*)element.m_Offset);
+				break;
+			}
+			case Graphics::DataType::INT_2: {
+				glEnableVertexAttribArray(i);
+				glVertexAttribIPointer(i, element.m_Components, (GLenum)ParseDataType(element.m_Type), layout.GetStride(), (const void*)element.m_Offset);
+				break;
+			}
+			case Graphics::DataType::INT_3: {
+				glEnableVertexAttribArray(i);
+				glVertexAttribIPointer(i, element.m_Components, (GLenum)ParseDataType(element.m_Type), layout.GetStride(), (const void*)element.m_Offset);
+				break;
+			}
+			case Graphics::DataType::INT_4: {
+				glEnableVertexAttribArray(i);
+				glVertexAttribIPointer(i, element.m_Components, (GLenum)ParseDataType(element.m_Type), layout.GetStride(), (const void*)element.m_Offset);
+				break;
+			}
+			case Graphics::DataType::INT_9: {}
+			case Graphics::DataType::INT_16: {}
+			case Graphics::DataType::BOOL_1: {}
+			case Graphics::DataType::BOOL_2: {}
+			case Graphics::DataType::BOOL_3: {}
+			case Graphics::DataType::BOOL_4: {}
+			case Graphics::DataType::BOOL_9: {}
+			case Graphics::DataType::BOOL_16: {}
+		}
+	
+	}
+	m_VertexBuffers.push_back(buffer);
+	
+	
+
+	/*glBindVertexArray(m_VAO);
 	
 	auto ParseDataType = [](DataType type) {
 		switch (type) {
@@ -98,7 +202,7 @@ void ArcticFox::Graphics::OpenGL::OpenGLVertexArray::AddVertexBuffer(VertexBuffe
 		glEnableVertexAttribArray(i);
 		glVertexAttribPointer(i, element.m_Components, (GLenum)ParseDataType(element.m_Type), element.m_Normalized ? GL_TRUE : GL_FALSE, layout.GetStride(), (const void*)element.m_Offset);
 	}
-	m_VertexBuffers.push_back(buffer);
+	m_VertexBuffers.push_back(buffer);*/
 }
 void ArcticFox::Graphics::OpenGL::OpenGLVertexArray::SetIndexBuffer(IndexBuffer * buffer) {
 	glBindVertexArray(m_VAO);

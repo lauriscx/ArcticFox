@@ -3,13 +3,14 @@
 #include "Texture.h"
 
 namespace ArcticFox {
+	struct SpriteRenderComponent;
 	namespace Graphics {
 		class Render2D {
 		public:
 			static void Init();
 
 			static void BeginScene(const Camera& camera, const glm::mat4& transform);
-			static void BeginScene(const Camera& camera);
+			static void BeginScene(const EditorCamera& camera);
 			static void BeginScene(const OrthographicCamera& camera);
 
 			static void DrawQuad(const glm::mat4 matrix, const glm::vec4& color);
@@ -22,6 +23,8 @@ namespace ArcticFox {
 			static void DrawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color, Texture* texture);
 
 			static void DrawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color, Texture* texture, float rotate);
+
+			static void DrawSprite(const glm::mat4 matrix, SpriteRenderComponent& src, int entityID = -1);
 
 			static void Flush();
 

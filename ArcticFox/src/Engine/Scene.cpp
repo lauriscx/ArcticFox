@@ -58,12 +58,13 @@ void ArcticFox::Scene::OnUpdateRuntime(float deltaTime) {
 	//Render 3D
 }
 
-void ArcticFox::Scene::OnUpdateEditor(float deltaTime, ArcticFox::Graphics::SceneCamera & camera) {
+void ArcticFox::Scene::OnUpdateEditor(float deltaTime, ArcticFox::Graphics::EditorCamera & camera) {
 	ArcticFox::Graphics::Render2D::BeginScene(camera);
 	auto group = m_Registry.group<TransformComponent>(entt::get<SpriteRenderComponent>);
 	for (auto entity : group) {
 		auto&[transform, sprite] = group.get<TransformComponent, SpriteRenderComponent>(entity);
-		Graphics::Render2D::DrawQuad(transform.GetTranformation(), sprite.m_Color);
+		//Graphics::Render2D::DrawQuad(transform.GetTranformation(), sprite.m_Color);
+		Graphics::Render2D::DrawSprite(transform.GetTranformation(), sprite, (int)entity);
 	}
 	ArcticFox::Graphics::Render2D::EndScene();
 }

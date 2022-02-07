@@ -49,7 +49,10 @@ namespace Editor {
 		glm::vec2 m_vieportSize;
 		glm::vec3 CamPos = {0.0f, 0.0f, 0.0f};
 
+		glm::vec2 m_ViewPortBound[2];
+
 		ArcticFox::Scene m_Scene;
 		SceneHierarchyPanel m_SceneHierarchyPanel;
+		ArcticFox::Graphics::EditorCamera m_Editor;
 	};
 }

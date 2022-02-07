@@ -16,8 +16,11 @@ namespace ArcticFox {
 
 				virtual void Resize(uint32_t x, uint32_t y) override;
 
-				virtual uint32_t GetColorAttachment0() const override;
-				virtual uint32_t GetDepthAttachment() const override;
+				virtual int ReadPixel(uint32_t attachmentID, uint32_t x, uint32_t y) override;
+				virtual void ClearColorAttachemnt(uint32_t id, int value) override;
+
+				virtual uint32_t GetColorAttachment(uint32_t index = 0) const override { return m_ColorAttachments[index]; };
+				virtual uint32_t GetDepthAttachment() const override { return m_DepthAttachment; };
 
 				virtual ~OpenGLFrameBuffer();
 
@@ -25,8 +28,11 @@ namespace ArcticFox {
 			private:
 				FrameBufferSpec m_Specs;
 				uint32_t m_FrameBuffer = 0;
-				uint32_t m_ColorAttachment0 = 0;
-				uint32_t m_DepthAttachment0 = 0;
+				std::vector <uint32_t> m_ColorAttachments;
+				uint32_t m_DepthAttachment = 0;
+
+				std::vector<FramebufferTextureSpecification> m_ColarAttachmentSpecification;
+				FramebufferTextureSpecification m_DepthAttachmentSpecification;
 			};
 		}
 	}

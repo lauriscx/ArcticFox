@@ -4,6 +4,8 @@
 #include "Texture.h"
 #include "RenderCommand.h"
 
+#include "Engine/Core/ECS/Components.h"
+
 #include <array>
 #include <glm/gtc/matrix_transform.hpp>
 
@@ -14,6 +16,7 @@ namespace ArcticFox {
 			glm::vec4 Color;
 			glm::vec2 TexCoord;
 			float ImageIndex;
+			int EntityID = -1;
 		};
 
 		struct Render2DCache {
@@ -54,7 +57,8 @@ void ArcticFox::Graphics::Render2D::Init() {
 	s_2DRenderData->m_VBO->SetLayout({	{"b_Position", DataType::FLOAT_3},
 										{"b_Color", DataType::FLOAT_4},
 										{"b_Coords", DataType::FLOAT_2},
-										{"b_TextIndex", DataType::FLOAT_1} });
+										{"b_TextIndex", DataType::FLOAT_1},
+										{"b_EntityIndex", DataType::INT_1} });
 
 	s_2DRenderData->m_VAO->AddVertexBuffer(s_2DRenderData->m_VBO);
 
@@ -83,27 +87,32 @@ void ArcticFox::Graphics::Render2D::Init() {
 		"layout(location = 1) in vec4 b_Color;\n"
 		"layout(location = 2) in vec2 b_Coords;\n"
 		"layout(location = 3) in float b_TextIndex;\n"
+		"layout(location = 4) in int b_EntityIndex;\n"
 		"uniform mat4 u_ViewPeojection;\n"
 		"out vec2 p_Coords;\n"
 		"out vec4 p_Color;\n"
-		"out float p_TextIndex;\n"
+		"flat out float p_TextIndex;\n"
+		"flat out int p_EntityIndex;\n"
 		"void main() {\n"
 		"	p_Coords = b_Coords;\n"
 		"	p_Color = b_Color;\n"
+		"	p_EntityIndex = b_EntityIndex;\n"
 		"	p_TextIndex = b_TextIndex;\n"
 		"	gl_Position = u_ViewPeojection * vec4(b_Position, 1.0);\n"
 		"}";
 
 	std::string Fragment =
 		"#version 330 core\n"
-		"uniform vec4 u_color;\n"
 		"uniform sampler2D u_texture[32];\n"
 		"in vec2 p_Coords;\n"
 		"in vec4 p_Color;\n"
-		"in float p_TextIndex;\n"
-		"out vec4 color;\n"
+		"flat in float p_TextIndex;\n"
+		"flat in int p_EntityIndex;\n"
+		"layout(location = 0) out vec4 color;\n"
+		"layout(location = 1) out int entityId;\n"
 		"void main() {\n"
 		"	color = texture(u_texture[int(p_TextIndex)], p_Coords) * p_Color;\n"
+		"	entityId = p_EntityIndex;\n"
 		"}";
 
 	s_2DRenderData->m_Texture = Texture2D::Create(1, 1);
@@ -133,8 +142,8 @@ void ArcticFox::Graphics::Render2D::BeginScene(const Camera & camera, const glm:
 	s_2DRenderData->QuadVertexPtr = s_2DRenderData->QuadVertexBase;
 }
 
-void ArcticFox::Graphics::Render2D::BeginScene(const Camera & camera) {
-	glm::mat4 viewProjection = camera.GetProjectionMatrix();
+void ArcticFox::Graphics::Render2D::BeginScene(const EditorCamera & camera) {
+	glm::mat4 viewProjection = camera.GetViewProjection();
 
 	s_2DRenderData->m_Shader->Bind();
 	s_2DRenderData->m_Shader->UploadUniform("u_ViewPeojection", viewProjection);
@@ -504,6 +513,46 @@ void ArcticFox::Graphics::Render2D::DrawQuad(const glm::vec3 & position, const g
 	s_2DRenderData->QuadVertexPtr->Color = color;
 	s_2DRenderData->QuadVertexPtr->TexCoord = { 0.0f, 1.0f };
 	s_2DRenderData->QuadVertexPtr->ImageIndex = TextureIndex;
+	s_2DRenderData->QuadVertexPtr++;
+
+	s_2DRenderData->QuadIndexCount += 6;
+
+	s_2DRenderData->m_Statistics.m_QuodCount++;
+}
+
+void ArcticFox::Graphics::Render2D::DrawSprite(const glm::mat4 matrix, SpriteRenderComponent & src, int entityID) {
+	if (s_2DRenderData->QuadIndexCount >= Render2DCache::maxIndices) {
+		EndScene();
+	}
+
+	int TextureIndex = 0;
+
+	s_2DRenderData->QuadVertexPtr->Position = matrix * s_2DRenderData->QoudPositionTemplate[0];
+	s_2DRenderData->QuadVertexPtr->Color = src.m_Color;
+	s_2DRenderData->QuadVertexPtr->TexCoord = { 0.0f, 0.0f };
+	s_2DRenderData->QuadVertexPtr->ImageIndex = TextureIndex;
+	s_2DRenderData->QuadVertexPtr->EntityID = entityID;
+	s_2DRenderData->QuadVertexPtr++;
+
+	s_2DRenderData->QuadVertexPtr->Position = matrix * s_2DRenderData->QoudPositionTemplate[1];
+	s_2DRenderData->QuadVertexPtr->Color = src.m_Color;
+	s_2DRenderData->QuadVertexPtr->TexCoord = { 1.0f, 0.0f };
+	s_2DRenderData->QuadVertexPtr->ImageIndex = TextureIndex;
+	s_2DRenderData->QuadVertexPtr->EntityID = entityID;
+	s_2DRenderData->QuadVertexPtr++;
+
+	s_2DRenderData->QuadVertexPtr->Position = matrix * s_2DRenderData->QoudPositionTemplate[2];
+	s_2DRenderData->QuadVertexPtr->Color = src.m_Color;
+	s_2DRenderData->QuadVertexPtr->TexCoord = { 1.0f, 1.0f };
+	s_2DRenderData->QuadVertexPtr->ImageIndex = TextureIndex;
+	s_2DRenderData->QuadVertexPtr->EntityID = entityID;
+	s_2DRenderData->QuadVertexPtr++;
+
+	s_2DRenderData->QuadVertexPtr->Position = matrix * s_2DRenderData->QoudPositionTemplate[3];
+	s_2DRenderData->QuadVertexPtr->Color = src.m_Color;
+	s_2DRenderData->QuadVertexPtr->TexCoord = { 0.0f, 1.0f };
+	s_2DRenderData->QuadVertexPtr->ImageIndex = TextureIndex;
+	s_2DRenderData->QuadVertexPtr->EntityID = entityID;
 	s_2DRenderData->QuadVertexPtr++;
 
 	s_2DRenderData->QuadIndexCount += 6;
