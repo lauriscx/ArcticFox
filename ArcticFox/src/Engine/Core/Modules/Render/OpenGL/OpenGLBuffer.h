@@ -61,6 +61,17 @@ namespace ArcticFox {
 				IndexBuffer* m_IndexBuffer;
 				std::vector<VertexBuffer*> m_VertexBuffers;
 			};
+
+			class OpenGLUniformBuffer : public UniformBuffer {
+			public:
+				OpenGLUniformBuffer(uint32_t size, uint32_t binding);
+
+				void SetData(void* data, uint32_t size, uint32_t offset) override;
+
+				virtual ~OpenGLUniformBuffer();
+			private:
+				uint32_t m_UFO;
+			};
 		}
 	}
 }

@@ -53,5 +53,15 @@ namespace ArcticFox {
 
 			virtual ~VertexArray();
 		};
+		
+		class UniformBuffer {
+		public:
+
+			static UniformBuffer* Create(uint32_t size, uint32_t binding);
+
+			virtual void SetData(void* data, uint32_t size, uint32_t offset) = 0;
+
+			virtual ~UniformBuffer();
+		};
 	}
 }

@@ -2,6 +2,9 @@
 project "ArcticFoxEditor"
 	kind "ConsoleApp"
 	language "C++"
+	cppdialect "C++17"
+	staticruntime "off"
+	
 	targetdir ("../Build/bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("../Build/bin-int/" .. outputdir .. "/%{prj.name}")
 
@@ -26,25 +29,25 @@ project "ArcticFoxEditor"
 	}
 
 	links {
-		"ArcticFox",
-		"yaml-cpp"
+		"ArcticFox"
 	}
 
 	filter "system:windows"
-		cppdialect "c++17"
-		staticruntime "On"
 		systemversion "latest"
 
 		defines {
-			"ENGINE_PLATFORM_WINDOWS",
-			"_MBCS",
-			"IMGUI_API=__declspec(dllimport)"
+			--"ENGINE_PLATFORM_WINDOWS",
+			"_MBCS"
+			--"IMGUI_API=__declspec(dllimport)"
 		}
 
 		filter { "configurations:Debug" }
 			runtime "Debug"
 			defines "DEBUG"
 			symbols "On"
+			postbuildcommands {
+				"{COPYDIR} \"%{LibraryDir.VulkanSDK_DebugDLL}\" \"%{cfg.targetdir}\""
+			}
 
 		filter { "configurations:Release" }
 			runtime "Release"

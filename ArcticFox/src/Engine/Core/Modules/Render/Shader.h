@@ -10,7 +10,7 @@ namespace ArcticFox {
 		public:
 			Shader();
 
-			static Shader* Create(const std::string& name, const std::string& vertex, const std::string& fragment);
+			static Shader* Create(const std::string& name, const std::string& vertex, const std::string& fragment, bool spirv = false);
 
 			virtual const std::string& GetName() const = 0;
 

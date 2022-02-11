@@ -32,6 +32,7 @@ namespace ArcticFox {
 
 			VertexArray* m_VAO;
 			VertexBuffer* m_VBO;
+			UniformBuffer* m_UBO;
 			Shader* m_Shader;
 
 			std::array<Texture*, maxTextureSlots> TextureSlots;
@@ -42,6 +43,12 @@ namespace ArcticFox {
 			glm::vec4 QoudPositionTemplate[4] = { {-0.5f, -0.5f, 0.0f, 1.0f}, {0.5f, -0.5f, 0.0f, 1.0f}, {0.5f, 0.5f, 0.0f, 1.0f}, {-0.5f, 0.5f, 0.0f, 1.0f} };
 
 			Render2D::Statistics m_Statistics;
+
+			struct CameraData
+			{
+				glm::mat4 ViewProjection;
+			};
+			CameraData m_CameraBuffer;
 		};
 		static Render2DCache* s_2DRenderData;
 	}
@@ -61,6 +68,8 @@ void ArcticFox::Graphics::Render2D::Init() {
 										{"b_EntityIndex", DataType::INT_1} });
 
 	s_2DRenderData->m_VAO->AddVertexBuffer(s_2DRenderData->m_VBO);
+
+	s_2DRenderData->m_UBO = UniformBuffer::Create(sizeof(Render2DCache::CameraData), 0);
 
 	uint32_t* qaudIndices = new uint32_t[s_2DRenderData->maxIndices];
 
@@ -115,19 +124,61 @@ void ArcticFox::Graphics::Render2D::Init() {
 		"	entityId = p_EntityIndex;\n"
 		"}";
 
+		//"layout(std140, binding  = 0) uniform Camera {\n"
+		//"	mat4 u_ViewPeojection;\n"
+		//"};"
+
+	std::string VertexVulkan =
+		"#version 450 core\n"
+		"layout(location = 0) in vec3 b_Position;\n"
+		"layout(location = 1) in vec4 b_Color;\n"
+		"layout(location = 2) in vec2 b_Coords;\n"
+		"layout(location = 3) in float b_TextIndex;\n"
+		"layout(location = 4) in int b_EntityIndex;\n"
+		"layout(std140, binding = 0) uniform Camera\n"
+		"{\n"
+		"	mat4 u_ViewProjection;\n"
+		"};\n"
+		"layout(location = 0) out vec2 p_Coords;\n"
+		"layout(location = 1) out vec4 p_Color;\n"
+		"layout(location = 2) flat out float p_TextIndex;\n"
+		"layout(location = 3) flat out int p_EntityIndex;\n"
+		"void main() {\n"
+		"	p_Coords = b_Coords;\n"
+		"	p_Color = b_Color;\n"
+		"	p_EntityIndex = b_EntityIndex;\n"
+		"	p_TextIndex = b_TextIndex;\n"
+		"	gl_Position = u_ViewProjection * vec4(b_Position, 1.0);\n"
+		"}";
+
+	std::string FragmentVulkan =
+		"#version 450 core\n"
+		"layout(location = 0) out vec4 color;\n"
+		"layout(location = 1) out int entityId;\n"
+		"layout(location = 0) in vec2 p_Coords;\n"
+		"layout(location = 1) in vec4 p_Color;\n"
+		"layout(location = 2) flat in float p_TextIndex;\n"
+		"layout(location = 3) flat in int p_EntityIndex;\n"
+		"layout(binding = 0) uniform sampler2D u_texture[32];\n"
+		"void main() {\n"
+		"	color = texture(u_texture[int(p_TextIndex)], p_Coords) * p_Color;\n"
+		"	entityId = p_EntityIndex;\n"
+		"}";
+
 	s_2DRenderData->m_Texture = Texture2D::Create(1, 1);
 	uint32_t white = 0xfffffffff;
 	s_2DRenderData->m_Texture->SetData(&white, sizeof(white));
 	s_2DRenderData->TextureSlots[0] = s_2DRenderData->m_Texture;
 
-	s_2DRenderData->m_Shader = Shader::Create("2DShader", Vertex, Fragment);
+	//s_2DRenderData->m_Shader = Shader::Create("2DShader", Vertex, Fragment, false);
+	s_2DRenderData->m_Shader = Shader::Create("2DShader", VertexVulkan, FragmentVulkan, true);
 
-	int samplers[s_2DRenderData->maxTextureSlots];
+	/*int samplers[s_2DRenderData->maxTextureSlots];
 	for (uint32_t i = 0; i < s_2DRenderData->maxTextureSlots; i++) {
 		samplers[i] = i;
-	}
+	}*/
 
-	s_2DRenderData->m_Shader->UploadUniform("u_texture", samplers, s_2DRenderData->maxTextureSlots);
+	//s_2DRenderData->m_Shader->UploadUniform("u_texture", samplers, s_2DRenderData->maxTextureSlots);
 
 }
 
@@ -135,8 +186,11 @@ void ArcticFox::Graphics::Render2D::BeginScene(const Camera & camera, const glm:
 
 	glm::mat4 viewProjection = camera.GetProjectionMatrix() * glm::inverse(transform);
 
+	s_2DRenderData->m_CameraBuffer.ViewProjection = viewProjection;
+	s_2DRenderData->m_UBO->SetData(&s_2DRenderData->m_CameraBuffer, sizeof(Render2DCache::CameraData), 0);
+
 	s_2DRenderData->m_Shader->Bind();
-	s_2DRenderData->m_Shader->UploadUniform("u_ViewPeojection", viewProjection);
+	//s_2DRenderData->m_Shader->UploadUniform("camera.transform", viewProjection);
 	s_2DRenderData->TextureSlotIndex = 1;
 	s_2DRenderData->QuadIndexCount = 0;
 	s_2DRenderData->QuadVertexPtr = s_2DRenderData->QuadVertexBase;
@@ -145,16 +199,22 @@ void ArcticFox::Graphics::Render2D::BeginScene(const Camera & camera, const glm:
 void ArcticFox::Graphics::Render2D::BeginScene(const EditorCamera & camera) {
 	glm::mat4 viewProjection = camera.GetViewProjection();
 
+	s_2DRenderData->m_CameraBuffer.ViewProjection = viewProjection;
+	s_2DRenderData->m_UBO->SetData(&s_2DRenderData->m_CameraBuffer, sizeof(Render2DCache::CameraData), 0);
+
 	s_2DRenderData->m_Shader->Bind();
-	s_2DRenderData->m_Shader->UploadUniform("u_ViewPeojection", viewProjection);
+	//s_2DRenderData->m_Shader->UploadUniform("camera.transform", viewProjection);
 	s_2DRenderData->TextureSlotIndex = 1;
 	s_2DRenderData->QuadIndexCount = 0;
 	s_2DRenderData->QuadVertexPtr = s_2DRenderData->QuadVertexBase;
 }
 
 void ArcticFox::Graphics::Render2D::BeginScene(const OrthographicCamera & camera) {
+	s_2DRenderData->m_CameraBuffer.ViewProjection = camera.GetViewProjectionMatrix();
+	s_2DRenderData->m_UBO->SetData(&s_2DRenderData->m_CameraBuffer, sizeof(Render2DCache::CameraData), 0);
+
 	s_2DRenderData->m_Shader->Bind();
-	s_2DRenderData->m_Shader->UploadUniform("u_ViewPeojection", camera.GetViewProjectionMatrix());
+	//s_2DRenderData->m_Shader->UploadUniform("camera.transform", camera.GetViewProjectionMatrix());
 	s_2DRenderData->TextureSlotIndex = 1;
 	s_2DRenderData->QuadIndexCount = 0;
 	s_2DRenderData->QuadVertexPtr = s_2DRenderData->QuadVertexBase;

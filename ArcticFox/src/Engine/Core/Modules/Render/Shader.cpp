@@ -5,10 +5,10 @@
 
 ArcticFox::Graphics::Shader::Shader() {}
 
-ArcticFox::Graphics::Shader * ArcticFox::Graphics::Shader::Create(const std::string& name, const std::string& vertex, const std::string& fragment) {
+ArcticFox::Graphics::Shader * ArcticFox::Graphics::Shader::Create(const std::string& name, const std::string& vertex, const std::string& fragment, bool spirv) {
 	switch (RendererAPI::GetAPI()) {
 		case RendererAPI::API::None:		return nullptr;
-		case RendererAPI::API::OpenGL:		return new OpenGL::OpenGLShader(name, vertex, fragment);
+		case RendererAPI::API::OpenGL:		return new OpenGL::OpenGLShader(name, vertex, fragment, spirv);
 		case RendererAPI::API::Directx9:	return nullptr;
 		case RendererAPI::API::Directx10:	return nullptr;
 		case RendererAPI::API::Vulkan:		return nullptr;

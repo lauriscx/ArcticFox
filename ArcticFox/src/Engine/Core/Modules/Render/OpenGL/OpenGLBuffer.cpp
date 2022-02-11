@@ -224,3 +224,15 @@ void ArcticFox::Graphics::OpenGL::OpenGLVertexArray::Unbind() {
 ArcticFox::Graphics::OpenGL::OpenGLVertexArray::~OpenGLVertexArray() {
 	glDeleteVertexArrays(1, &m_VAO);
 }
+
+ArcticFox::Graphics::OpenGL::OpenGLUniformBuffer::OpenGLUniformBuffer(uint32_t size, uint32_t binding) {
+	glCreateBuffers(1, &m_UFO);
+	glNamedBufferData(m_UFO, size, nullptr, GL_DYNAMIC_DRAW);
+	glBindBufferBase(GL_UNIFORM_BUFFER, binding, m_UFO);
+}
+void ArcticFox::Graphics::OpenGL::OpenGLUniformBuffer::SetData(void * data, uint32_t size, uint32_t offset) {
+	glNamedBufferSubData(m_UFO, offset, size, data);
+}
+ArcticFox::Graphics::OpenGL::OpenGLUniformBuffer::~OpenGLUniformBuffer() {
+	glDeleteBuffers(1, &m_UFO);
+}

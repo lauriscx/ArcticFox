@@ -1,12 +1,13 @@
 #pragma once
 #include "../Shader.h"
+#include "Glad/glad.h"
 
 namespace ArcticFox {
 	namespace Graphics {
 		namespace OpenGL {
 			class OpenGLShader : public Shader {
 			public:
-				OpenGLShader(const std::string& name, const std::string& vertex, const std::string& fragment);
+				OpenGLShader(const std::string& name, const std::string& vertex, const std::string& fragment, bool spirv = false);
 				~OpenGLShader();
 
 				virtual const std::string& GetName() const override;
@@ -26,6 +27,13 @@ namespace ArcticFox {
 				unsigned int m_FragmentShader;
 				unsigned int m_Shader;
 				std::string m_Name;
+
+				//SPIR-V implementation
+			private:
+				std::unordered_map<GLenum, std::vector<uint32_t>> CompileVulkanBinaries(const std::unordered_map<GLenum, std::string>& shadersSourceCode);
+				std::unordered_map<GLenum, std::vector<uint32_t>> CompileOpenGLBinaries(const std::unordered_map<GLenum, std::vector<uint32_t>>& shadersSourceCode);
+				void CreateShaderProgram(std::unordered_map<GLenum, std::vector<uint32_t>> openglBinary);
+				void CreateShaderProgram(const std::unordered_map<GLenum, std::string>& shadersSourceCode);
 			};
 		}
 	}

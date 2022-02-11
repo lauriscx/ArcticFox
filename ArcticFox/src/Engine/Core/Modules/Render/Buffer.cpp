@@ -61,3 +61,19 @@ ArcticFox::Graphics::VertexArray * ArcticFox::Graphics::VertexArray::Create() {
 	return nullptr;
 }
 ArcticFox::Graphics::VertexArray::~VertexArray() {}
+
+ArcticFox::Graphics::UniformBuffer * ArcticFox::Graphics::UniformBuffer::Create(uint32_t size, uint32_t binding) {
+	switch (RendererAPI::GetAPI()) {
+	case RendererAPI::API::None:		return nullptr;
+	case RendererAPI::API::OpenGL:		return new OpenGL::OpenGLUniformBuffer(size, binding);
+	case RendererAPI::API::Directx9:	return nullptr;
+	case RendererAPI::API::Directx10:	return nullptr;
+	case RendererAPI::API::Vulkan:		return nullptr;
+	case RendererAPI::API::Metal:		return nullptr;
+	default: return nullptr;
+	}
+
+	return nullptr;
+}
+
+ArcticFox::Graphics::UniformBuffer::~UniformBuffer() {}
