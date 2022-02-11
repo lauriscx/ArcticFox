@@ -14,13 +14,6 @@ glm::vec3 mPosT(0, 0, 0);
 glm::vec3 mRotT(0, 0, 0);
 glm::vec3 mScaT(1, 1, 1);
 void Editor::Application::Run() {
-	AddModule<AppFrame::ModuleWindow>(new AppFrame::ModuleWindow());
-	AddModule<AppFrame::ModuleConsole>(new AppFrame::ModuleConsole());
-	//AddModule<AppFrame::SoundModule>(new AppFrame::SoundModule());
-	AddModule<ArcticFox::GraphicsModule>(new ArcticFox::GraphicsModule());
-	AddModule<AppFrame::ModuleIMGUI>(new AppFrame::ModuleIMGUI());
-	AddModule<Editor>(new Editor());
-
 	ArcticFox::Application::Run();
 
 	ArcticFox::Graphics::FrameBufferSpec specs;

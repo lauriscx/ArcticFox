@@ -1,5 +1,7 @@
 #include "Application.h"
 #include <AppFrame.h>
+#include "Module/Editor/Editor.h"
+#include <Engine/Core/Modules/Render/GraphicsModule.h>
 
 
 int main() {
@@ -11,6 +13,15 @@ int main() {
 
 		AppFrame::AppConfig config;
 		Editor::Application * aap = new Editor::Application(&config);
+
+		/* Add application behavior/functionality  */
+		aap->AddModule<AppFrame::ModuleWindow>(new AppFrame::ModuleWindow());
+		aap->AddModule<AppFrame::ModuleConsole>(new AppFrame::ModuleConsole());
+		//aap->AddModule<AppFrame::SoundModule>(new AppFrame::SoundModule());
+		aap->AddModule<ArcticFox::GraphicsModule>(new ArcticFox::GraphicsModule());
+		aap->AddModule<AppFrame::ModuleIMGUI>(new AppFrame::ModuleIMGUI());
+		aap->AddModule<Editor::Editor>(new Editor::Editor());
+
 		Editor::Application::SetInstance(aap);
 		//aap->SetConfig(&config);
 		aap->Run();
