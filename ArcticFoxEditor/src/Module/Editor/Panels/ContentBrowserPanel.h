@@ -10,5 +10,6 @@ namespace Editor {
 
 	private:
 		AppFrame::PhysicalMountPoint* m_MountDirectory;
+		std::filesystem::path m_Dir;
 	};
 }

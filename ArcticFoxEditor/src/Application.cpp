@@ -157,6 +157,7 @@ void Editor::Application::OnUpdate() {
 	ImGui::End();
 	
 	m_SceneHierarchyPanel.OnImGuiRender();
+	m_ContentBrowserPanel.OnImGuiRender();
 
 	ImGui::PopStyleVar();
 }

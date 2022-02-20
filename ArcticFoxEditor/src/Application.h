@@ -15,6 +15,7 @@
 #include "Engine/Core/ECS/Entity.h"
 #include <AppFrame.h>
 #include "Module/Editor/Panels/SceneHierarchyPanel.h"
+#include "Module/Editor/Panels/ContentBrowserPanel.h"
 
 /*#include "Application/Modules/Render/Mesh.h"
 #include "Application/Modules/Render/Renderer.h"*/
@@ -53,6 +54,7 @@ namespace Editor {
 
 		ArcticFox::Scene m_Scene;
 		SceneHierarchyPanel m_SceneHierarchyPanel;
+		ContentBrowserPanel m_ContentBrowserPanel;
 		ArcticFox::Graphics::EditorCamera m_Editor;
 	};
 }

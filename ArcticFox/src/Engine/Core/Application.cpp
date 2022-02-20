@@ -42,8 +42,8 @@ bool ArcticFox::Application::Close() {
 void ArcticFox::Application::Stop() {
 	AppFrame::Application::Stop();
 
-	AppFrame::PhysicalMountPoint * PhysicalSystem = static_cast<AppFrame::PhysicalMountPoint*>(AppFrame::VFS::GetInstance()->GetMount("C:/Users/Kosmosas/Desktop/Application/"));
-	AppFrame::VFS::GetInstance()->Unmount("C:/Users/Kosmosas/Desktop/Application/");
+	AppFrame::PhysicalMountPoint * PhysicalSystem = static_cast<AppFrame::PhysicalMountPoint*>(AppFrame::VFS::GetInstance()->GetMount("C:/Users/Kosmosas/Desktop/Application"));
+	AppFrame::VFS::GetInstance()->Unmount("C:/Users/Kosmosas/Desktop/Application");
 	delete PhysicalSystem;
 
 	for (auto it = m_Modules.begin(); it != m_Modules.end(); it++) {

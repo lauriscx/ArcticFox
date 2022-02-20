@@ -56,11 +56,6 @@ void Editor::SceneHierarchyPanel::OnImGuiRender() {
 		DrawEntityNode({ entityID, m_Scene });
 	});
 
-
-	ImGui::Begin("FileExplorer");
-
-	ImGui::End();
-
 	if (ImGui::IsMouseDown(0) && ImGui::IsWindowHovered()) {
 		m_SelectionContext = {};
 	}

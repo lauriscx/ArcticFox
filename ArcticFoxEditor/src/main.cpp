@@ -8,7 +8,7 @@ int main() {
 	//std::cout << "Start with memory " << m_MemoryAllocated << std::endl;
 	{
 		AppFrame::PhysicalMountPoint * PhysicalSystem = new AppFrame::PhysicalMountPoint();
-		PhysicalSystem->SetMountPoint("C:/Users/Kosmosas/Desktop/Application/");
+		PhysicalSystem->SetMountPoint("C:/Users/Kosmosas/Desktop/Application");
 		AppFrame::VFS::GetInstance()->Mount(PhysicalSystem);
 
 		AppFrame::AppConfig config;
