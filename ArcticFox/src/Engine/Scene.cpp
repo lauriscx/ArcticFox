@@ -59,14 +59,31 @@ void ArcticFox::Scene::OnUpdateRuntime(float deltaTime) {
 }
 
 void ArcticFox::Scene::OnUpdateEditor(float deltaTime, ArcticFox::Graphics::EditorCamera & camera) {
-	ArcticFox::Graphics::Render2D::BeginScene(camera);
-	auto group = m_Registry.group<TransformComponent>(entt::get<SpriteRenderComponent>);
-	for (auto entity : group) {
-		auto&[transform, sprite] = group.get<TransformComponent, SpriteRenderComponent>(entity);
-		//Graphics::Render2D::DrawQuad(transform.GetTranformation(), sprite.m_Color);
-		Graphics::Render2D::DrawSprite(transform.GetTranformation(), sprite, (int)entity);
+	{
+		ArcticFox::Graphics::Render2D::BeginScene(camera);
+		auto group = m_Registry.group<TransformComponent>(entt::get<SpriteRenderComponent>);
+		for (auto entity : group) {
+			auto&[transform, sprite] = group.get<TransformComponent, SpriteRenderComponent>(entity);
+			//Graphics::Render2D::DrawQuad(transform.GetTranformation(), sprite.m_Color);
+			Graphics::Render2D::DrawSprite(transform.GetTranformation(), sprite, (int)entity);
+		}
+		ArcticFox::Graphics::Render2D::EndScene();
 	}
-	ArcticFox::Graphics::Render2D::EndScene();
+
+	{
+		ArcticFox::Graphics::Renderer::BeginScene(camera);
+		auto group = m_Registry.group<>(entt::get<TransformComponent, MaterialComponent, MeshComponent>);
+		for (auto entity : group) {
+			auto&[transform, material, mesh] = group.get<TransformComponent, MaterialComponent, MeshComponent>(entity);
+			if (material.m_Material.GetShader() && mesh.m_Mesh.GetVertextArray()) {
+				for (const auto& texture : material.m_Material.GetTextures()) {
+					texture.first->Bind(texture.second.second);//Bind texture to shader specified slot. Slot received from shader class which reflect shader code variables and bindings.(Texture slot bind is set in shader code next to texture uniform layout).
+				}
+				Graphics::Renderer::Submit(mesh.m_Mesh.GetVertextArray(), material.m_Material.GetShader(), transform.GetTranformation());
+			}
+		}
+		ArcticFox::Graphics::Renderer::EndScene();
+	}
 }
 
 

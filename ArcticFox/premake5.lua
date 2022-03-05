@@ -25,11 +25,18 @@ project "ArcticFox"
 		"%{IncludeDir.stb}",
 		"%{IncludeDir.entt}",
 		"%{IncludeDir.yaml}",
-		"%{IncludeDir.VulkanSDK}"
+		"%{IncludeDir.assimp}",
+		"%{IncludeDir.VulkanSDK}",
+		"%{IncludeDir.Mono}"
+	}
+
+	libdirs {
+		"%{LibraryDir.assimp}"
 	}
 
 	links {
-		"AppFrame"
+		"AppFrame",
+		"assimp.lib"
 	}
 
 	filter "system:windows"

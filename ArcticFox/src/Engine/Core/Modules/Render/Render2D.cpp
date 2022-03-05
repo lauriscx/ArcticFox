@@ -33,12 +33,12 @@ namespace ArcticFox {
 			VertexArray* m_VAO;
 			VertexBuffer* m_VBO;
 			UniformBuffer* m_UBO;
-			Shader* m_Shader;
+			std::shared_ptr<Shader> m_Shader;
 
-			std::array<Texture*, maxTextureSlots> TextureSlots;
+			std::array<std::shared_ptr<Texture>, maxTextureSlots> TextureSlots;
 			uint32_t TextureSlotIndex = 1;
 
-			Texture2D* m_Texture;
+			std::shared_ptr<Texture2D> m_Texture;
 
 			glm::vec4 QoudPositionTemplate[4] = { {-0.5f, -0.5f, 0.0f, 1.0f}, {0.5f, -0.5f, 0.0f, 1.0f}, {0.5f, 0.5f, 0.0f, 1.0f}, {-0.5f, 0.5f, 0.0f, 1.0f} };
 
@@ -135,7 +135,7 @@ void ArcticFox::Graphics::Render2D::Init() {
 		"layout(location = 2) in vec2 b_Coords;\n"
 		"layout(location = 3) in float b_TextIndex;\n"
 		"layout(location = 4) in int b_EntityIndex;\n"
-		"layout(std140, binding = 0) uniform Camera\n"
+		"layout(std140, binding = 0) uniform Camera2D\n"
 		"{\n"
 		"	mat4 u_ViewProjection;\n"
 		"};\n"
@@ -331,7 +331,7 @@ void ArcticFox::Graphics::Render2D::DrawQuad(const glm::vec3 & position, const g
 	s_2DRenderData->m_Statistics.m_QuodCount++;
 }
 
-void ArcticFox::Graphics::Render2D::DrawQuad(const glm::vec2 & position, const glm::vec2 & size, Texture * texture) {
+void ArcticFox::Graphics::Render2D::DrawQuad(const glm::vec2 & position, const glm::vec2 & size, std::shared_ptr<Texture> texture) {
 	if (s_2DRenderData->QuadIndexCount >= Render2DCache::maxIndices) {
 		EndScene();
 	}
@@ -382,7 +382,7 @@ void ArcticFox::Graphics::Render2D::DrawQuad(const glm::vec2 & position, const g
 	s_2DRenderData->m_Statistics.m_QuodCount++;
 }
 
-void ArcticFox::Graphics::Render2D::DrawQuad(const glm::vec3 & position, const glm::vec2 & size, Texture * texture) {
+void ArcticFox::Graphics::Render2D::DrawQuad(const glm::vec3 & position, const glm::vec2 & size, std::shared_ptr<Texture> texture) {
 	if (s_2DRenderData->QuadIndexCount >= Render2DCache::maxIndices) {
 		EndScene();
 	}
@@ -433,7 +433,7 @@ void ArcticFox::Graphics::Render2D::DrawQuad(const glm::vec3 & position, const g
 	s_2DRenderData->m_Statistics.m_QuodCount++;
 }
 
-void ArcticFox::Graphics::Render2D::DrawQuad(const glm::vec2 & position, const glm::vec2 & size, const glm::vec4 & color, Texture * texture) {
+void ArcticFox::Graphics::Render2D::DrawQuad(const glm::vec2 & position, const glm::vec2 & size, const glm::vec4 & color, std::shared_ptr<Texture> texture) {
 	if (s_2DRenderData->QuadIndexCount >= Render2DCache::maxIndices) {
 		EndScene();
 	}
@@ -482,7 +482,7 @@ void ArcticFox::Graphics::Render2D::DrawQuad(const glm::vec2 & position, const g
 	s_2DRenderData->m_Statistics.m_QuodCount++;
 }
 
-void ArcticFox::Graphics::Render2D::DrawQuad(const glm::vec3 & position, const glm::vec2 & size, const glm::vec4 & color, Texture * texture) {
+void ArcticFox::Graphics::Render2D::DrawQuad(const glm::vec3 & position, const glm::vec2 & size, const glm::vec4 & color, std::shared_ptr<Texture> texture) {
 	if (s_2DRenderData->QuadIndexCount >= Render2DCache::maxIndices) {
 		EndScene();
 	}
@@ -531,7 +531,7 @@ void ArcticFox::Graphics::Render2D::DrawQuad(const glm::vec3 & position, const g
 	s_2DRenderData->m_Statistics.m_QuodCount++;
 }
 
-void ArcticFox::Graphics::Render2D::DrawQuad(const glm::vec3 & position, const glm::vec2 & size, const glm::vec4 & color, Texture * texture, float rotate) {
+void ArcticFox::Graphics::Render2D::DrawQuad(const glm::vec3 & position, const glm::vec2 & size, const glm::vec4 & color, std::shared_ptr<Texture> texture, float rotate) {
 	if (s_2DRenderData->QuadIndexCount >= Render2DCache::maxIndices) {
 		EndScene();
 	}
@@ -647,7 +647,6 @@ void ArcticFox::Graphics::Render2D::EndScene() {
 
 void ArcticFox::Graphics::Render2D::ShutDown() {
 	delete[] s_2DRenderData->QuadVertexBase;
-	delete s_2DRenderData->m_Shader;
 	delete s_2DRenderData->m_VAO->GetIndexBuffer();
 	delete s_2DRenderData->m_VBO;
 	delete s_2DRenderData->m_VAO;

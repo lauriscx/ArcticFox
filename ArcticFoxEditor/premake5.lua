@@ -25,11 +25,18 @@ project "ArcticFoxEditor"
 		"%{IncludeDir.glm}", 
 		"%{IncludeDir.spdlog}",
 		"%{IncludeDir.stb}",
-		"%{IncludeDir.entt}"
+		"%{IncludeDir.entt}",
+		"%{IncludeDir.assimp}",
+		"%{IncludeDir.Mono}"
+	}
+	
+	libdirs {
+		"%{LibraryDir.assimp}"
 	}
 
 	links {
-		"ArcticFox"
+		"ArcticFox",
+		"assimp.lib"
 	}
 
 	filter "system:windows"

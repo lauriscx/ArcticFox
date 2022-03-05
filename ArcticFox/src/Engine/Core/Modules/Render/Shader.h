@@ -10,7 +10,7 @@ namespace ArcticFox {
 		public:
 			Shader();
 
-			static Shader* Create(const std::string& name, const std::string& vertex, const std::string& fragment, bool spirv = false);
+			static std::shared_ptr<Shader> Create(const std::string& name, const std::string& vertex, const std::string& fragment, bool spirv = false);
 
 			virtual const std::string& GetName() const = 0;
 
@@ -24,18 +24,20 @@ namespace ArcticFox {
 			virtual void UploadUniform(const std::string& name, int value) = 0;
 			virtual void UploadUniform(const std::string& name, int* value, uint32_t count) = 0;
 
+			virtual std::vector<std::pair<std::string, uint32_t>> GetTextureSlots() = 0;
+
 			~Shader();
 		};
 
 		class ShaderLibrary {
 		public:
-			void Add(Shader* shader);
-			Shader* Load(const std::string& name, const std::filesystem::path & pathVer, const std::filesystem::path & pathFrag);
-			Shader* Load(const std::filesystem::path & pathVer, const std::filesystem::path & pathFrag);
-			Shader* Get(const std::string& name);
+			void Add(std::shared_ptr<Shader> shader);
+			std::shared_ptr<Shader> Load(const std::string& name, const std::filesystem::path & pathVer, const std::filesystem::path & pathFrag);
+			std::shared_ptr<Shader> Load(const std::filesystem::path & pathVer, const std::filesystem::path & pathFrag);
+			std::shared_ptr<Shader> Get(const std::string& name);
 			bool Exists(const std::string& name) const;
 		private:
-			std::unordered_map<std::string, Shader*> m_Shader;
+			std::unordered_map<std::string, std::shared_ptr<Shader>> m_Shader;
 		};
 	}
 }

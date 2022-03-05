@@ -217,9 +217,13 @@ const ArcticFox::Graphics::IndexBuffer * ArcticFox::Graphics::OpenGL::OpenGLVert
 }
 void ArcticFox::Graphics::OpenGL::OpenGLVertexArray::Bind() {
 	glBindVertexArray(m_VAO);
+	for (auto& ver : m_VertexBuffers) {
+		ver->Bind();
+	}
+	m_IndexBuffer->Bind();
 }
 void ArcticFox::Graphics::OpenGL::OpenGLVertexArray::Unbind() {
-	glBindVertexArray(m_VAO);
+	glBindVertexArray(0);
 }
 ArcticFox::Graphics::OpenGL::OpenGLVertexArray::~OpenGLVertexArray() {
 	glDeleteVertexArrays(1, &m_VAO);

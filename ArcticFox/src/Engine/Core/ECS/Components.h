@@ -6,8 +6,23 @@
 #include <glm/gtx/quaternion.hpp>
 #include <string>
 #include "Engine/Core/Modules/Render/Camera.h"
+#include "Engine/Core/Modules/Render/Mesh.h"
+#include "Engine/Core/Modules/Render/Material.h"
 
 namespace ArcticFox {
+	struct MaterialComponent {
+		Graphics::Material m_Material;
+
+		MaterialComponent() = default;
+		MaterialComponent(const MaterialComponent&) = default;
+	};
+	struct MeshComponent {
+		Graphics::Mesh m_Mesh;
+
+		MeshComponent() = default;
+		MeshComponent(const MeshComponent&) = default;
+	};
+
 	struct CameraComponent {//Appear problem then component are added after scene init because came then don't have set aspect ratio.
 		Graphics::SceneCamera m_Camera;
 		bool Primary = false;

@@ -1,6 +1,9 @@
 #include <AppFrame.h>
 #include "Application.h"
 #include "Module/Editor/Editor.h"
+#include "Application/Resources/RecourceXML.h"
+
+#include "Core/Core.h"
 
 #include "Engine/Core/Modules/Render/GraphicsModule.h"
 #include "Engine/Core/ECS/Components.h"
@@ -8,7 +11,18 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-Editor::Application::Application(AppFrame::AppConfig* config) : ArcticFox::Application(config), m_Controller(800.0f / 600.0f), m_vieportSize(0, 0) { }
+#include "Application/Events/AppEvents.h"
+
+Editor::Application::Application(AppFrame::AppConfig* config) : ArcticFox::Application(config), m_Controller(800.0f / 600.0f), m_vieportSize(0, 0) {
+	//m_Assembly = new ScriptAssembly("MainGameScript", "GameScript");
+	//m_ScriptClass = m_Assembly->GetClass("Application");
+	
+
+	/*m_ScriptClass->LinkMethod("GameScript.Application::TestFunction()", []() {
+		dynamic_cast<Application*>(Application::GetInstance())->TestFunction();
+	});*/
+	//m_ScriptMethodRun = m_ScriptClass->GetMethod("Run(int,int,char)");
+}
 glm::vec3 mPos(0, 0, 0);
 glm::vec3 mPosT(0, 0, 0);
 glm::vec3 mRotT(0, 0, 0);
@@ -27,10 +41,17 @@ void Editor::Application::Run() {
 	m_SceneHierarchyPanel.SetContext(&m_Scene);
 
 	m_Editor = ArcticFox::Graphics::EditorCamera(30.0f, 1.778f, 0.1f, 1000.0f);
+
+
+	AppFrame::ResourceManager::GetInstance()->GetResource<AppFrame::RecourceXML>("Configuration.xml");
+
+	//m_ScriptMethodRun->Invoke(52, 5, std::string("What"));
+
 }
 
 void Editor::Application::OnEarlyUpdate() {
 	ArcticFox::Application::OnEarlyUpdate();
+	//m_ScriptClass->GetMethod("OnEarlyUpdate()")->Invoke();
 }
 void Editor::Application::OnUpdate() {
 	ArcticFox::Application::OnUpdate();
@@ -160,12 +181,15 @@ void Editor::Application::OnUpdate() {
 	m_ContentBrowserPanel.OnImGuiRender();
 
 	ImGui::PopStyleVar();
+	//m_ScriptClass->GetMethod("OnUpdate()")->Invoke();
 }
 bool Editor::Application::OnInput(const AppFrame::InputData& input) {
+	//m_ScriptClass->GetMethod("OnInput()")->Invoke();
 	return true;
 }
 void Editor::Application::OnLateUpdate() {
 	ArcticFox::Application::OnLateUpdate();
+	//m_ScriptClass->GetMethod("OnLateUpdate()")->Invoke();
 }
 
 bool Editor::Application::OnEvent(AppFrame::BasicEvent & event) {
@@ -176,6 +200,13 @@ bool Editor::Application::OnEvent(AppFrame::BasicEvent & event) {
 }
 void Editor::Application::Stop() {
 	ArcticFox::Application::Stop();
+	//m_ScriptClass->GetMethod("Stop()")->Invoke();
 }
 
-Editor::Application::~Application() { }
+Editor::Application::~Application() {
+	//delete m_Assembly;
+}
+
+void Editor::Application::TestFunction() {
+	std::cout << "C# call" << std::endl;
+}

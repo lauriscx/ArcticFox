@@ -3,7 +3,7 @@
 #include "Core/FileSystem/File.h"
 #include <iostream>
 #include "Core/XML/XML.h"
-
+#include "Core/ResourceManager/ResourceManager.h"
 
 ArcticFox::Graphics::RecourceShader::RecourceShader() { }
 
@@ -16,10 +16,12 @@ bool ArcticFox::Graphics::RecourceShader::IsAvailable() {
 }
 
 bool ArcticFox::Graphics::RecourceShader::Load(std::filesystem::path file) {
-	AppFrame::File* _file = AppFrame::VFS::GetInstance()->ReadFile(file);
+	AppFrame::Resource::Load(file);
+
+	std::shared_ptr<AppFrame::File> _file = AppFrame::VFS::GetInstance()->ReadFile(file);
 	if (_file && _file->IsDataAvailable()) {
 		m_Resource = _file->GetData();
-		delete _file;//It will erease all allocated memory inside(mean data which is char*).
+		//delete _file;//It will erease all allocated memory inside(mean data which is char*).
 		return true;
 	}
 	return false;
@@ -31,4 +33,8 @@ size_t ArcticFox::Graphics::RecourceShader::GetMemoryUsage() {
 
 ArcticFox::Graphics::RecourceShader::~RecourceShader() {
 	//delete m_Resource;
+	AppFrame::Resource::~Resource();
+	if (!m_File.empty()) {
+		AppFrame::ResourceManager::GetInstance()->ReleaseResource<RecourceShader>(this);
+	}
 }

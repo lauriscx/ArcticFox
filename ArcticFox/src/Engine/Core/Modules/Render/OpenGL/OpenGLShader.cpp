@@ -17,6 +17,10 @@ ArcticFox::Graphics::OpenGL::OpenGLShader::OpenGLShader(const std::string& name,
 	if(spirv) {
 
 		auto VulkanBinaries = CompileVulkanBinaries(shaders);
+		m_TexturesSlots.clear();
+		for (const auto& data : VulkanBinaries) {
+			Reflect(data.first, data.second);
+		}
 		auto OpenGLBinaries = CompileOpenGLBinaries(VulkanBinaries);
 		CreateShaderProgram(OpenGLBinaries);
 
@@ -69,6 +73,80 @@ void ArcticFox::Graphics::OpenGL::OpenGLShader::UploadUniform(const std::string 
 	glUseProgram(m_Shader);
 	int location = glGetUniformLocation(m_Shader, name.c_str());
 	glUniform1iv(location, count, value);
+}
+
+std::vector<std::pair<std::string, uint32_t>> ArcticFox::Graphics::OpenGL::OpenGLShader::GetTextureSlots() {
+	return m_TexturesSlots;
+}
+
+void ArcticFox::Graphics::OpenGL::OpenGLShader::Reflect(GLenum stage, const std::vector<uint32_t>& shaderData) {
+	spirv_cross::CompilerGLSL glsl(std::move(shaderData));
+
+	// The SPIR-V is now parsed, and we can perform reflection on it.
+	spirv_cross::ShaderResources resources = glsl.get_shader_resources();
+
+	// Get all sampled images in the shader.
+	for (auto &resource : resources.sampled_images)
+	{
+		unsigned set = glsl.get_decoration(resource.id, spv::DecorationDescriptorSet);
+		unsigned binding = glsl.get_decoration(resource.id, spv::DecorationBinding);
+		std::cout << glsl.get_name(resource.id) << std::endl;
+		std::cout<< glsl.get_name(resource.id) << std::endl;
+		std::cout<< glsl.get_fallback_name(resource.id) << std::endl;
+		printf("Image %s at set = %u, binding = %u\n", resource.name.c_str(), set, binding);
+
+		// Modify the decoration to prepare it for GLSL.
+		glsl.unset_decoration(resource.id, spv::DecorationDescriptorSet);
+
+		// Some arbitrary remapping if we want.
+		glsl.set_decoration(resource.id, spv::DecorationBinding, set * 16 + binding);
+
+		std::string _name = "Texture";
+		_name += glsl.get_fallback_name(resource.id);
+		if (resource.name.empty()) {
+			m_TexturesSlots.push_back(std::make_pair(_name, binding));
+		} else {
+			m_TexturesSlots.push_back(std::make_pair(resource.name, binding));
+		}
+	}
+
+
+	/*spirv_cross::Compiler compiler(shaderData);
+	spirv_cross::ShaderResources resource = compiler.get_shader_resources();
+	
+
+	for (const auto& image : resource.separate_images) {
+		m_TexturesSlots.push_back(std::make_pair(image.name, image.id));
+	}
+	for (const auto& image : resource.separate_samplers) {
+		m_TexturesSlots.push_back(std::make_pair(image.name, image.id));
+	}
+	//std::cout << resource.sampled_images.size() << std::endl;
+	for (const auto& image : resource.sampled_images) {
+		m_TexturesSlots.push_back(std::make_pair(image.name, image.id));
+		//const auto& bufferType = compiler.get_type(image.base_type_id);
+		//uint32_t bufferSize = compiler.get_declared_struct_size(bufferType);
+		uint32_t binding = compiler.get_decoration(image.id, spv::DecorationBinding);
+		//int memberCount = bufferType.member_types.size();
+
+		std::cout << compiler.get_name(image.id) << std::endl;
+		std::cout << compiler.get_fallback_name(image.id) << std::endl;
+		//std::cout << "Size = " << bufferSize << std::endl;
+		std::cout << "Binding" << binding << std::endl;
+		//std::cout << "Members" << memberCount << std::endl;
+	}
+
+	for (const auto& uniform : resource.uniform_buffers) {
+		//const auto& bufferType = compiler.get_type(uniform.base_type_id);
+		//uint32_t bufferSize = compiler.get_declared_struct_size(bufferType);
+		//uint32_t binding = compiler.get_decoration(uniform.id, spv::DecorationBinding);
+		//int memberCount = bufferType.member_types.size();
+		//
+		//std::cout<< uniform.name << std::endl;
+		//std::cout<<"Size = "<< bufferSize << std::endl;
+		//std::cout<<"Binding" << binding << std::endl;
+		//std::cout<<"Members"<< memberCount << std::endl;
+	}*/
 }
 
 std::unordered_map<GLenum, std::vector<uint32_t>> ArcticFox::Graphics::OpenGL::OpenGLShader::CompileVulkanBinaries(const std::unordered_map<GLenum, std::string>& shadersSourceCode) {

@@ -5,6 +5,8 @@
 #include "glm/gtc/type_ptr.hpp"
 #include "Engine/Core/Modules/Render/Camera.h"
 #include "Engine/SceneSerializer.h"
+#include "Engine/Core/Modules/Render/Texture.h"
+#include <filesystem>
 
 Editor::SceneHierarchyPanel::SceneHierarchyPanel(ArcticFox::Scene * scene) : m_Scene(scene) {
 	
@@ -86,6 +88,14 @@ void Editor::SceneHierarchyPanel::OnImGuiRender() {
 			}*/
 			if (ImGui::MenuItem("Sprete renderer")) {
 				m_SelectionContext.AddComponent<ArcticFox::SpriteRenderComponent>();
+				ImGui::CloseCurrentPopup();
+			}
+			if (ImGui::MenuItem("Mesh")) {
+				m_SelectionContext.AddComponent<ArcticFox::MeshComponent>();
+				ImGui::CloseCurrentPopup();
+			}
+			if (ImGui::MenuItem("Material")) {
+				m_SelectionContext.AddComponent<ArcticFox::MaterialComponent>();
 				ImGui::CloseCurrentPopup();
 			}
 			ImGui::EndPopup();
@@ -263,7 +273,101 @@ void Editor::SceneHierarchyPanel::DrawComponents(ArcticFox::Entity entity) {
 
 			ImGui::TreePop();
 		}
+
 		if (RemoveComponent)
 			entity.RemoveComponent<ArcticFox::CameraComponent>();
+	}
+
+	if (entity.HasComponent<ArcticFox::MeshComponent>()) {
+		ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2{ 4, 4 });
+		bool open = ImGui::TreeNodeEx((void*)typeid(ArcticFox::MeshComponent).hash_code(), treeNodeFlags, "Mesh");
+
+		ImGui::SameLine(ImGui::GetWindowWidth() - 25.0f);
+		if (ImGui::Button("...", ImVec2{ 30, 30 })) {
+			ImGui::OpenPopup("ComponentSettings");
+		}
+		ImGui::PopStyleVar();
+		bool RemoveComponent = false;
+		if (ImGui::BeginPopup("ComponentSettings")) {
+			if (ImGui::MenuItem("Remove component")) {
+				RemoveComponent = true;
+			}
+			ImGui::EndPopup();
+		}
+
+		if (open) {
+			auto& mesh = entity.GetComponent<ArcticFox::MeshComponent>().m_Mesh;
+
+			static auto& name = mesh.getPath().string();
+			char buffer[256];
+			memset(buffer, 0, sizeof(buffer));
+			strcpy_s(buffer, sizeof(buffer), name.c_str());
+			if (ImGui::InputText("Mesh", buffer, sizeof(buffer))) {
+				name = buffer;
+			}
+			if (ImGui::Button("Load")) {
+				mesh.LoadFile(std::string(buffer));
+			}
+			ImGui::TreePop();
+		}
+
+		if (RemoveComponent)
+			entity.RemoveComponent<ArcticFox::MeshComponent>();
+	}
+
+	if (entity.HasComponent<ArcticFox::MaterialComponent>()) {
+		ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2{ 4, 4 });
+		bool open = ImGui::TreeNodeEx((void*)typeid(ArcticFox::MaterialComponent).hash_code(), treeNodeFlags, "Mesh");
+
+		ImGui::SameLine(ImGui::GetWindowWidth() - 25.0f);
+		if (ImGui::Button("...", ImVec2{ 30, 30 })) {
+			ImGui::OpenPopup("ComponentSettings");
+		}
+		ImGui::PopStyleVar();
+		bool RemoveComponent = false;
+		if (ImGui::BeginPopup("ComponentSettings")) {
+			if (ImGui::MenuItem("Remove component")) {
+				RemoveComponent = true;
+			}
+			ImGui::EndPopup();
+		}
+
+		if (open) {
+			auto& material = entity.GetComponent<ArcticFox::MaterialComponent>().m_Material;
+			ImGui::Text("BaseFragment.glsl and BaseVertex.glsl");
+			if (ImGui::Button("Load shader")) {
+				material.LoadShader("Shaders/3d/BaseVertex.glsl", "Shaders/3d/BaseFragment.glsl");
+			}
+			
+			if (material.GetShader()) {
+				int i = 0;
+				for (const auto& texture : material.GetShader()->GetTextureSlots()) {
+					std::string t = texture.first;
+					t += " Slot ";
+					t += std::to_string(texture.second);
+					ImGui::Text(t.c_str());
+
+					static std::string name[10] = { "Texture.png", "handgun_C.jpg", "", "", "", "", "", "", "", "" };
+					char buffer[256];
+					memset(buffer, 0, sizeof(buffer));
+					strcpy_s(buffer, sizeof(buffer), name[i].c_str());
+					if (ImGui::InputText("Texture", buffer, sizeof(buffer))) {
+						name[i] = buffer;
+					}
+					std::string load = "Load" + name[i];
+					if (ImGui::Button(load.c_str())) {
+						AppFrame::ResourceTexture textureRes = AppFrame::ResourceManager::GetInstance()->GetResource<AppFrame::ResourceTexture>(name[i]);
+						auto m_Texture = ArcticFox::Graphics::Texture2D::Create(&textureRes);
+						material.AddTexture(texture.second, m_Texture);
+					}
+					i++;
+				}
+			}
+
+			ImGui::TreePop();
+		}
+
+		if (RemoveComponent)
+			entity.RemoveComponent<ArcticFox::MaterialComponent>();
 	}
 }

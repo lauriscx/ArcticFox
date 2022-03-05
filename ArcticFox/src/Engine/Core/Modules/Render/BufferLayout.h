@@ -122,7 +122,9 @@ namespace ArcticFox {
 			BufferLayout(const std::vector<BufferElement>& elements) : m_Elements(elements) { PrepereElements(); }//Creates layout with std::vector
 			BufferLayout(const std::initializer_list<BufferElement>& elements) : m_Elements(elements) { PrepereElements(); }//Creates layout with raw array with implicit cast to std::vector
 			inline const std::vector<BufferElement>& GetElements() const { return m_Elements; }
-			inline unsigned int GetStride() const { return m_Stride; }
+			inline unsigned int GetStride() const { 
+				return m_Stride;
+			}
 
 			std::vector<BufferElement>::iterator begin() { return m_Elements.begin(); };
 			std::vector<BufferElement>::iterator end() { return m_Elements.end(); };

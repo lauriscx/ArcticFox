@@ -22,8 +22,8 @@ void ArcticFox::Graphics::OpenGL::OpenGLRendererAPI::Clear() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 }
 void ArcticFox::Graphics::OpenGL::OpenGLRendererAPI::DrawIndexed(VertexArray * vertexArray, uint32_t count) {
-	//glDrawArrays(GL_TRIANGLES, 0, 3);
 	glDrawElements(GL_TRIANGLES, count ? count : vertexArray->GetIndexBuffer()->getCount(), GL_UNSIGNED_INT, 0);
+	//glDrawArrays(GL_TRIANGLES, 0, count ? count : vertexArray->GetIndexBuffer()->getCount());
 }
 
 ArcticFox::Graphics::OpenGL::OpenGLRendererAPI::~OpenGLRendererAPI() {}

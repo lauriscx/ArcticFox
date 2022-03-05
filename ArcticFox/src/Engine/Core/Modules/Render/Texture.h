@@ -20,8 +20,8 @@ namespace ArcticFox {
 
 		class Texture2D : public Texture {
 		public:
-			static Texture2D* Create(uint32_t width, uint32_t height);
-			static Texture2D* Create(AppFrame::ResourceTexture* texture);
+			static std::shared_ptr<Texture2D> Create(uint32_t width, uint32_t height);
+			static std::shared_ptr<Texture2D> Create(AppFrame::ResourceTexture* texture);
 
 			virtual ~Texture2D() = default;
 		};

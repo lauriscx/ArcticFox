@@ -17,12 +17,12 @@ namespace ArcticFox {
 
 			static void DrawQuad(const glm::vec2& position, const glm::vec2& size, const glm::vec4& color);
 			static void DrawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color);
-			static void DrawQuad(const glm::vec2& position, const glm::vec2& size, Texture* texture);
-			static void DrawQuad(const glm::vec3& position, const glm::vec2& size, Texture* texture);
-			static void DrawQuad(const glm::vec2& position, const glm::vec2& size, const glm::vec4& color, Texture* texture);
-			static void DrawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color, Texture* texture);
+			static void DrawQuad(const glm::vec2& position, const glm::vec2& size, std::shared_ptr<Texture> texture);
+			static void DrawQuad(const glm::vec3& position, const glm::vec2& size, std::shared_ptr<Texture> texture);
+			static void DrawQuad(const glm::vec2& position, const glm::vec2& size, const glm::vec4& color, std::shared_ptr<Texture> texture);
+			static void DrawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color, std::shared_ptr<Texture> texture);
 
-			static void DrawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color, Texture* texture, float rotate);
+			static void DrawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color, std::shared_ptr<Texture> texture, float rotate);
 
 			static void DrawSprite(const glm::mat4 matrix, SpriteRenderComponent& src, int entityID = -1);
 

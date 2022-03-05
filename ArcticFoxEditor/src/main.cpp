@@ -13,7 +13,7 @@ int main() {
 
 		AppFrame::AppConfig config;
 		Editor::Application * aap = new Editor::Application(&config);
-
+		
 		/* Add application behavior/functionality  */
 		aap->AddModule<AppFrame::ModuleWindow>(new AppFrame::ModuleWindow());
 		aap->AddModule<AppFrame::ModuleConsole>(new AppFrame::ModuleConsole());

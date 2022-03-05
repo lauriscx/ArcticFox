@@ -17,6 +17,12 @@
 #include "Module/Editor/Panels/SceneHierarchyPanel.h"
 #include "Module/Editor/Panels/ContentBrowserPanel.h"
 
+#include <mono/jit/jit.h>
+#include <mono/metadata/debug-helpers.h>
+
+
+#include "Core/Scripting/ScriptAssembly.h"
+
 /*#include "Application/Modules/Render/Mesh.h"
 #include "Application/Modules/Render/Renderer.h"*/
 
@@ -34,6 +40,8 @@ namespace Editor {
 		virtual void Stop() override;
 
 		virtual ~Application();
+
+		void TestFunction();
 	private:
 
 		ArcticFox::Graphics::OrthographicCameraController m_Controller;
@@ -56,5 +64,15 @@ namespace Editor {
 		SceneHierarchyPanel m_SceneHierarchyPanel;
 		ContentBrowserPanel m_ContentBrowserPanel;
 		ArcticFox::Graphics::EditorCamera m_Editor;
+
+	/*private://Scripting
+		MonoDomain* m_PtrMonoDomain = nullptr;
+		MonoAssembly* m_PtrApplicationAssembly = nullptr;
+		MonoImage* m_PtrApplicationAssemblyImage = nullptr;*/
+
+	private://Scripting wrapper
+		ScriptAssembly* m_Assembly = nullptr;
+		Class* m_ScriptClass = nullptr;
+		Method* m_ScriptMethodRun = nullptr;
 	};
 }

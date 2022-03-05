@@ -22,14 +22,20 @@ namespace ArcticFox {
 				virtual void UploadUniform(const std::string& name, int value) override;
 				virtual void UploadUniform(const std::string& name, int* value, uint32_t count) override;
 
+				virtual std::vector<std::pair<std::string, uint32_t>> GetTextureSlots() override;
+
 			private:
 				unsigned int m_VertexShader;
 				unsigned int m_FragmentShader;
 				unsigned int m_Shader;
 				std::string m_Name;
 
+				std::vector<std::pair<std::string, uint32_t>> m_TexturesSlots;
+
 				//SPIR-V implementation
 			private:
+				void Reflect(GLenum stage, const std::vector<uint32_t>& shaderData);
+
 				std::unordered_map<GLenum, std::vector<uint32_t>> CompileVulkanBinaries(const std::unordered_map<GLenum, std::string>& shadersSourceCode);
 				std::unordered_map<GLenum, std::vector<uint32_t>> CompileOpenGLBinaries(const std::unordered_map<GLenum, std::vector<uint32_t>>& shadersSourceCode);
 				void CreateShaderProgram(std::unordered_map<GLenum, std::vector<uint32_t>> openglBinary);
