@@ -3,29 +3,13 @@
 
 
 
-ArcticFox::Graphics::Mesh::Mesh() {
-/*	glm::vec3 QoudPositionTemplate[8] = { {-0.5f, -0.5f, 0.0f},{-0.5f, -0.5f, 0.0f}, {0.5f, -0.5f, 0.0f},{-0.5f, -0.5f, 0.0f}, {0.5f, 0.5f, 0.0f},{-0.5f, -0.5f, 0.0f}, {-0.5f, 0.5f, 0.0f},{-0.5f, -0.5f, 0.0f} };
-
-	uint32_t ind[6] = { 0, 1, 2, 2, 3, 0 };
-
-	m_VBO = VertexBuffer::Create(QoudPositionTemplate, sizeof(QoudPositionTemplate));
-	m_IBO = IndexBuffer::Create(ind, sizeof(ind));
-
-	m_VBO->SetLayout({ {"a_Position", DataType::FLOAT_3, false},
-					{"a_Normals", DataType::FLOAT_3, false},
-		});
-
-
-	m_VAO = VertexArray::Create();
-	m_VAO->AddVertexBuffer(m_VBO);
-	m_VAO->SetIndexBuffer(m_IBO);*/
-}
+ArcticFox::Graphics::Mesh::Mesh() { }
 
 void ArcticFox::Graphics::Mesh::LoadFile(std::filesystem::path path) {
-	m_path = path;
+	m_Path = path;
 
-	AppFrame::ResourceMesh meshRes = AppFrame::ResourceManager::GetInstance()->GetResource<AppFrame::ResourceMesh>(path);
-
+	auto meshRes = AppFrame::ResourceManager::GetInstance()->GetResource<AppFrame::ResourceMesh>(path);
+	meshRess.push_back(meshRes);
 	std::vector<float> vertex;
 	std::vector<uint32_t> Indices;
 
@@ -67,4 +51,6 @@ void ArcticFox::Graphics::Mesh::LoadFile(std::filesystem::path path) {
 	}
 }
 
-ArcticFox::Graphics::Mesh::~Mesh() { }
+ArcticFox::Graphics::Mesh::~Mesh() {
+	meshRess.clear();
+}

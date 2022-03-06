@@ -43,7 +43,7 @@ void Editor::Application::Run() {
 	m_Editor = ArcticFox::Graphics::EditorCamera(30.0f, 1.778f, 0.1f, 1000.0f);
 
 
-	AppFrame::ResourceManager::GetInstance()->GetResource<AppFrame::RecourceXML>("Configuration.xml");
+	//AppFrame::ResourceManager::GetInstance()->GetResource<AppFrame::RecourceXML>("Configuration.xml");
 
 	//m_ScriptMethodRun->Invoke(52, 5, std::string("What"));
 

@@ -15,7 +15,7 @@ namespace ArcticFox {
 
 			void LoadFile(std::filesystem::path path);
 			inline VertexArray* GetVertextArray() { return m_VAO; };
-			inline std::filesystem::path getPath() { return m_path; };
+			inline std::filesystem::path getPath() { return m_Path; };
 
 			~Mesh();
 		private:
@@ -23,7 +23,8 @@ namespace ArcticFox {
 			VertexBuffer* m_VBO;
 			IndexBuffer* m_IBO;
 
-			std::filesystem::path m_path;
+			std::filesystem::path m_Path;
+			std::vector<AppFrame::ResourceMesh> meshRess;
 		};
 	}
 }

@@ -1,5 +1,6 @@
 #include "Editor.h"
 #include "Engine/Core/Modules/Render/Render2D.h"
+#include <AppFrame.h>
 
 
 void Editor::Editor::OnStart() {
@@ -21,6 +22,17 @@ void Editor::Editor::OnUpdate(float deltaTime) {
 	ImGui::Text("Index count %d", stats.GetTotalIndexCount());
 	ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 	ImGui::End();
+
+	ImGui::Begin("Resource Manager");
+	if (ImGui::Button("Release all resources")) {
+		AppFrame::ResourceManager::GetInstance()->ReleaseResources();
+	}
+	for (auto&& [path, resource] : AppFrame::ResourceManager::GetInstance()->GetResources()) {
+		ImGui::Text("Resource: usage %d, path %s, memory %d", resource->getRefCount(), resource->GetPath().string().c_str(), resource->GetMemoryUsage());
+	}
+
+	ImGui::End();
+
 }
 
 void Editor::Editor::OnLateUpdate(float deltaTime) {

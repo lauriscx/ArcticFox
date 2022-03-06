@@ -31,8 +31,6 @@ std::shared_ptr<ArcticFox::Graphics::Shader> ArcticFox::Graphics::ShaderLibrary:
 	std::shared_ptr<Shader> Shader = Graphics::Shader::Create(name, vertex.Get(), fragment.Get());
 	Add(Shader);
 
-	AppFrame::ResourceManager::GetInstance()->ReleaseResource(pathVer);
-	AppFrame::ResourceManager::GetInstance()->ReleaseResource(pathFrag);
 	return Shader;
 }
 std::shared_ptr<ArcticFox::Graphics::Shader> ArcticFox::Graphics::ShaderLibrary::Load(const std::filesystem::path & pathVer, const std::filesystem::path & pathFrag) {
@@ -42,8 +40,6 @@ std::shared_ptr<ArcticFox::Graphics::Shader> ArcticFox::Graphics::ShaderLibrary:
 	std::shared_ptr<Shader> Shader = Graphics::Shader::Create(pathVer.stem().string(), vertex.Get(), fragment.Get());
 	Add(Shader);
 
-	AppFrame::ResourceManager::GetInstance()->ReleaseResource(pathVer);
-	AppFrame::ResourceManager::GetInstance()->ReleaseResource(pathFrag);
 	return Shader;
 }
 std::shared_ptr<ArcticFox::Graphics::Shader> ArcticFox::Graphics::ShaderLibrary::Get(const std::string & name) {
