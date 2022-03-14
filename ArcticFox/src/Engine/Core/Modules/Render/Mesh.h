@@ -24,7 +24,7 @@ namespace ArcticFox {
 			IndexBuffer* m_IBO;
 
 			std::filesystem::path m_Path;
-			std::vector<AppFrame::ResourceMesh> meshRess;
+			AppFrame::ResourceMesh meshRes;
 		};
 	}
 }

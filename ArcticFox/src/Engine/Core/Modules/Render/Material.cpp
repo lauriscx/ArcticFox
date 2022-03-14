@@ -1,11 +1,10 @@
 #include "Material.h"
-#include "Engine/Core/Resource/ResourceShader.h"
 
 ArcticFox::Graphics::Material::Material() {}
 
 void ArcticFox::Graphics::Material::LoadShader(std::filesystem::path verpath, std::filesystem::path fragpath) {
-	Graphics::RecourceShader vertex = AppFrame::ResourceManager::GetInstance()->GetResource<Graphics::RecourceShader>(verpath);
-	Graphics::RecourceShader fragment = AppFrame::ResourceManager::GetInstance()->GetResource<Graphics::RecourceShader>(fragpath);
+	vertex = AppFrame::ResourceManager::GetInstance()->GetResource<Graphics::RecourceShader>(verpath);
+	fragment = AppFrame::ResourceManager::GetInstance()->GetResource<Graphics::RecourceShader>(fragpath);
 	m_Shader = Shader::Create("Material", vertex.Get(), fragment.Get(), true);
 }
 

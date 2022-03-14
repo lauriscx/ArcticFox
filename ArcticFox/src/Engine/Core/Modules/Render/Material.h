@@ -4,6 +4,8 @@
 #include "Engine/Core/Modules/Render/Shader.h"
 #include "Engine/Core/Modules/Render/Texture.h"
 
+#include "Engine/Core/Resource/ResourceShader.h"
+
 namespace ArcticFox {
 	namespace Graphics {
 		class Material {
@@ -21,6 +23,9 @@ namespace ArcticFox {
 		private:
 			std::shared_ptr<Shader> m_Shader;
 			std::map<std::shared_ptr<Texture2D>, std::pair<std::string, uint32_t>> m_Textures;
+
+			Graphics::RecourceShader vertex;
+			Graphics::RecourceShader fragment;
 		};
 	}
 }

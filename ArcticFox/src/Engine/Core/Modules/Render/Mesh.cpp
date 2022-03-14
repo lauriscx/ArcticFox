@@ -8,8 +8,8 @@ ArcticFox::Graphics::Mesh::Mesh() { }
 void ArcticFox::Graphics::Mesh::LoadFile(std::filesystem::path path) {
 	m_Path = path;
 
-	auto meshRes = AppFrame::ResourceManager::GetInstance()->GetResource<AppFrame::ResourceMesh>(path);
-	meshRess.push_back(meshRes);
+	meshRes = AppFrame::ResourceManager::GetInstance()->GetResource<AppFrame::ResourceMesh>(path);
+
 	std::vector<float> vertex;
 	std::vector<uint32_t> Indices;
 
@@ -51,6 +51,4 @@ void ArcticFox::Graphics::Mesh::LoadFile(std::filesystem::path path) {
 	}
 }
 
-ArcticFox::Graphics::Mesh::~Mesh() {
-	meshRess.clear();
-}
+ArcticFox::Graphics::Mesh::~Mesh() { }

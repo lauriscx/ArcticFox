@@ -11,7 +11,7 @@ void ArcticFox::Graphics::Renderer::BeginScene(EditorCamera & camera) {
 }
 
 void ArcticFox::Graphics::Renderer::Submit(Graphics::VertexArray* vertexArray, const std::shared_ptr<Graphics::Shader>& shader, glm::mat4 transformation) {
-	m_SceneData->m_CameraBuffer->SetData(&m_SceneData->m_Camera.ViewProjection, sizeof(SceneData::CameraData), 0);
+	m_SceneData->m_CameraBuffer->SetData(&m_SceneData->m_Camera, sizeof(SceneData::CameraData), 0);
 	m_SceneData->m_TransformationBuffer->SetData(&transformation, sizeof(SceneData::TransformationData), 0);
 	
 	shader->Bind();
